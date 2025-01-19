@@ -7,21 +7,18 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
-    let
-      system = "x86_64-linux";
-    in {
-      nixosConfigurations.simos = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./hosts/simos/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users."sheva" = import ./hosts/simos/home.nix;
-          }
-        ];
-      };
+  outputs = { self, nixpkgs, home-manager, ... }: {
+    nixosConfigurations.simos = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux"; # Replace with your system architecture
+      modules = [
+        ./hosts/simos/configuration.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.sheva = import ./hosts/simos/home.nix;
+        }
+      ];
     };
+  };
 }
