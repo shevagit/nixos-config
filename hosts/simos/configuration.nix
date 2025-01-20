@@ -92,6 +92,10 @@
     ];
   };
 
+  # move
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  
   # Install firefox.
   programs.firefox.enable = true;
 
