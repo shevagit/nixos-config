@@ -4,5 +4,6 @@
         ./fzf.nix
         ./zsh.nix
         ./starship.nix
+        ./terminal.nix
     ];
 }

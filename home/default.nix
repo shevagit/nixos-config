@@ -34,6 +34,7 @@
     vscode
     wezterm
     alacritty
+    terminator
     neofetch
     nnn # terminal file manager
 
