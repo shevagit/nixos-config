@@ -28,7 +28,7 @@
         untracked = "🤷";
         stashed = "📦";
         modified = "📝";
-        staged = "[++($${count})](green)";
+        #staged = "[++($${count})](green)";
         renamed = "👅";
         deleted = "🗑";
       };
