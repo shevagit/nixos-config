@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/common/bluetooth.nix
+      ../../modules/common/virt-manager.nix
       ../../modules/hardware/nvidia.nix
     ];
 
@@ -98,6 +99,7 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
+    zsh
   ];
 
   # flakes
