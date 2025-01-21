@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/common/bluetooth.nix
     ];
 
   # Bootloader.
@@ -83,18 +84,7 @@
     isNormalUser = true;
     description = "andreas sheva";
     extraGroups = [ "networkmanager" "wheel" "sudo" ];
-    packages = with pkgs; [
-      google-chrome
-      git
-      vscode
-      wezterm
-      alacritty
-    ];
   };
-
-  # move
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
   
   # Install firefox.
   programs.firefox.enable = true;
