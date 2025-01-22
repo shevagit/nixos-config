@@ -8,6 +8,9 @@
     shellAliases = {
       ll = "ls -l";
       k  = "kubectl";
+      kgp = "kubectl get pods";
+      kns = "kubens";
+      kctx = "kubectx";
       du = "du -hsc";
     };
 
@@ -15,5 +18,9 @@
     history.ignoreAllDups = true;
     history.path = "$HOME/.zsh_history";
     history.ignorePatterns = ["rm *" "pkill *" "cp *"];
+    # Add paths in PATH
+    initExtra = ''
+      export PATH="$HOME/bin:$PATH"
+    '';
   };
 }
