@@ -86,8 +86,12 @@
     isNormalUser = true;
     description = "andreas sheva";
     extraGroups = [ "networkmanager" "wheel" "sudo" ];
+    shell = pkgs.zsh;
   };
   
+  # zsh is enabled in home manager, but is not recognized if I don't add it here
+  programs.zsh.enable = true;
+
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -99,7 +103,7 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    zsh
+    docker
   ];
 
   # flakes
