@@ -27,8 +27,6 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    # here is some command line tools I use frequently
-    # feel free to add your own or remove some of them
     google-chrome
     git
     vscode
@@ -37,6 +35,8 @@
     terminator
     neofetch
     nnn # terminal file manager
+    mongodb-compass
+    mongosh
 
     # archives
     zip
