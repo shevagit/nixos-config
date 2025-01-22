@@ -9,12 +9,6 @@
       init = {
         defaultBranch = "main";
       };
-      gpg = {
-        format = "ssh";
-      };
-      user = {
-        signingkey = "~/.ssh/nixsimos-github.pub";
-      };
       "includeIf.gitdir:/home/sheva/githubdir/" = {
         path = "~/.gitconfig-github";
       };
@@ -35,12 +29,14 @@
             sshCommand = ssh -i ~/.ssh/nixsimos-github.pub
       '';
     };
-
     ".gitconfig-gitlab" = {
       text = ''
         [user]
             name = Andreas Sevastos
             email = sheva@learnworlds.com
+            signingkey = ~/.ssh/ed25519_gitlab.pub
+        [gpg]
+            format = ssh
         [core]
             sshCommand = ssh -i ~/.ssh/ed25519_gitlab.pub
       '';
