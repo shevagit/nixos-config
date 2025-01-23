@@ -93,7 +93,7 @@
   programs.zsh.enable = true;
 
   # hyprland as well
-  programs.hyprland.enable = true;
+  programs.hyprland.enable = false;
   
   # Install firefox.
   programs.firefox.enable = true;
