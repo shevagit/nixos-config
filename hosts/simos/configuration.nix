@@ -92,6 +92,9 @@
   # zsh is enabled in home manager, but is not recognized if I don't add it here
   programs.zsh.enable = true;
 
+  # hyprland as well
+  programs.hyprland.enable = true;
+  
   # Install firefox.
   programs.firefox.enable = true;
 

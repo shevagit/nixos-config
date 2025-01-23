@@ -98,6 +98,16 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    # hyprland
+    hyprland
+    swaybg               # For setting wallpapers
+    waybar               # Status bar
+    wl-clipboard         # Clipboard utilities
+    grim                 # Screenshot utility
+    slurp                # Area selection for screenshots
+    wofi                 # Application launcher
+    xdg-desktop-portal-wlr # Wayland app support
   ];
 
   # alacritty - a cross-platform, GPU-accelerated terminal emulator

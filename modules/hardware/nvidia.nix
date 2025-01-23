@@ -8,6 +8,12 @@
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
 
+  # Set environment variables for Wayland
+  environment.variables = {
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";       # Enable NVIDIA GLX for Wayland
+    WLR_NO_HARDWARE_CURSORS = "1";              # Disable hardware cursors to avoid glitches
+  };
+
   hardware.nvidia = {
 
     # Modesetting is required.

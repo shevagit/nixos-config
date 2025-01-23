@@ -12,6 +12,8 @@
       kns = "kubens";
       kctx = "kubectx";
       du = "du -hsc";
+      cdnix = "cd ~/githubdir/nixos-config";
+      cdlwgit = "cd ~/learnworlds/gitlabdir";
     };
 
     history.size = 10000;
