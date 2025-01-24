@@ -6,7 +6,7 @@
     syntaxHighlighting.enable = true;
 
     shellAliases = {
-      ll = "ls -l";
+      ll = "ls -lash";
       k  = "kubectl";
       kgp = "kubectl get pods";
       kns = "kubens";
