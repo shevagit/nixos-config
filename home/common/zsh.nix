@@ -23,6 +23,10 @@
     # Add paths in PATH
     initExtra = ''
       export PATH="$HOME/bin:$PATH"
+
+      # Bind Ctrl + Left Arrow to backward-word and Ctrl + Right Arrow to forward-word
+      bindkey "^[[1;5D" backward-word
+      bindkey "^[[1;5C" forward-word
     '';
   };
 }
