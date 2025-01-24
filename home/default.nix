@@ -23,6 +23,7 @@
     nnn # terminal file manager
     mongodb-compass
     mongosh
+    insomnia
 
     # archives
     zip
