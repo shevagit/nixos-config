@@ -11,6 +11,7 @@
       ../../modules/common/bluetooth.nix
       ../../modules/common/virt-manager.nix
       ../../modules/hardware/nvidia.nix
+      ../../modules/common/hyprland.nix
     ];
 
   # Bootloader.
@@ -20,10 +21,6 @@
   boot.initrd.luks.devices."luks-71011c21-d4ea-4506-b3f2-a909a67ba871".device = "/dev/disk/by-uuid/71011c21-d4ea-4506-b3f2-a909a67ba871";
   networking.hostName = "simos";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -91,10 +88,7 @@
   
   # zsh is enabled in home manager, but is not recognized if I don't add it here
   programs.zsh.enable = true;
-
-  # hyprland as well
-  programs.hyprland.enable = false;
-  
+ 
   # Install firefox.
   programs.firefox.enable = true;
 

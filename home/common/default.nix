@@ -8,5 +8,6 @@
         ./go.nix
         ./kube.nix
         ./docker.nix
+        ./hyprland.nix
     ];
 }
