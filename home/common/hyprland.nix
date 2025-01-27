@@ -20,23 +20,22 @@
       # 6 -> flipped + 180 degrees
       # 7 -> flipped + 270 degrees
       "DP-3,2560x1440@164,0x0,1"
-      "DP-2,1080x1920@60,2560x0,1,transform,1"
+      "DP-2,1080x1920@60,2560x0,1,transform,3"
     ];
-
 
       # exec-once = "swaybg -o DP-3 -i ~/wallpapers/landscape.jpg -m fill";
       # exec-once = "swaybg -o DP-2 -i ~/wallpapers/portrait.jpg -m fill";
       bind = [
         "$mod, Return, exec, terminator"
         "$mod, d, exec, wofi --show drun"
-        "$mod, SHIFT, r, exec, hyprctl reload"
-        "$mod, SHIFT, e, exec, hyprctl dispatch exit 0"
+        #"$mod SHIFT, r exec, hyprctl reload"
+        "$mod SHIFT, e, exec, hyprctl dispatch exit 0"
       ];
       env = [
         "WLR_NO_HARDWARE_CURSORS=1"
       ];
 
-      sensitivity = "1.0";
+#      sensitivity = "1.0";
     };
   };
   home.packages = with pkgs; [
