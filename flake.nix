@@ -28,8 +28,6 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-
-            # TODO replace ryan with your own username
             home-manager.users.sheva = import ./hosts/simos/home.nix;
 
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
