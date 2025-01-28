@@ -12,6 +12,7 @@
       ../../modules/common/virt-manager.nix
       ../../modules/hardware/nvidia.nix
       ../../modules/common/hyprland.nix
+      ../../modules/common/hyprland-extras.nix
     ];
 
   # Bootloader.

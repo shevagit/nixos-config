@@ -8,6 +8,7 @@
     enable = true;
     settings = {
       "$mod" = "SUPER";
+      exec-once = "waybar";
     monitor = [
       # cheatsheet: "monitor = name, resolution, position, scale"
       # transform: 

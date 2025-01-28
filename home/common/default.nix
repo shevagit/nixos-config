@@ -9,5 +9,6 @@
         ./kube.nix
         ./docker.nix
         ./hyprland.nix
+        # ./hyprland-extras.nix
     ];
 }
