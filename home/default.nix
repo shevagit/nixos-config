@@ -101,6 +101,20 @@
       selection.save_to_clipboard = true;
     };
   };
+
+
+  programs.vscode.extensions = with pkgs.vscode-extensions; [
+    bbenoist.nix
+    eamodio.gitlens
+    github.copilot
+    github.copilot-chat
+    golang.go
+    mechatroner.rainbow-csv
+    ms-vscode.makefile-tools
+    hashicorp.terraform
+    4ops.terraform
+  ];
+
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new home Manager release introduces backwards
