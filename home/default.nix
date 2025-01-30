@@ -24,6 +24,7 @@
     mongodb-compass
     mongosh
     insomnia
+    terraform
 
     # archives
     zip
