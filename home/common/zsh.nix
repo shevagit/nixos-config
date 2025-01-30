@@ -14,6 +14,7 @@
       du = "du -hsc";
       cdnix = "cd ~/githubdir/nixos-config";
       cdlwgit = "cd ~/learnworlds/gitlabdir";
+      rm = "rm -i";
     };
 
     history.size = 10000;
