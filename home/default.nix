@@ -26,6 +26,9 @@
     insomnia
     terraform
 
+    # xrhsima
+    openrgb-with-all-plugins
+    
     # archives
     zip
     xz

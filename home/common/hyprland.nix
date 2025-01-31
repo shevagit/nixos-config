@@ -20,8 +20,8 @@
       # 5 -> flipped + 90 degrees
       # 6 -> flipped + 180 degrees
       # 7 -> flipped + 270 degrees
-      "DP-3,2560x1440@164,0x0,1"
-      "DP-2,1080x1920@60,2560x0,1,transform,3"
+      "DP-1,2560x1440@164,0x0,1"
+      "DP-2,1080x1920@60,2560x0,1"
     ];
 
       # exec-once = "swaybg -o DP-3 -i ~/wallpapers/landscape.jpg -m fill";
