@@ -29,8 +29,34 @@ home-manager.users.sheva = {
         "memory": {
           "format": "RAM: {used} / {total} GB"
         }
-      }
-    '';
+        "bluetooth": {
+        // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+        // "format": "󰂯 {status}",
+        // format-* handles every state, so default format is not necessary.
+        "format-on": "󰂯",
+        "format-off": "󰂲",
+        "format-disabled": "", // an empty format will hide the module
+        "format-connected": "󰂱 {num_connections}",
+        // "tooltip-format": "{controller_alias}\t{controller_address}",
+        // "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+        "tooltip-format-connected": "{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+        },
+        "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        // "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-wifi": "{icon}",
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        // "format-ethernet": "{ipaddr}/{cidr} 󰈀",
+        "format-ethernet": "󰈀",
+        "format-linked": "{ifname} 󰈀",
+        "format-disconnected": "󰤫",
+        // "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "on-click": "~/.config/rofi/rofi-wifi-menu"
+        },
+        }
+        '';
 
     # Define Waybar styling
     home.file.".config/waybar/style.css".text = ''
