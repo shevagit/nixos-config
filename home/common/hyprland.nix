@@ -90,8 +90,8 @@
         "CONTROL_ALT, L, exec, swaylock"
 
         # Move/resize windows with mod + LMB/RMB and dragging
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindowpixel"
+        # "$mod, mouse:272, movewindow"
+        # "$mod, mouse:273, resizewindowpixel"
 
         "$mod, Print, exec, grim -g \"$(slurp)\""
 
