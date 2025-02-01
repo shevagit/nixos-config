@@ -24,7 +24,10 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    settings.connectivity.uri = "http://nmcheck.gnome.org/check_network_status.txt";
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Athens";
