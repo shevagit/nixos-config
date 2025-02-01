@@ -57,7 +57,7 @@ home-manager.users.sheva = {
 
       #workspaces button.active {
         background-color: #88c0d0;
-        color: #2e3440;
+        color: #ff0000;
       }
     '';
 
