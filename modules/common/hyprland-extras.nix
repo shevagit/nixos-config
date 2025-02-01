@@ -1,21 +1,17 @@
-
 {
-home-manager.users.sheva = {
-  programs.waybar = {
-    enable = true;
-  };
+  home-manager.users.sheva = {
+    programs.waybar = {
+      enable = true;
+    };
 
-  # Define Waybar configuration
-  home.file.".config/waybar/config.jsonc".text = ''
+    # Define Waybar configuration
+    home.file.".config/waybar/config.jsonc".text = ''
     {
       "layer": "top",
       "position": "top",
-      "modules-left": ["workspaces"],
+      "modules-left": ["custom/workspaces"],
       "modules-center": ["clock"],
       "modules-right": ["cpu", "memory", "battery"],
-      "workspaces": {
-        "hyprland": true
-      },
       "clock": {
         "format": "{:%A, %d %B %Y, %H:%M}"
       },
@@ -27,12 +23,16 @@ home-manager.users.sheva = {
       },
       "memory": {
         "format": "RAM: {used} / {total} GB"
+      },
+      "custom/workspaces": {
+        "exec": "~/.config/waybar/hyprland-workspaces.sh",
+        "interval": 1
       }
     }
-  '';
+    '';
 
-  # Define Waybar styling
-  home.file.".config/waybar/style.css".text = ''
+    # Define Waybar styling
+    home.file.".config/waybar/style.css".text = ''
     * {
       font-family: "JetBrains Mono", monospace;
       font-size: 12px;
@@ -45,19 +45,29 @@ home-manager.users.sheva = {
       padding: 0 10px;
     }
 
-    #workspaces button {
-      border: none;
-      padding: 5px;
-      margin: 2px;
-      background-color: #2e3440;
-      color: #ffffff;
-      border-radius: 5px;
+    #custom-workspaces {
+      padding: 0 5px;
+      font-weight: bold;
     }
+    '';
 
-    #workspaces button.focused {
-      background-color: #88c0d0;
-      color: #2e3440;
-    }
-  '';
-};
+    home.file.".config/waybar/hyprland-workspaces.sh".text = ''
+    #!/usr/bin/env bash
+    # This script outputs the current workspaces for Hyprland in a format suitable for Waybar.
+    # It uses hyprctl to get workspace info in JSON format and jq to process it.
+
+    # Get JSON output of workspaces
+    json=$(hyprctl workspaces -j)
+
+    # Process each workspace:
+    #   • Print the workspace name.
+    #   • Mark the active workspace with an asterisk (you can change this indicator as you like).
+    workspaces=$(echo "$json" | jq -r '.[] | if .active then "\(.name)*" else "\(.name)" end' | tr '\n' ' ')
+
+    # Output the workspaces line (trim any trailing space)
+    echo "$workspaces" | sed 's/[[:space:]]*$//'
+    '';
+    home.file.".config/waybar/hyprland-workspaces.sh".executable = true;
+
+  };
 }

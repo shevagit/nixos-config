@@ -62,6 +62,7 @@
     gawk
     zstd
     gnupg
+    flameshot
 
     # nix related
     #
