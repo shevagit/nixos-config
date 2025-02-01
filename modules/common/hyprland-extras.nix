@@ -1,54 +1,64 @@
+
 {
-  home-manager.users.sheva = {
-    programs.waybar = {
-      enable = true;
-    };
+home-manager.users.sheva = {
+  programs.waybar = {
+    enable = true;
+  };
 
     # Define Waybar configuration
     home.file.".config/waybar/config.jsonc".text = ''
-    {
-      "layer": "top",
-      "position": "top",
-      "modules-left": ["custom/workspaces"],
-      "modules-center": ["clock"],
-      "modules-right": ["cpu", "memory", "battery"],
-      "clock": {
-        "format": "{:%A, %d %B %Y, %H:%M}"
-      },
-      "battery": {
-        "format": "{percent}%"
-      },
-      "cpu": {
-        "format": "CPU: {usage}%"
-      },
-      "memory": {
-        "format": "RAM: {used} / {total} GB"
-      },
-      "custom/workspaces": {
-        "exec": "~/.config/waybar/hyprland-workspaces.sh",
-        "interval": 1
+      {
+        "layer": "top",
+        "position": "top",
+        "modules-left": ["hyprland/workspaces"],
+        "modules-center": ["clock", "hyprland/window"],
+        "modules-right": ["cpu", "memory", "battery"],
+        },
+        "hyprland/window": {
+          "separate-outputs": true
+        },
+        "clock": {
+          "format": "{:%A, %d %B %Y, %H:%M}"
+        },
+        "battery": {
+          "format": "{percent}%"
+        },
+        "cpu": {
+          "format": "CPU: {usage}%"
+        },
+        "memory": {
+          "format": "RAM: {used} / {total} GB"
+        }
       }
-    }
     '';
 
     # Define Waybar styling
     home.file.".config/waybar/style.css".text = ''
-    * {
-      font-family: "JetBrains Mono", monospace;
-      font-size: 12px;
-      color: #ffffff;
-      background: #1e1e2e;
-    }
+      * {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: #ffffff;
+        background: #1e1e2e;
+      }
 
-    #clock {
-      font-size: 14px;
-      padding: 0 10px;
-    }
+      #clock {
+        font-size: 14px;
+        padding: 0 10px;
+      }
 
-    #custom-workspaces {
-      padding: 0 5px;
-      font-weight: bold;
-    }
+      #workspaces button {
+        border: none;
+        padding: 5px;
+        margin: 2px;
+        background-color: #2e3440;
+        color: #ffffff;
+        border-radius: 5px;
+      }
+
+      #workspaces button.active {
+        background-color: #88c0d0;
+        color: #2e3440;
+      }
     '';
 
     home.file.".config/waybar/hyprland-workspaces.sh".text = ''
