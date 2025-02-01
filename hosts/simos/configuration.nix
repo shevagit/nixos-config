@@ -26,7 +26,9 @@
   # Enable networking
   networking.networkmanager = {
     enable = true;
-    settings.connectivity.uri = "http://nmcheck.gnome.org/check_network_status.txt";
+    settings = {
+      connectivity.uri = "http://nmcheck.gnome.org/check_network_status.txt";
+    };
   };
 
   # Set your time zone.
