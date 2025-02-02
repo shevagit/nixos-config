@@ -10,7 +10,7 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode"],
+        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome"],
         "modules-center": ["hyprland/window"],
         "modules-right": ["clock", "cpu", "memory", "battery", "network", "pulseaudio", "hyprland/language"],
 
