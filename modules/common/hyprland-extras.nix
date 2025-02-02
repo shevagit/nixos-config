@@ -38,7 +38,7 @@
           "interface": "eno2",
           "format-wifi": "{icon}",
           "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-          "format-ethernet": "󰈀",
+          "format-ethernet": "🌐",
           "format-linked": "{ifname} 󰈀",
           "format-disconnected": "󰤫",
           "interval": 1,
