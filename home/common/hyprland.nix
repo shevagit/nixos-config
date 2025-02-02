@@ -97,6 +97,11 @@
 
       ];
 
+      input = {
+        "kb_layout" = "us,gr";
+        "kb_options" = "grp:win_space_toggle";
+      };
+
       env = [
         "WLR_NO_HARDWARE_CURSORS=1"
       ];

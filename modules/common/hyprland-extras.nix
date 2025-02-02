@@ -11,9 +11,14 @@
         "position": "top",
         "modules-left": ["hyprland/workspaces", "custom/launcher"],
         "modules-center": ["clock", "hyprland/window"],
-        "modules-right": ["cpu", "memory", "battery", "network", "pulseaudio", "custom/language"],
+        "modules-right": ["cpu", "memory", "battery", "network", "pulseaudio", "hyprland/language"],
         "hyprland/window": {
           "separate-outputs": true
+        },
+        "hyprland/language": {
+          "format": "{}",
+          "format-en": "🇺🇸",
+          "format-gr": "GR"
         },
         "clock": {
           "format": "{:%A, %d %B %Y, %H:%M}"
@@ -60,14 +65,10 @@
           },
           "on-click": "pavucontrol"
         },
-        "custom/language": {
-          "exec": "~/.config/waybar/language.sh",
-          "interval": 1,
-          "format": "{}"
-        },
         "custom/launcher": {
           "exec": "~/.config/waybar/launcher.sh",
-          "format": "{}"
+          "format": "{}",
+          "on-click": "rofi -show drun"
         }
       }
     '';
