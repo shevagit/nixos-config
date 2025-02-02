@@ -17,3 +17,12 @@ not: when enabling extensions/hyprland the cursor theme is changed, reset with:
 ```
 dconf reset /org/gnome/desktop/interface/cursor-theme
 ```
+
+### Cleanup old generations
+#### Using the script 
+
+```
+./trim-generations.sh 5 5 home-manager
+```
+
+Then `./trim-generations.sh 5 5 home-manager`
