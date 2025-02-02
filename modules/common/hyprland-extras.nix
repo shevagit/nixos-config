@@ -43,7 +43,7 @@
           "format-disconnected": "󰤫",
           "interval": 1,
           "tooltip-format": "{ifname} via {gwaddr}",
-          "on-click": "~/.config/rofi/rofi-wifi-menu"
+          "on-click": "alacritty -e nmtui"
         },
         "pulseaudio": {
           "format": "{icon} {volume}%  {format_source}",
