@@ -10,7 +10,7 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["hyprland/workspaces", "custom/launcher"],
+        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode"],
         "modules-center": ["hyprland/window"],
         "modules-right": ["clock", "cpu", "memory", "battery", "network", "pulseaudio", "hyprland/language"],
 
@@ -20,7 +20,8 @@
         "hyprland/language": {
           "format": "{}",
           "format-en": "🇺🇸",
-          "format-gr": "🇬🇷"
+          "format-gr": "🇬🇷",
+          "on-click": "hyprctl switchxkblayout current next"
         },
         "clock": {
           "format": "{:%A, %d %B %Y, %H:%M}"
@@ -67,10 +68,18 @@
           },
           "on-click": "pavucontrol"
         },
+
         "custom/launcher": {
           "exec": "~/.config/waybar/launcher.sh",
           "format": "{}",
           "on-click": "rofi -show drun"
+        },
+
+        "custom/vscode": {
+          "exec": "echo ''",         // Outputs the Visual Studio Code icon.
+          "interval": 600,           // The icon is static; update every 10 minutes.
+          "on-click": "code",        // Runs the command to open VS Code when clicked.
+          "tooltip": "Launch Visual Studio Code"
         }
       }
     '';
@@ -120,6 +129,10 @@
       }
 
       #custom-launcher {
+        padding: 0 10px;
+      }
+
+      #custom-vscode {
         padding: 0 10px;
       }
 
