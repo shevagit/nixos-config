@@ -18,7 +18,7 @@
         "hyprland/language": {
           "format": "{}",
           "format-en": "🇺🇸",
-          "format-gr": "GR"
+          "format-gr": "🇬🇷"
         },
         "clock": {
           "format": "{:%A, %d %B %Y, %H:%M}"
