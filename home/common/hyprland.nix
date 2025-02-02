@@ -103,6 +103,7 @@
     };
   };
 
+  # required packages for the hyprland configuration
   home.packages = with pkgs; [
     swaybg               # For setting wallpapers
     waybar               # Status bar
@@ -110,8 +111,11 @@
     grim                 # Screenshot utility
     slurp                # Area selection for screenshots
     wofi                 # Application launcher
+    rofi-wayland         # a better wofi for wayland
     nwg-displays         # GUI for display management for Sway or Hyprland
     swaylock
+    pavucontrol          # PulseAudio volume control
+    font-awesome
   ];
 
   home.file = {
