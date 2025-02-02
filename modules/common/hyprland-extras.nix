@@ -1,19 +1,17 @@
-
 {
-home-manager.users.sheva = {
-  programs.waybar = {
-    enable = true;
-  };
+  home-manager.users.sheva = {
+    programs.waybar = {
+      enable = true;
+    };
 
     # Define Waybar configuration
     home.file.".config/waybar/config.jsonc".text = ''
       {
         "layer": "top",
         "position": "top",
-        "modules-left": ["hyprland/workspaces"],
+        "modules-left": ["hyprland/workspaces", "custom/launcher"],
         "modules-center": ["clock", "hyprland/window"],
-        "modules-right": ["cpu", "memory", "battery"],
-        },
+        "modules-right": ["cpu", "memory", "battery", "network", "pulseaudio", "custom/language"],
         "hyprland/window": {
           "separate-outputs": true
         },
@@ -28,40 +26,56 @@ home-manager.users.sheva = {
         },
         "memory": {
           "format": "RAM: {used} / {total} GB"
-        }
-        "bluetooth": {
-        // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
-        // "format": "󰂯 {status}",
-        // format-* handles every state, so default format is not necessary.
-        "format-on": "󰂯",
-        "format-off": "󰂲",
-        "format-disabled": "", // an empty format will hide the module
-        "format-connected": "󰂱 {num_connections}",
-        // "tooltip-format": "{controller_alias}\t{controller_address}",
-        // "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-        "tooltip-format-connected": "{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
         },
         "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        // "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-wifi": "{icon}",
-        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-        // "format-ethernet": "{ipaddr}/{cidr} 󰈀",
-        "format-ethernet": "󰈀",
-        "format-linked": "{ifname} 󰈀",
-        "format-disconnected": "󰤫",
-        // "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "tooltip-format": "{ifname} via {gwaddr}",
-        "on-click": "~/.config/rofi/rofi-wifi-menu"
+          "interface": "eno2",
+          "format-wifi": "{icon}",
+          "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+          "format-ethernet": "󰈀",
+          "format-linked": "{ifname} 󰈀",
+          "format-disconnected": "󰤫",
+          "interval": 1,
+          "tooltip-format": "{ifname} via {gwaddr}",
+          "on-click": "~/.config/rofi/rofi-wifi-menu"
         },
+        "pulseaudio": {
+          "format": "{icon} {volume}%  {format_source}",
+          "format-bluetooth": "{icon} {volume}%  {format_source}",
+          "format-bluetooth-muted": " {icon}  {format_source}",
+          "format-muted": " {format_source}",
+          "format-source": " {volume}%",
+          "format-source-muted": "",
+          "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+              "",
+              "",
+              ""
+            ]
+          },
+          "on-click": "pavucontrol"
+        },
+        "custom/language": {
+          "exec": "~/.config/waybar/language.sh",
+          "interval": 1,
+          "format": "{}"
+        },
+        "custom/launcher": {
+          "exec": "~/.config/waybar/launcher.sh",
+          "format": "{}"
         }
-        '';
+      }
+    '';
 
     # Define Waybar styling
     home.file.".config/waybar/style.css".text = ''
       * {
-        font-family: "JetBrains Mono", monospace;
+        font-family: "JetBrains Mono", "Font Awesome", monospace;
         font-size: 12px;
         color: #ffffff;
         background: #1e1e2e;
@@ -85,25 +99,39 @@ home-manager.users.sheva = {
         background-color: #88c0d0;
         color: #ff0000;
       }
+
+      #custom-launcher {
+        padding: 0 10px;
+      }
+
+      #custom-language {
+        padding: 0 10px;
+      }
     '';
 
-    home.file.".config/waybar/hyprland-workspaces.sh".text = ''
-    #!/usr/bin/env bash
-    # This script outputs the current workspaces for Hyprland in a format suitable for Waybar.
-    # It uses hyprctl to get workspace info in JSON format and jq to process it.
+    # Script for language settings
+    home.file.".config/waybar/language.sh" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        LAYOUT=$(hyprctl devices | grep "active keymap:" | uniq | sed 's/.*active keymap: //')
+        echo " $LAYOUT"
+        while true; do
+          sleep 1
+        done
+      '';
+    };
 
-    # Get JSON output of workspaces
-    json=$(hyprctl workspaces -j)
-
-    # Process each workspace:
-    #   • Print the workspace name.
-    #   • Mark the active workspace with an asterisk (you can change this indicator as you like).
-    workspaces=$(echo "$json" | jq -r '.[] | if .active then "\(.name)*" else "\(.name)" end' | tr '\n' ' ')
-
-    # Output the workspaces line (trim any trailing space)
-    echo "$workspaces" | sed 's/[[:space:]]*$//'
-    '';
-    home.file.".config/waybar/hyprland-workspaces.sh".executable = true;
-
+    # Script for app launcher
+    home.file.".config/waybar/launcher.sh" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        echo ""
+        while true; do
+          sleep 1
+        done
+      '';
+    };
   };
 }
