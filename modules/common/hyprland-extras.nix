@@ -76,10 +76,17 @@
         },
 
         "custom/vscode": {
-          "exec": "echo ''",         // Outputs the Visual Studio Code icon.
+          "exec": "echo 'vscode'",         // Outputs the Visual Studio Code icon.
           "interval": 600,           // The icon is static; update every 10 minutes.
           "on-click": "code",        // Runs the command to open VS Code when clicked.
           "tooltip": "Launch Visual Studio Code"
+        },
+
+        "custom/chrome": {
+          "exec": "echo 'chrome'",         // Outputs the Visual Studio Code icon.
+          "interval": 600,           // The icon is static; update every 10 minutes.
+          "on-click": "google-chrome-stable",        // Runs the command to open VS Code when clicked.
+          "tooltip": "Launch Chrome"
         }
       }
     '';
@@ -133,6 +140,10 @@
       }
 
       #custom-vscode {
+        padding: 0 10px;
+      }
+
+      #custom-chrome {
         padding: 0 10px;
       }
 
