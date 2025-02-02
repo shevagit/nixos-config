@@ -11,8 +11,8 @@
         "position": "top",
 
         "modules-left": ["hyprland/workspaces", "custom/launcher"],
-        "modules-center": ["clock", "hyprland/window"],
-        "modules-right": ["cpu", "memory", "battery", "network", "pulseaudio", "hyprland/language"],
+        "modules-center": ["hyprland/window"],
+        "modules-right": ["clock", "cpu", "memory", "battery", "network", "pulseaudio", "hyprland/language"],
 
         "hyprland/window": {
           "separate-outputs": true
