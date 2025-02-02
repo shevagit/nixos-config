@@ -163,4 +163,19 @@
     '';
   };
     home.file.".config/hyprland/scripts/wofi-power-menu.sh".executable = true;
+
+  programs.keychain = {
+    enable = true;
+    agents = [
+      "ssh"
+    ];
+    keys = [
+      "nixsimos-github"
+      "ed25519_gitlab"
+    ];
+    extraFlags = [
+      "--quiet"
+      "--timeout 120"
+    ];
+  };
 }
