@@ -9,9 +9,11 @@
       {
         "layer": "top",
         "position": "top",
+
         "modules-left": ["hyprland/workspaces", "custom/launcher"],
         "modules-center": ["clock", "hyprland/window"],
         "modules-right": ["cpu", "memory", "battery", "network", "pulseaudio", "hyprland/language"],
+
         "hyprland/window": {
           "separate-outputs": true
         },
@@ -84,6 +86,22 @@
 
       #clock {
         font-size: 14px;
+        padding: 0 10px;
+      }
+
+      #cpu {
+        padding: 0 10px;
+      }
+
+      #memory {
+        padding: 0 10px;
+      }
+
+      #network {
+        padding: 0 10px;
+      }
+
+      #pulseadio {
         padding: 0 10px;
       }
 
