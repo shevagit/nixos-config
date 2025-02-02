@@ -86,7 +86,7 @@
 
       #clock {
         font-size: 14px;
-        padding: 0 10px;
+        padding: 0 50px;
       }
 
       #cpu {
