@@ -40,7 +40,7 @@
         "$mod, q, killactive,"
 
         "CONTROL, Space, togglefloating,"
-        
+
         "$mod, F, fullscreen,"
 
         # Move focus
@@ -49,10 +49,15 @@
         "$mod, K, movefocus, u"
         "$mod, J, movefocus, d"
 
+        # move window using keys
         "$mod SHIFT, H, movewindow, l"
         "$mod SHIFT, L, movewindow, r"
         "$mod SHIFT, K, movewindow, u"
         "$mod SHIFT, J, movewindow, d"
+        "$mod SHIFT, left, movewindow, l"
+        "$mod SHIFT, right, movewindow, r"
+        "$mod SHIFT, up, movewindow, u"
+        "$mod SHIFT, down, movewindow, d"
 
         # Switch workspaces with mod + [0-9]
         "$mod, 1, workspace, 1"
