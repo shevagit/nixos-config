@@ -175,6 +175,7 @@
     keys = [
       "nixsimos-github"
       "ed25519_gitlab"
+      "google-compute-engine"
     ];
     extraFlags = [
       "--quiet"
