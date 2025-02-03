@@ -85,7 +85,7 @@
         "custom/chrome": {
           "exec": "echo 'chrome'",
           "interval": 600,
-          "on-click": "google-chrome-stable", when clicked.
+          "on-click": "google-chrome-stable",
           "tooltip": "Launch Chrome"
         },
       
@@ -151,7 +151,7 @@
       }
 
       #custom-chrome {
-        padding: 0 10px;
+        padding: 0 15px;
       }
 
       #custom-language {
