@@ -10,7 +10,7 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome"],
+        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia"],
         "modules-center": ["hyprland/window"],
         "modules-right": ["clock", "cpu", "memory", "battery", "network", "pulseaudio", "hyprland/language"],
 
@@ -76,17 +76,24 @@
         },
 
         "custom/vscode": {
-          "exec": "echo 'vscode'",         // Outputs the Visual Studio Code icon.
-          "interval": 600,           // The icon is static; update every 10 minutes.
-          "on-click": "code",        // Runs the command to open VS Code when clicked.
+          "exec": "echo 'vscode'",
+          "interval": 600,
+          "on-click": "code",
           "tooltip": "Launch Visual Studio Code"
         },
 
         "custom/chrome": {
-          "exec": "echo 'chrome'",         // Outputs the Visual Studio Code icon.
-          "interval": 600,           // The icon is static; update every 10 minutes.
-          "on-click": "google-chrome-stable",        // Runs the command to open VS Code when clicked.
+          "exec": "echo 'chrome'",
+          "interval": 600,
+          "on-click": "google-chrome-stable", when clicked.
           "tooltip": "Launch Chrome"
+        },
+      
+        "custom/insomnia": {
+          "exec": "echo 'insomnia'",
+          "interval": 600,
+          "on-click": "insomnia",
+          "tooltip": "Launch Insomnia"
         }
       }
     '';
@@ -150,6 +157,11 @@
       #custom-language {
         padding: 0 10px;
       }
+
+      #custom-insomnia {
+        padding: 0 10px;
+      }
+      
     '';
 
     # Script for language settings
