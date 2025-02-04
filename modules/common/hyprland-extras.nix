@@ -66,7 +66,9 @@
               ""
             ]
           },
-          "on-click": "pavucontrol"
+          "on-click": "pavucontrol",
+          "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+          "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
         },
 
         "custom/launcher": {

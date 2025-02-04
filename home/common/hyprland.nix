@@ -97,6 +97,11 @@
         # Screenshot
         "$mod, Print, exec, grim -g \"$(slurp)\""
 
+        # Volume control
+        ", XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        ", XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
+        ", XF86AudioMute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
+
       ];
 
       bindm = [
@@ -128,6 +133,7 @@
     nwg-displays         # GUI for display management for Sway or Hyprland
     swaylock
     pavucontrol          # PulseAudio volume control
+    pulseaudio            # pactl for volume control
     font-awesome
   ];
 
