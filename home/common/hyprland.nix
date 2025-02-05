@@ -153,7 +153,7 @@
       case "$CHOICE" in
         "Lock")
           # Adjust the lock command if you use a different locker.
-          hyprctl dispatch exec swaylock
+          hyprlock
           ;;
         "Logout")
           # Exits the current Hyprland session.
@@ -188,5 +188,37 @@
       "--quiet"
       "--timeout 120"
     ];
+  };
+
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      general = {
+        hide_cursor = true;
+        no_fade_in = false;
+      };
+
+      background = [
+        {
+          path = "~/Pictures/hyprlock-wallpaper.jpeg";
+          blur_passes = 3;
+          blur_size = 5;
+        }
+      ];
+
+      input-field = [
+        {
+          monitor = "";
+          size = "250, 50";
+          outline_thickness = 2;
+          dots_size = 0.3;
+          dots_spacing = 0.2;
+          outer_color = "rgba(30, 30, 30, 0.8)";
+          inner_color = "rgba(0, 0, 0, 0.8)";
+          font_color = "rgb(255, 255, 255)";
+          fade_on_empty = false;
+        }
+      ];
+    };
   };
 }
