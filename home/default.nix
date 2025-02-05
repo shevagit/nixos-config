@@ -63,6 +63,7 @@
     zstd
     gnupg
     flameshot
+    blueman
 
     # nix related
     #

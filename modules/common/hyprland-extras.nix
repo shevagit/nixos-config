@@ -10,9 +10,9 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia"],
+        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "tray"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "cpu", "memory", "battery", "network", "pulseaudio", "hyprland/language"],
+        "modules-right": ["clock", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language"],
 
         "hyprland/window": {
           "separate-outputs": true
@@ -35,6 +35,10 @@
         "memory": {
           "format": "RAM: {used} / {total} GB"
         },
+        "tray": {
+          "spacing": 10
+        },
+
         "network": {
           "interface": "eno2",
           "format-wifi": "{icon}",
@@ -46,6 +50,7 @@
           "tooltip-format": "{ifname} via {gwaddr}",
           "on-click": "alacritty -e nmtui"
         },
+
         "pulseaudio": {
           "format": "{icon} {volume}%  {format_source}",
           "format-bluetooth": "{icon} {volume}%  {format_source}",
@@ -69,6 +74,14 @@
           "on-click": "pavucontrol",
           "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
           "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+        },
+
+        "bluetooth": {
+          "format": "{icon} {status}",
+          "format-connected": "󰂯 {num_connections}",
+          "format-disconnected": "󰂲 Off",
+          "tooltip": true,
+          "on-click": "env GDK_BACKEND=x11 blueman-manager"
         },
 
         "custom/launcher": {
