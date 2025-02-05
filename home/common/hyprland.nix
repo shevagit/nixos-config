@@ -133,8 +133,9 @@
     nwg-displays         # GUI for display management for Sway or Hyprland
     swaylock
     pavucontrol          # PulseAudio volume control
-    pulseaudio            # pactl for volume control
+    pulseaudio           # pactl for volume control
     font-awesome
+    hyprlock             # Lock screen for Hyprland
   ];
 
   home.file = {
