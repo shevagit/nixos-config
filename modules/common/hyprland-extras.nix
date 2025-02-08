@@ -10,7 +10,7 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "tray"],
+        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "tray", "wlr/taskbar"],
         "modules-center": ["hyprland/window"],
         "modules-right": ["clock", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language"],
 
@@ -23,20 +23,34 @@
           "format-gr": "🇬🇷",
           "on-click": "hyprctl switchxkblayout current next"
         },
+
         "clock": {
           "format": "{:%A, %d %B %Y, %H:%M}"
         },
+
         "battery": {
           "format": "{percent}%"
         },
+
         "cpu": {
           "format": "CPU: {usage}%"
         },
+
         "memory": {
           "format": "RAM: {used} / {total} GB"
         },
+
         "tray": {
           "spacing": 10
+        },
+
+        "wlr/taskbar": {
+          "format": "{icon}",
+          "icon-size": 14,
+          "icon-theme": "Numix-Circle",
+          "tooltip-format": "{title}",
+          "on-click": "activate",
+          "on-click-middle": "close"
         },
 
         "network": {
