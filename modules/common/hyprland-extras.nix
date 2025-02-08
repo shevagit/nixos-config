@@ -91,7 +91,7 @@
         },
 
         "bluetooth": {
-          "format": "{icon} {status}",
+          "format": " {status}",
           "format-connected": "󰂯 {num_connections}",
           "format-disconnected": "󰂲 Off",
           "tooltip": true,
