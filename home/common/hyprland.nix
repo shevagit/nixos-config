@@ -135,6 +135,7 @@
     pavucontrol          # PulseAudio volume control
     pulseaudio           # pactl for volume control
     font-awesome
+    nerdfonts
     hyprlock             # Lock screen for Hyprland
   ];
 
