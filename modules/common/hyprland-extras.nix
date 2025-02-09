@@ -10,9 +10,9 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "tray", "wlr/taskbar"],
+        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "wlr/taskbar"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language"],
+        "modules-right": ["clock", "tray", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language"],
 
         "hyprland/window": {
           "separate-outputs": true
