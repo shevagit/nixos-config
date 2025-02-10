@@ -37,6 +37,8 @@
             signingkey = ~/.ssh/ed25519_gitlab.pub
         [gpg]
             format = ssh
+        [commit]
+            gpgSign = true
         [core]
             sshCommand = ssh -i ~/.ssh/ed25519_gitlab.pub
       '';
