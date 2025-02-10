@@ -43,7 +43,7 @@
       bind = [
         # --- Actions ---
         "$mod, Return, exec, terminator"
-        "$mod, d, exec, wofi --show drun"
+        "$mod, d, exec, rofi -show drun -config ~/.config/rofi/launcher.rasi"
         #"$mod SHIFT, r exec, hyprctl reload"
 
         # Bind SUPER+p to the wofi power menu script.
