@@ -24,6 +24,20 @@
       "DP-2,1080x1920@60,2560x0,1"
     ];
 
+
+    workspace = [
+      "1, monitor:DP-1"
+      "2, monitor:DP-2"
+      "3, monitor:DP-1"
+      "4, monitor:DP-2"
+      "5, monitor:DP-1"
+      "6, monitor:DP-2"
+      "7, monitor:DP-1"
+      "8, monitor:DP-2"
+      "9, monitor:DP-1"
+      "10, monitor:DP-2"
+    ];
+
       # exec-once = "swaybg -o DP-3 -i ~/wallpapers/landscape.jpg -m fill";
       # exec-once = "swaybg -o DP-2 -i ~/wallpapers/portrait.jpg -m fill";
       bind = [
@@ -42,6 +56,10 @@
         "CONTROL, Space, togglefloating,"
 
         "$mod, F, fullscreen,"
+
+        # cycle through workspaces pairs
+        "$mod, mouse_down, workspace, r+1"
+        "$mod, mouse_up, workspace, r-1"
 
         # Move focus
         "$mod, H, movefocus, l"
@@ -82,10 +100,6 @@
         "$mod SHIFT, 8, movetoworkspace, 8"
         "$mod SHIFT, 9, movetoworkspace, 9"
         "$mod SHIFT, 0, movetoworkspace, 10"
-
-        # Scroll through existing workspaces with mod + scroll
-        "$mod, mouse_down, workspace, e+1"
-        "$mod, mouse_up, workspace, e-1"
 
         # next workspace on monitor
         "CONTROL_ALT, right, workspace, m+1"
@@ -174,6 +188,37 @@
     '';
   };
     home.file.".config/hyprland/scripts/wofi-power-menu.sh".executable = true;
+
+  home.file = {
+    ".config/hyprland/scripts/workspace-cycle.sh".text = ''
+      #!/bin/bash
+      # Define workspace groups for dual monitors
+      workspace_sets=(
+          "1 2"
+          "3 4"
+          "5 6"
+      )
+
+      # Get the current workspace number
+      current_ws=$(hyprctl activeworkspace | awk '{print $2}')
+
+      # Find the next set of workspaces
+      for i in "''${!workspace_sets[@]}"; do
+          if [[ " ''${workspace_sets[i]} " == *" $current_ws "* ]]; then
+              next_index=$(( (i + 1) % ''${#workspace_sets[@]} ))
+              next_workspaces=''${workspace_sets[$next_index]}
+              break
+          fi
+      done
+
+      # Switch both monitors to the new workspace set
+      for ws in $next_workspaces; do
+          hyprctl dispatch workspace $ws
+      done
+    '';
+  };
+    home.file.".config/hyprland/scripts/workspace-cycle.sh".executable = true;
+
 
   programs.keychain = {
     enable = true;
