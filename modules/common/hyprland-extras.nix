@@ -14,6 +14,11 @@
         "modules-center": ["hyprland/window"],
         "modules-right": ["clock", "tray", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language"],
 
+        "hyprland/workspaces": {
+          "on-scroll-down": "hyprctl dispatch workspace e+1",
+          "on-scroll-up": "hyprctl dispatch workspace e-1"
+        },
+
         "hyprland/window": {
           "separate-outputs": true
         },
