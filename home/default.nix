@@ -25,6 +25,7 @@
     mongosh
     insomnia
     terraform
+    gnome-keyring # required by mongodb-compass
 
     # xrhsima
     openrgb-with-all-plugins
