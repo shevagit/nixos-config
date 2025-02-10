@@ -28,6 +28,14 @@
       # Bind Ctrl + Left Arrow to backward-word and Ctrl + Right Arrow to forward-word
       bindkey "^[[1;5D" backward-word
       bindkey "^[[1;5C" forward-word
+      function getnixindexdb {
+        local _index="index-$(uname -m | sed 's/^arm64$/aarch64/')-$(uname | tr A-Z a-z)"
+        local _cache=~/.cache/nix-index
+        local _file=''${_cache}/files
+        test -d ''${_cache} || mkdir -p ''${_cache}
+        curl -s -L -R -o ''${_file} -z ''${_file} \
+          "https://github.com/Mic92/nix-index-database/releases/latest/download/''${_index}"
+      }
     '';
   };
 }

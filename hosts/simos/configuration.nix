@@ -108,6 +108,7 @@
     wget
     docker
     gnome-tweaks
+    comma
   ];
 
   # flakes
