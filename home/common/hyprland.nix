@@ -156,38 +156,54 @@
   home.file = {
     ".config/hyprland/scripts/wofi-power-menu.sh".text = ''
       #!/usr/bin/env bash
-      # A simple power menu using wofi
 
-      # List the options. Each option on a new line.
-      OPTIONS="Lock\nLogout\nRestart\nShutdown"
+      # Define the options properly
+      OPTIONS=$(printf "🔒 Lock\n🚪 Logout\n🔄 Restart\n⏻ Shutdown")
 
-      # Use wofi in dmenu mode to show the options.
-      CHOICE=$(echo -e "$OPTIONS" | wofi --dmenu --prompt "Power Menu" --lines=4 --width=200)
+      # Launch Wofi with the correct style and options
+      CHOICE=$(echo "$OPTIONS" | wofi --dmenu --prompt "Power Menu" --lines=4 --width=250 --style ~/.config/wofi/style.css)
 
-      # Execute the corresponding command based on your selection.
+      # Execute the corresponding command
       case "$CHOICE" in
-        "Lock")
-          # Adjust the lock command if you use a different locker.
-          hyprlock
-          ;;
-        "Logout")
-          # Exits the current Hyprland session.
-          hyprctl dispatch exit 0
-          ;;
-        "Restart")
-          systemctl reboot
-          ;;
-        "Shutdown")
-          systemctl poweroff
-          ;;
-        *)
-          # If no valid choice was made, do nothing.
-          exit 1
-          ;;
+        "🔒 Lock") hyprlock ;;
+        "🚪 Logout") hyprctl dispatch exit 0 ;;
+        "🔄 Restart") systemctl reboot ;;
+        "⏻ Shutdown") systemctl poweroff ;;
+        *) exit 1 ;;
       esac
+
     '';
   };
     home.file.".config/hyprland/scripts/wofi-power-menu.sh".executable = true;
+
+  home.file.".config/wofi/style.css".text = ''
+    window {
+      background-color: rgba(40, 42, 54, 0.9);
+      border-radius: 12px;
+      border: 2px solid #6272a4;
+    }
+
+    #input {
+      margin: 10px;
+      padding: 5px;
+      border-radius: 8px;
+      background-color: rgba(68, 71, 90, 0.8);
+      color: #f8f8f2;
+    }
+
+    #entry {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 8px;
+      background-color: rgba(50, 50, 68, 0.8);
+      color: #f8f8f2;
+    }
+
+    #entry:selected {
+      background-color: #6272a4;
+      color: #ffffff;
+    }
+  '';
 
   home.file = {
     ".config/hyprland/scripts/workspace-cycle.sh".text = ''
