@@ -136,7 +136,7 @@
     home.file.".config/waybar/style.css".text = ''
       * {
         font-family: "JetBrains Mono", "Font Awesome", monospace;
-        font-size: 12px;
+        font-size: 14px;
         color: #ffffff;
         background: #1e1e2e;
       }
