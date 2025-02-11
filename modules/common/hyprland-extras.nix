@@ -110,21 +110,21 @@
         },
 
         "custom/vscode": {
-          "exec": "echo 'vscode'",
+          "format": "",
           "interval": 600,
           "on-click": "code",
           "tooltip": "Launch Visual Studio Code"
         },
 
         "custom/chrome": {
-          "exec": "echo 'chrome'",
+          "format": "",
           "interval": 600,
           "on-click": "google-chrome-stable",
           "tooltip": "Launch Chrome"
         },
       
         "custom/insomnia": {
-          "exec": "echo 'insomnia'",
+          "format": "",
           "interval": 600,
           "on-click": "insomnia",
           "tooltip": "Launch Insomnia"
