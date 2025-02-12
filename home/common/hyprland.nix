@@ -60,7 +60,7 @@
         # cycle through workspaces pairs
         "$mod, mouse_down, workspace, r+1"
         "$mod, mouse_up, workspace, r-1"
-        "$mod, grave, exec, ~/.config/hyprland/scripts/move-to-next-empty.sh"
+        "$mod SHIFT, grave, exec, ~/.config/hyprland/scripts/move-to-next-empty.sh"
 
         # Move focus
         "$mod, H, movefocus, l"
