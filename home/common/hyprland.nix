@@ -60,6 +60,7 @@
         # cycle through workspaces pairs
         "$mod, mouse_down, workspace, r+1"
         "$mod, mouse_up, workspace, r-1"
+        "$mod, grave, exec, ~/.config/hyprland/scripts/move-to-next-empty.sh"
 
         # Move focus
         "$mod, H, movefocus, l"
@@ -206,34 +207,34 @@
   '';
 
   home.file = {
-    ".config/hyprland/scripts/workspace-cycle.sh".text = ''
-      #!/bin/bash
-      # Define workspace groups for dual monitors
-      workspace_sets=(
-          "1 2"
-          "3 4"
-          "5 6"
-      )
+    ".config/hyprland/scripts/move-to-next-empty.sh".text = ''
+      #!/usr/bin/env bash
 
-      # Get the current workspace number
-      current_ws=$(hyprctl activeworkspace | awk '{print $2}')
+      # Get the currently focused workspace
+      current_workspace=$(hyprctl activeworkspace -j | jq -r '.id')
 
-      # Find the next set of workspaces
-      for i in "''${!workspace_sets[@]}"; do
-          if [[ " ''${workspace_sets[i]} " == *" $current_ws "* ]]; then
-              next_index=$(( (i + 1) % ''${#workspace_sets[@]} ))
-              next_workspaces=''${workspace_sets[$next_index]}
+      # Get a list of all active workspaces
+      active_workspaces=$(hyprctl workspaces -j | jq -r '.[].id')
+
+      # Find the next available (empty) workspace
+      next_workspace=$((current_workspace + 1))
+
+      # Loop until we find an empty workspace
+      while [[ $active_workspaces =~ $next_workspace ]]; do
+          ((next_workspace++))
+          
+          # If we exceed a reasonable number of workspaces, wrap around
+          if [[ $next_workspace -gt 10 ]]; then  # Adjust the limit as needed
+              next_workspace=1
               break
           fi
       done
 
-      # Switch both monitors to the new workspace set
-      for ws in $next_workspaces; do
-          hyprctl dispatch workspace $ws
-      done
+      # Move the focused window to the next available workspace
+      hyprctl dispatch movetoworkspace "$next_workspace"
     '';
   };
-    home.file.".config/hyprland/scripts/workspace-cycle.sh".executable = true;
+    home.file.".config/hyprland/scripts/move-to-next-empty.sh".executable = true;
 
 
   programs.keychain = {
