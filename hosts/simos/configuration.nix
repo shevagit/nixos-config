@@ -13,6 +13,7 @@
       ../../modules/hardware/nvidia.nix
       ../../modules/common/hyprland.nix
       ../../modules/common/hyprland-extras.nix
+      ../../modules/common/docker.nix
     ];
 
   # Bootloader.
