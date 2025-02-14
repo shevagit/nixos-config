@@ -14,6 +14,7 @@
       ../../modules/common/hyprland.nix
       ../../modules/common/hyprland-extras.nix
       ../../modules/common/docker.nix
+      ../../modules/common/extraHosts.nix
     ];
 
   # Bootloader.
@@ -89,8 +90,13 @@
   users.users.sheva = {
     isNormalUser = true;
     description = "andreas sheva";
+    group = "sheva";
     extraGroups = [ "networkmanager" "wheel" "sudo" ];
     shell = pkgs.zsh;
+  };
+
+  users.groups.sheva = {
+    gid = 1000;
   };
   
   # zsh is enabled in home manager, but is not recognized if I don't add it here
