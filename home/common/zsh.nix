@@ -36,6 +36,16 @@
         curl -s -L -R -o ''${_file} -z ''${_file} \
           "https://github.com/Mic92/nix-index-database/releases/latest/download/''${_index}"
       }
+      
+      function kwide {
+        kubectl $@ -o wide
+      }
+
+      function ktail {
+        local _app=$1; shift
+        kubectl logs --prefix -f -l app=''${_app} $@ | \
+          grep -E -v 'health|metrics'
+      }
     '';
   };
 }
