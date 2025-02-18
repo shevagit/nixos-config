@@ -159,6 +159,8 @@
           font-size: 14px;
           font-family: Liberation, monospace;
           background-color: transparent;
+          border-radius: 10px;
+          color: #ffffff;
       }
 
       #clock {
