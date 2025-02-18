@@ -24,6 +24,7 @@
     # Add paths in PATH
     initExtra = ''
       export PATH="$HOME/bin:$PATH"
+      export KUBE_EDITOR=vim
 
       # Bind Ctrl + Left Arrow to backward-word and Ctrl + Right Arrow to forward-word
       bindkey "^[[1;5D" backward-word
