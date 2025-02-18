@@ -15,8 +15,29 @@
         "modules-right": ["clock", "tray", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language"],
 
         "hyprland/workspaces": {
-          "on-scroll-down": "hyprctl dispatch workspace e+1",
-          "on-scroll-up": "hyprctl dispatch workspace e-1"
+          "format": "{name} {windows}",
+          "format-window-separator": " ",
+          "window-rewrite-default": "",
+          "window-rewrite": {
+              "class<firefox> title<.*youtube.*>": "", // Windows whose titles contain "youtube"
+              "class<firefox>": "", // Windows whose classes are "firefox"
+              "class<firefox> title<.*gitlab.*>": "", // Windows whose class is "firefox" and title contains "github". Note that "class" always comes first.
+              "zsh": "", // Windows that contain "foot" in either class or title. For optimization reasons, it will only match against a title if at least one other window explicitly matches against a title.
+              "slack": "",
+              "steam": "",
+              "spotify": "",
+              "telegram-desktop": "",
+              "Google-chrome": "",
+              "discord": "",
+              "signal": "",
+              "compass": "",
+              "element": "",
+              "Visual Studio Code": "",
+              "title<.*vim.*>": "",
+              //"title<.* - (.*) - VSCodium>": "codium $1"  // captures part of the window title and formats it into output
+              },
+                "show-special": true,
+                "special-visible-only": true,
         },
 
         "hyprland/window": {
@@ -134,11 +155,10 @@
 
     # Define Waybar styling
     home.file.".config/waybar/style.css".text = ''
-      * {
-        font-family: "JetBrains Mono", "Font Awesome", monospace;
-        font-size: 14px;
-        color: #ffffff;
-        background: #1e1e2e;
+    * {
+          font-size: 14px;
+          font-family: Liberation, monospace;
+          background-color: transparent;
       }
 
       #clock {
