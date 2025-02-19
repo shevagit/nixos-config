@@ -78,6 +78,9 @@
         "$mod SHIFT, up, movewindow, u"
         "$mod SHIFT, down, movewindow, d"
 
+        # move windows to next monitor
+        "$mod SHIFT, TAB, movewindow, mon:+1"
+
         # Switch workspaces with mod + [0-9]
         "$mod, 1, workspace, 1"
         "$mod, 2, workspace, 2"
