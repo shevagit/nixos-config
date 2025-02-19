@@ -30,6 +30,7 @@
     insomnia
     terraform
     gnome-keyring # required by mongodb-compass
+    libreoffice
 
     # xrhsima
     openrgb-with-all-plugins
