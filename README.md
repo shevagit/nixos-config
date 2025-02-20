@@ -24,5 +24,6 @@ dconf reset /org/gnome/desktop/interface/cursor-theme
 ```
 ./trim-generations.sh 5 5 home-manager
 ```
+will keep 5 generations
 
-Then `./trim-generations.sh 5 5 home-manager`
+Then `sudo nix-collect-garbage -d` in order to really clean up store paths and files
