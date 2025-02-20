@@ -136,6 +136,12 @@
       env = [
         "WLR_NO_HARDWARE_CURSORS=1"
       ];
+
+      decoration = {
+        rounding = 10;
+        dim_inactive = true;
+      };
+
     };
   };
 
