@@ -34,11 +34,11 @@
               "element": "",
               "Visual Studio Code": "",
               "title<.*vim.*>": "",
-              "title<.*is sharing your screen>": """,
+              //"title<.*is sharing your screen>": """
               //"title<.* - (.*) - VSCodium>": "codium $1"  // captures part of the window title and formats it into output
               },
                 "show-special": true,
-                "special-visible-only": true,
+                "special-visible-only": true
         },
 
         "hyprland/window": {
