@@ -25,18 +25,18 @@
     ];
 
 
-    workspace = [
-      "1, monitor:DP-1"
-      "2, monitor:DP-2"
-      "3, monitor:DP-1"
-      "4, monitor:DP-2"
-      "5, monitor:DP-1"
-      "6, monitor:DP-2"
-      "7, monitor:DP-1"
-      "8, monitor:DP-2"
-      "9, monitor:DP-1"
-      "10, monitor:DP-2"
-    ];
+    # workspace = [
+    #   "1, monitor:DP-1"
+    #   "2, monitor:DP-2"
+    #   "3, monitor:DP-1"
+    #   "4, monitor:DP-2"
+    #   "5, monitor:DP-1"
+    #   "6, monitor:DP-2"
+    #   "7, monitor:DP-1"
+    #   "8, monitor:DP-2"
+    #   "9, monitor:DP-1"
+    #   "10, monitor:DP-2"
+    # ];
 
       # exec-once = "swaybg -o DP-3 -i ~/wallpapers/landscape.jpg -m fill";
       # exec-once = "swaybg -o DP-2 -i ~/wallpapers/portrait.jpg -m fill";
@@ -58,8 +58,10 @@
         "$mod, F, fullscreen,"
 
         # cycle through workspaces pairs
-        "$mod, mouse_down, workspace, r+1"
-        "$mod, mouse_up, workspace, r-1"
+        "$mod, mouse_down, exec, ~/.config/hyprland/scripts/popshell-alt.sh next"
+        "$mod, mouse_up, exec, ~/.config/hyprland/scripts/popshell-alt.sh prev"
+
+        # move to the next workspace
         "$mod SHIFT, grave, exec, ~/.config/hyprland/scripts/move-to-next-empty.sh"
 
         # Move focus
@@ -186,6 +188,52 @@
     '';
   };
     home.file.".config/hyprland/scripts/wofi-power-menu.sh".executable = true;
+
+  home.file = {
+    ".config/hyprland/scripts/popshell-alt.sh".text = ''
+      #!/usr/bin/env bash
+      # Get the current active workspace
+      active_ws=$(hyprctl activeworkspace -j | jq '.id')
+      monitor1=$(hyprctl monitors -j | jq -r '.[0].name')
+      monitor2=$(hyprctl monitors -j | jq -r '.[1].name')  # Adjust if needed
+
+      # Ensure valid data
+      if [[ -z "$active_ws" || -z "$monitor1" || -z "$monitor2" ]]; then
+          echo "Error: Could not fetch workspace or monitor information."
+          exit 1
+      fi
+
+      # Define workspace grouping
+      GROUP_SIZE=5
+      MAX_WORKSPACES=20  # Adjust based on total workspaces used
+
+      # Calculate the total number of groups
+      TOTAL_GROUPS=$(( MAX_WORKSPACES / GROUP_SIZE ))
+
+      # Determine current workspace group
+      current_group=$(( (active_ws - 1) / GROUP_SIZE ))
+
+      # Determine next or previous group
+      direction="$1"
+      if [[ "$direction" == "next" ]]; then
+          new_group=$(( (current_group + 1) % TOTAL_GROUPS ))
+      elif [[ "$direction" == "prev" ]]; then
+          new_group=$(( (current_group - 1 + TOTAL_GROUPS) % TOTAL_GROUPS ))
+      else
+          echo "Usage: $0 {next|prev}"
+          exit 1
+      fi
+
+      # Compute the new workspace numbers for both monitors
+      new_ws=$(( new_group * GROUP_SIZE + 1 ))
+      new_ws_monitor2=$(( new_ws + GROUP_SIZE ))
+
+      # Move both monitors to their respective new workspace groups
+      hyprctl dispatch workspace "$new_ws"
+      hyprctl dispatch workspace "$new_ws_monitor2"
+    '';
+  };
+    home.file.".config/hyprland/scripts/popshell-alt.sh".executable = true;
 
   home.file.".config/wofi/style.css".text = ''
     window {
