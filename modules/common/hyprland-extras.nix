@@ -169,8 +169,8 @@
 
         "custom/notifications": {
             "format": "🔔 {}",
-            "exec": "swaync-client --counter",
-            "on-click": "swaync-client --toggle-window",
+            "exec": "swaync-client --count",
+            "on-click": "swaync-client -t",
             "tooltip": false,
             "interval": 2
         },
