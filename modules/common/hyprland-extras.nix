@@ -12,7 +12,7 @@
 
         "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "wlr/taskbar"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "tray", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language"],
+        "modules-right": ["clock", "tray", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language", "custom/notifications"],
 
         "hyprland/workspaces": {
           "format": "{name} {windows}",
@@ -166,6 +166,14 @@
           "on-click": "google-chrome-stable",
           "tooltip": "Launch Chrome"
         },
+
+        "custom/notifications": {
+            "format": "🔔 {}",
+            "exec": "swaync-client --counter",
+            "on-click": "swaync-client --toggle-window",
+            "tooltip": false,
+            "interval": 2
+        },
       
         "custom/insomnia": {
           "format": "",
@@ -238,6 +246,10 @@
       }
 
       #custom-insomnia {
+        padding: 0 10px;
+      }
+
+      #custom-notifications {
         padding: 0 10px;
       }
       
