@@ -8,6 +8,10 @@
     enable = true;
   };
 
+  # enable a notification daemon and swaync for waybar
+  services.mako.enable = true;
+  services.swaync.enable = true;
+
   # set cursor size and dpi for 4k monitor
   xresources.properties = {
     "Xcursor.size" = 16;
