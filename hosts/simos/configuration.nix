@@ -108,8 +108,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # enable dbus
+  # enable dbus and fwupd for firmware updates
   services.dbus.enable = true;
+  services.fwupd.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
