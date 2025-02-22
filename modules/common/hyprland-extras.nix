@@ -187,72 +187,42 @@
     # Define Waybar styling
     home.file.".config/waybar/style.css".text = ''
     * {
-          font-size: 14px;
-          font-family: Liberation, monospace;
-          background-color: transparent;
-          border-radius: 10px;
-          color: #ffffff;
-      }
-
-      #clock {
         font-size: 14px;
-        padding: 0 50px;
-      }
-
-      #cpu {
-        padding: 0 10px;
-      }
-
-      #memory {
-        padding: 0 10px;
-      }
-
-      #network {
-        padding: 0 10px;
-      }
-
-      #pulseadio {
-        padding: 0 10px;
-      }
-
-      #workspaces button {
-        border: none;
-        padding: 5px;
-        margin: 2px;
-        background-color: #2e3440;
+        font-family: Liberation, monospace;
+        background: transparent;
         color: #ffffff;
-        border-radius: 5px;
-      }
+    }
 
-      #workspaces button.active {
-        background-color: #88c0d0;
+    #waybar {
+        background: transparent;
+    }
+
+    #waybar > * {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        padding: 6px 12px;
+        margin: 4px;
+    }
+
+    #workspaces button {
+        border: none;
+        padding: 5px 10px;
+        margin: 2px;
+        background-color: rgba(46, 52, 64, 0.7);
+        color: #ffffff;
+        border-radius: 10px;
+    }
+
+    #workspaces button.active {
+        background-color: rgba(136, 192, 208, 0.7);
         color: #ff0000;
-      }
+    }
 
-      #custom-launcher {
-        padding: 0 10px;
-      }
-
-      #custom-vscode {
-        padding: 0 10px;
-      }
-
-      #custom-chrome {
-        padding: 0 15px;
-      }
-
-      #custom-language {
-        padding: 0 10px;
-      }
-
-      #custom-insomnia {
-        padding: 0 10px;
-      }
-
-      #custom-notifications {
-        padding: 0 10px;
-      }
-      
+    #clock, #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray, #workspaces, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications {
+        border-radius: 10px;
+        padding: 6px 12px;
+        background: rgba(30, 30, 30, 0.6);
+    }
     '';
 
     # Script for language settings
