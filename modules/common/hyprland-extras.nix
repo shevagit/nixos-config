@@ -193,15 +193,15 @@
         color: #ffffff;
     }
 
-    #waybar {
-        background: transparent;
+    window#waybar {
+        background-color: transparent;
+        color: #ffffff;
+        transition-property: background-color;
+        transition-duration: .5s;
     }
 
-    #waybar > * {
-        background: rgba(0, 0, 0, 0.5);
-        border-radius: 10px;
-        padding: 6px 12px;
-        margin: 4px;
+    window#waybar.hidden {
+        opacity: 0.2;
     }
 
     #workspaces button {
