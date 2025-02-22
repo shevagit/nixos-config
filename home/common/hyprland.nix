@@ -143,8 +143,16 @@
         rounding = 10;
         dim_inactive = true;
         dim_strength = 0.2;
+        blur = {
+          size = 3;
+          passes = 2;
+          vibrancy = 0.1696;
+        };
+        shadow = {
+          range = 4;
+          render_power = 3;
+        };
       };
-
     };
   };
 
