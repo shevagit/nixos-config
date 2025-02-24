@@ -270,8 +270,8 @@
         border-top: 5px solid #50C878;
     }
 
-    #clock, #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray, #workspaces, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications {
-        border-radius: 10px;
+    #clock, #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications {
+        border-radius: 10px 0px 0px 10px;
         padding: 6px 12px;
         background: rgba(30, 30, 30, 0.6);
     }
