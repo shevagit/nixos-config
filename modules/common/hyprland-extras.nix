@@ -187,35 +187,87 @@
     # Define Waybar styling
     home.file.".config/waybar/style.css".text = ''
     * {
-        font-size: 14px;
-        font-family: Liberation, monospace;
-        background: transparent;
+        border-radius: 0;
+        font-family: "FiraMono Nerd Font";
+        font-size: 13px;
+        font-weight: 500;
+        padding: 0;
+        margin: 0;
+        margin-right: 2px;
+        margin-left: 2px;
+        transition-delay: 3s;
         color: #ffffff;
+    }
+
+    #waybar {
+        background-color: rgba(76, 175, 80, 0.0);
+        border: none;
+        box-shadow: none;
     }
 
     window#waybar {
-        background-color: transparent;
-        color: #ffffff;
-        transition-property: background-color;
-        transition-duration: .5s;
+      padding: 0;
+      margin: 0;
     }
 
-    window#waybar.hidden {
-        opacity: 0.2;
+    #battery.critical {
+        border-top: 5px solid #f53c3c;
+        color: #f53c3c;
+        padding: 0px 4px;
+    }
+
+    #window {
+        font-weight: bold;
+        color: black;
+        background-color: #b877db;
+        border-radius: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #waybar.empty #window {
+        background: none;
+    }
+
+    #workspaces {
+        text-shadow: 2px 1px 2px #a0a0a0;
     }
 
     #workspaces button {
-        border: none;
-        padding: 5px 10px;
-        margin: 2px;
-        background-color: rgba(46, 52, 64, 0.7);
-        color: #ffffff;
-        border-radius: 10px;
+        color: #50C878;
+        text-shadow: 2px 1px 2px #1e1e3f;
+        border-top: 5px solid #b877db;
     }
 
-    #workspaces button.active {
-        background-color: rgba(136, 192, 208, 0.7);
-        color: #ff0000;
+    #workspaces:hover {
+        background-color: #303040;
+        border-top: 5px solid #b877db;
+    }
+
+    #workspaces button.visible {
+        color: #87ceeb;
+        border-top: 5px solid #ff9f00;
+    }
+
+    #workspaces button.focused {
+        color: #50C878;
+        border-top: 5px solid #1e1e3f;
+    }
+
+    #workspaces button.urgent {
+        color: #6c6f93;
+        background-color: #a0a0a0;
+        border-top: 5px solid #b877db;
+    }
+
+    #workspaces button.persistent {
+        color: #50C878;
+        border-top: 5px solid #b877db;
+    }
+
+    #workspaces button.current_output {
+        color: #50C878;
+        border-top: 5px solid #50C878;
     }
 
     #clock, #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray, #workspaces, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications {
