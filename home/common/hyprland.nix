@@ -24,22 +24,6 @@
       "DP-2,1080x1920@60,2560x0,1"
     ];
 
-
-    # workspace = [
-    #   "1, monitor:DP-1"
-    #   "2, monitor:DP-2"
-    #   "3, monitor:DP-1"
-    #   "4, monitor:DP-2"
-    #   "5, monitor:DP-1"
-    #   "6, monitor:DP-2"
-    #   "7, monitor:DP-1"
-    #   "8, monitor:DP-2"
-    #   "9, monitor:DP-1"
-    #   "10, monitor:DP-2"
-    # ];
-
-      # exec-once = "swaybg -o DP-3 -i ~/wallpapers/landscape.jpg -m fill";
-      # exec-once = "swaybg -o DP-2 -i ~/wallpapers/portrait.jpg -m fill";
       bind = [
         # --- Actions ---
         "$mod, Return, exec, terminator"
