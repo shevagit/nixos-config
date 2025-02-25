@@ -15,6 +15,9 @@
         "modules-right": ["clock", "tray", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language", "custom/notifications"],
 
         "hyprland/workspaces": {
+          "persistent_workspaces": {
+            "*": 5 // persist 5 workspaces for every monitor
+          },
           "format": "{name} {windows}",
           "format-window-separator": " ",
           "window-rewrite-default": "",
@@ -237,6 +240,8 @@
         color: #50C878;
         text-shadow: 2px 1px 2px #1e1e3f;
         border-top: 5px solid #b877db;
+        background-color: rgba(46, 52, 64, 0.7);
+        border-radius: 1px;
     }
 
     #workspaces:hover {
@@ -244,30 +249,14 @@
         border-top: 5px solid #b877db;
     }
 
+    #workspaces button:active {
+        background-color:rgb(105, 204, 43);
+        border-top: 5px solid #b877db;
+    }
+
     #workspaces button.visible {
         color: #87ceeb;
         border-top: 5px solid #ff9f00;
-    }
-
-    #workspaces button.focused {
-        color: #50C878;
-        border-top: 5px solid #1e1e3f;
-    }
-
-    #workspaces button.urgent {
-        color: #6c6f93;
-        background-color: #a0a0a0;
-        border-top: 5px solid #b877db;
-    }
-
-    #workspaces button.persistent {
-        color: #50C878;
-        border-top: 5px solid #b877db;
-    }
-
-    #workspaces button.current_output {
-        color: #50C878;
-        border-top: 5px solid #50C878;
     }
 
     #clock, #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications {
