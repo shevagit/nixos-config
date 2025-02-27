@@ -10,6 +10,7 @@
       k  = "kubectl";
       kgp = "kubectl get pods";
       kns = "kubens";
+      kgi = "kubectl get ingress";
       kctx = "kubectx";
       du = "du -hsc";
       cdnix = "cd ~/githubdir/nixos-config";
