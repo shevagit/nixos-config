@@ -28,7 +28,7 @@
         untracked = "🤷";
         stashed = "📦";
         modified = "📝";
-        #staged = "[++($${count})](green)";
+        staged = "[++($${count})](green)";
         renamed = "👅";
         deleted = "🗑";
       };
@@ -47,7 +47,7 @@
         style = "purple";
         format = "[$symbol$context(/$namespace)]($style) in ";
         contexts = [
-          { context_pattern = "eu-w1-dev"; style = "green"; }
+          { context_pattern = "dev-eu-w1"; style = "green"; }
         ];
       };
 
