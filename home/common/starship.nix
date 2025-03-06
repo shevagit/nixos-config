@@ -44,10 +44,11 @@
       kubernetes = {
         symbol = "☸️ ";
         disabled = false;
-        style = "purple";
+        style = "red";
         format = "[$symbol$context(/$namespace)]($style) in ";
         contexts = [
           { context_pattern = "dev-eu-w1"; style = "green"; }
+          { context_pattern = "test-playground-us-w3"; style = "yellow"; }
         ];
       };
 
