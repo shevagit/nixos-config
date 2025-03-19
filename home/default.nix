@@ -76,6 +76,8 @@
     gnupg
     flameshot
     blueman
+    discord
+    slack
 
     # nix related
     #
