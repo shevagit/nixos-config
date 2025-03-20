@@ -142,21 +142,28 @@
 
   # required packages for the hyprland configuration
   home.packages = with pkgs; [
-    swaybg               # For setting wallpapers
-    waybar               # Status bar
-    wl-clipboard         # Clipboard utilities
-    grim                 # Screenshot utility
-    slurp                # Area selection for screenshots
-    wofi                 # Application launcher
-    rofi-wayland         # a better wofi for wayland
-    nwg-displays         # GUI for display management for Sway or Hyprland
-    swaylock
-    pavucontrol          # PulseAudio volume control
-    pulseaudio           # pactl for volume control
-    font-awesome
-    nerdfonts
-    hyprlock             # Lock screen for Hyprland
-  ];
+      swaybg
+      waybar
+      wl-clipboard
+      grim
+      slurp
+      wofi
+      rofi-wayland
+      nwg-displays
+      swaylock
+      pavucontrol
+      pulseaudio
+      font-awesome
+      hyprlock
+      
+  ] ++ (if pkgs ? nerd-fonts then [
+      pkgs.nerd-fonts.fira-code
+      pkgs.nerd-fonts.hack
+      pkgs.nerd-fonts.jetbrains-mono
+    ] else [
+      pkgs.nerdfonts
+    ]);
+
 
   home.file = {
     ".config/hyprland/scripts/wofi-power-menu.sh".text = ''
