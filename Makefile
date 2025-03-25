@@ -1,15 +1,17 @@
 .PHONY: all build switch diff update upgrade gc
 
+HOSTNAME := $(shell hostname)
+
 # Default target: upgrade the system
 all: upgrade
 
 # Build the system without applying it
 build:
-	nixos-rebuild build --flake .#
+	nixos-rebuild build --flake .#$(HOSTNAME)
 
 # Apply the system configuration
 switch:
-	nixos-rebuild switch --flake .#
+	nixos-rebuild switch --flake .#$(HOSTNAME)
 
 # Show differences between the current and built system
 diff:
