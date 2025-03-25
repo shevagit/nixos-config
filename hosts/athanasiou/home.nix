@@ -1,4 +1,4 @@
-{
+{ config, pkgs, lib, ... }: {
   imports = [
     ../../home
     ../../home/common
