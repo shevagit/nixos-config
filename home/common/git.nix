@@ -25,6 +25,8 @@
         [user]
             name = sheva
             email = shevaneo@gmail.com
+        [commit]
+            gpgSign = false
         [core]
             sshCommand = ssh -i ~/.ssh/nixsimos-github.pub
       '';
