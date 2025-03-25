@@ -7,11 +7,11 @@ all: upgrade
 
 # Build the system without applying it
 build:
-	nixos-rebuild build --flake .#$(HOSTNAME)
+	nixos-rebuild build --flake ./#$(HOSTNAME)
 
 # Apply the system configuration
 switch:
-	nixos-rebuild switch --flake .#$(HOSTNAME)
+	sudo nixos-rebuild switch --flake ./#$(HOSTNAME)
 
 # Show differences between the current and built system
 diff:
