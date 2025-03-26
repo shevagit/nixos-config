@@ -205,7 +205,7 @@
         margin: 0;
         margin-right: 2px;
         margin-left: 2px;
-        transition-delay: 3s;
+        transition-delay: 2s;
         color: #ffffff;
     }
 
@@ -243,6 +243,9 @@
         border-top: 5px solid #b877db;
         background-color: rgba(46, 52, 64, 0.7);
         border-radius: 1px;
+        font-size: 18px;
+        padding: 8px 16px;
+        margin: 2px 4px;
     }
 
     #workspaces:hover {
