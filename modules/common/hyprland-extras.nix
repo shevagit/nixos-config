@@ -241,7 +241,7 @@
         text-shadow: 2px 1px 2px #1e1e3f;
         border-top: 5px solid #b877db;
         background-color: rgba(46, 52, 64, 0.7);
-        border-radius: 1px;
+        border-radius: 10px;
         font-size: 13px;
         padding: 1px 10px;
         margin: 2px 4px;
@@ -264,9 +264,10 @@
 
     #clock, #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications {
         border-radius: 10px;
+        border:2px solid #c7ab7a;
         padding: 1px 10px;
         min-height: 24px;
-        background-color: #b877db;
+        background-color:rgb(155, 29, 29);
         font-weight: bold;
         color: white;
     }
