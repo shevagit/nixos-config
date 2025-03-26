@@ -90,9 +90,8 @@
           },
           "format": "{icon} {capacity}%",
           "format-time": "{icon} {capacity}% {time}",
-          "format-cycles": "🔋 {cycles}",
-          "format-health": "🔋 {health}",
-          "format-icons": ["", "", "", "", ""]
+          "format-icons": ["", "", "", "", ""],
+          "tooltip-format": "Capacity: {capacity}%"
         },
 
         "cpu": {
