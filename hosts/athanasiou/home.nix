@@ -5,10 +5,14 @@
   ];
   # override home manager configuration
   wayland.windowManager.hyprland.settings.monitor = [
-    "eDP-1,1920x1080@60,0x0,1"
+  # office monitor on top
+  "DP-1,2560x1440@60,0x0,1"
 
-  # position discovered monitor above eDP display
-  ",preferred,0x-1080,1"
+  # embedded screen below
+  "eDP-1,1920x1080@60,0x1440,1"
+
+  # catch-all fallback
+  ",preferred,auto,1"
   ];
   
   # Override vscode.extensions
