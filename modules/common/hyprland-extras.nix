@@ -197,35 +197,45 @@
     # Define Waybar styling
     home.file.".config/waybar/style.css".text = ''
     * {
-        border-radius: 0;
         font-family: "FiraMono Nerd Font";
-        font-size: 13px;
-        font-weight: 500;
-        margin: 0;
-        margin-right: 2px;
-        margin-left: 2px;
-        transition-delay: 2s;
-        color: #ffffff;
+        font-weight: bold;
+        color: white;
+    }
+
+    #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray,
+    #workspaces, #language, #custom-launcher, #custom-vscode,
+    #custom-chrome, #custom-insomnia, #custom-notifications, #window {
+        border-radius: 10px;
+        border: 2px solid #c7ab7a;
+        padding: 2px 10px;
+        background-color: rgb(192, 41, 41);
+        min-height: 24px;
+        margin: 0 2px;
+    }
+
+    #clock {
+        background-color: rgba(13, 88, 50, 0.72);
+        border: 2px solid #c7ab7a;
+        border-radius: 10px;
     }
 
     #waybar {
         background-color: rgba(76, 175, 80, 0.0);
         border: none;
         box-shadow: none;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
     }
 
     window#waybar {
-      padding: 0;
-      margin: 0;
+        padding: 0;
+        margin: 0;
     }
 
     #window {
-        font-weight: bold;
         color: black;
         background-color: #b877db;
-        border-radius: 15px;
-        padding-left: 10px;
-        padding-right: 10px;
     }
 
     #waybar.empty #window {
@@ -234,17 +244,16 @@
 
     #workspaces {
         text-shadow: 2px 1px 2px #a0a0a0;
+        background-color: rgba(91, 115, 163, 0.7);
     }
 
     #workspaces button {
-        color: #50C878;
         text-shadow: 2px 1px 2px #1e1e3f;
         border-top: 5px solid #b877db;
         background-color: rgba(46, 52, 64, 0.7);
+        margin: 0px 2px;
+        padding: 2px 8px;
         border-radius: 10px;
-        font-size: 13px;
-        padding: 1px 10px;
-        margin: 2px 4px;
     }
 
     #workspaces:hover {
@@ -253,23 +262,13 @@
     }
 
     #workspaces button:active {
-        background-color:rgb(105, 204, 43);
+        background-color: rgb(105, 204, 43);
         border-top: 5px solid #b877db;
     }
 
     #workspaces button.visible {
         color: #87ceeb;
         border-top: 5px solid #ff9f00;
-    }
-
-    #clock, #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications {
-        border-radius: 10px;
-        border:2px solid #c7ab7a;
-        padding: 1px 10px;
-        min-height: 24px;
-        background-color:rgb(155, 29, 29);
-        font-weight: bold;
-        color: white;
     }
     '';
 
