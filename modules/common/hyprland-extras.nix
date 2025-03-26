@@ -12,7 +12,7 @@
 
         "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "wlr/taskbar"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "tray", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language", "custom/notifications"],
+        "modules-right": ["clock", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language", "tray", "custom/notifications"],
 
         "hyprland/workspaces": {
           "persistent_workspaces": {
@@ -81,7 +81,18 @@
         },
 
         "battery": {
-          "format": "{percent}%"
+          "bat": "BAT0",
+          "adapter": "AC",
+          "interval": 90,
+          "states": {
+            "warning": 30,
+            "critical": 15
+          },
+          "format": "{icon} {capacity}%",
+          "format-time": "{icon} {capacity}% {time}",
+          "format-cycles": "🔋 {cycles}",
+          "format-health": "🔋 {health}",
+          "format-icons": ["", "", "", "", ""]
         },
 
         "cpu": {
@@ -211,12 +222,6 @@
     window#waybar {
       padding: 0;
       margin: 0;
-    }
-
-    #battery.critical {
-        border-top: 5px solid #f53c3c;
-        color: #f53c3c;
-        padding: 0px 4px;
     }
 
     #window {
