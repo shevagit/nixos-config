@@ -12,7 +12,7 @@
 
         "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "wlr/taskbar"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "cpu", "memory", "battery", "bluetooth", "network", "pulseaudio", "hyprland/language", "tray", "custom/notifications"],
+        "modules-right": ["clock", "cpu", "memory", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "tray", "custom/notifications"],
 
         "hyprland/workspaces": {
           "persistent_workspaces": {
@@ -90,7 +90,7 @@
           },
           "format": "{icon} {capacity}%",
           "format-time": "{icon} {capacity}% {time}",
-          "format-icons": ["", "", "", "", ""],
+          "format-icons": [" ", " ", " ", " ", " "],
           "tooltip-format": "Capacity: {capacity}%"
         },
 
@@ -116,13 +116,10 @@
         },
 
         "network": {
-          "interface": "eno2",
-          "format-wifi": "{icon}",
-          "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-          "format-ethernet": "🌐",
-          "format-linked": "{ifname} 󰈀",
-          "format-disconnected": "󰤫",
-          "interval": 1,
+          "interval": 30,
+          "format-wifi": "  {essid} ({signalStrength}%)",
+          "format-ethernet": "󰈀 {ipaddr}",
+          "format-disconnected": "⚠️ No network",
           "tooltip-format": "{ifname} via {gwaddr}",
           "on-click": "alacritty -e nmtui"
         },
@@ -135,7 +132,7 @@
           "format-source": " {volume}%",
           "format-source-muted": "",
           "format-icons": {
-            "headphone": "",
+            "headphone": " ",
             "hands-free": "",
             "headset": "",
             "phone": "",
