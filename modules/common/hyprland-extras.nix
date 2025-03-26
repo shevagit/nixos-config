@@ -201,7 +201,6 @@
         font-family: "FiraMono Nerd Font";
         font-size: 13px;
         font-weight: 500;
-        padding: 0;
         margin: 0;
         margin-right: 2px;
         margin-left: 2px;
@@ -243,8 +242,8 @@
         border-top: 5px solid #b877db;
         background-color: rgba(46, 52, 64, 0.7);
         border-radius: 1px;
-        font-size: 18px;
-        padding: 8px 16px;
+        font-size: 13px;
+        padding: 1px 10px;
         margin: 2px 4px;
     }
 
@@ -264,9 +263,12 @@
     }
 
     #clock, #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications {
-        border-radius: 10px 0px 0px 10px;
-        padding: 6px 12px;
-        background: rgba(30, 30, 30, 0.6);
+        border-radius: 10px;
+        padding: 1px 10px;
+        min-height: 24px;
+        background-color: #b877db;
+        font-weight: bold;
+        color: white;
     }
     '';
 
