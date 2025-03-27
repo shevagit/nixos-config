@@ -198,7 +198,7 @@
     home.file.".config/waybar/style.css".text = ''
     * {
         font-family: "FiraMono Nerd Font";
-        font-size: 11px;
+        font-size: 10px;
         font-weight: bold;
         color: white;
     }
@@ -210,8 +210,7 @@
         border: 2px solid #c7ab7a;
         padding: 2px 10px;
         background-color: rgb(192, 41, 41);
-        min-height: 24px;
-        margin: 0 3px;
+        margin: 0 2px;
     }
 
     #clock {
@@ -254,7 +253,8 @@
         border-top: 5px solid #b877db;
         background-color: rgba(46, 52, 64, 0.7);
         margin: 0px 2px;
-        padding: 2px 8px;
+        padding: 1px 7px;
+        font-size: 10px;
         border-radius: 10px;
     }
 
