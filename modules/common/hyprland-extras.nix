@@ -9,7 +9,7 @@
       {
         "layer": "top",
         "position": "left",
-        "modules-left": ["hyprland/workspaces", "clock", "custom/weather"],
+        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "cpu", "memory", "custom/gpu", "tray"],
 
         "hyprland/workspaces": {
           "format": "{name} {windows}",
@@ -63,6 +63,28 @@
             }
         },
 
+        "cpu": {
+          "format": "{icon} {usage}%",
+          "format-icons": ["󰻠 "]
+        },
+
+        "memory": {
+          "format": "{icon} {used}/{total}",
+          "format-icons": [" "]
+        },
+
+        "tray": {
+          "spacing": 10
+        },
+
+        "custom/gpu": {
+          "format": "{}",
+          "exec": "~/.config/waybar/gpu-status.sh",
+          "interval": 30,
+          "tooltip": true,
+          "tooltip-format": "GPU Temp &amp; Fan"
+        },
+
         "custom/weather": {
           "exec": "~/.config/waybar/scripts/weather.sh",
           "interval": 600,
@@ -81,7 +103,7 @@
 
         "modules-left": ["custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["cpu", "custom/gpu", "memory", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "tray", "custom/notifications"],
+        "modules-right": ["bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
 
 
         "hyprland/window": {
@@ -106,20 +128,6 @@
           "format-time": "{icon} {capacity}% {time}",
           "format-icons": [" ", " ", " ", " ", " "],
           "tooltip-format": "Capacity: {capacity}%"
-        },
-
-        "cpu": {
-          "format": "{icon} {usage}%",
-          "format-icons": ["󰻠 "]
-        },
-
-        "memory": {
-          "format": "{icon} {used}/{total}",
-          "format-icons": [" "]
-        },
-
-        "tray": {
-          "spacing": 10
         },
 
         "wlr/taskbar": {
@@ -204,14 +212,6 @@
           "on-click": "rofi -show drun -config ~/.config/rofi/launcher.rasi"
         },
 
-        "custom/gpu": {
-          "format": "{}",
-          "exec": "~/.config/waybar/gpu-status.sh",
-          "interval": 30,
-          "tooltip": true,
-          "tooltip-format": "GPU Temp &amp; Fan"
-        },
-
         "custom/notifications": {
             "format": "🔔 {}",
             "exec": "swaync-client --count",
@@ -266,7 +266,7 @@
         border-top: 5px solid #ff9f00;
     }
     
-    #clock, #custom-weather {
+    #clock, #custom-weather, #cpu, #memory, #custom-gpu, #tray {
       margin: 12px 0;
       padding: 6px 10px;
       border: 2px solid #c7ab7a;
@@ -284,8 +284,7 @@
         color: white;
     }
 
-    #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray,
-    #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-gpu, #custom-notifications, #window {
+    #network, #pulseaudio, #bluetooth, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
         border-radius: 10px;
         border: 2px solid #c7ab7a;
         padding: 2px 10px;
