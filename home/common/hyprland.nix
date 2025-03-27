@@ -8,7 +8,7 @@
     enable = true;
     settings = {
       "$mod" = "SUPER";
-      exec-once = "waybar";
+      exec-once = "waybar & waybar -c ~/.config/waybar/left-bar-config.jsonc -s ~/.config/waybar/left-bar-style.css";
     monitor = [
       # cheatsheet: "monitor = name, resolution, position, scale"
       # transform: 

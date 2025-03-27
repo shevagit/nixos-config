@@ -4,21 +4,14 @@
       enable = true;
     };
 
-    # Define Waybar configuration
-    home.file.".config/waybar/config.jsonc".text = ''
+    # left-bar-config.jsonc
+    home.file.".config/waybar/left-bar-config.jsonc".text = ''
       {
         "layer": "top",
-        "position": "top",
-
-        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia"],
-        "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "cpu", "custom/gpu", "memory", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "tray", "custom/notifications"],
+        "position": "left",
+        "modules-left": ["hyprland/workspaces", "clock", "custom/weather"],
 
         "hyprland/workspaces": {
-          "persistent_workspaces": {
-            "*": 5 // persist 5 workspaces for every monitor
-          },
-
           "format": "{name} {windows}",
           "format-window-separator": " ",
           "window-rewrite-default": "",
@@ -44,18 +37,8 @@
                 "special-visible-only": true
         },
 
-        "hyprland/window": {
-          "separate-outputs": true
-        },
-        "hyprland/language": {
-          "format": "{}",
-          "format-en": "🇺🇸",
-          "format-gr": "🇬🇷",
-          "on-click": "hyprctl switchxkblayout current next"
-        },
-
         "clock": {
-          "format": "{:%A, %d %B %Y, %H:%M}",
+          "format": "📅{:%A\n%d %B %Y\n %H:%M}",
           "tooltip-format": "<tt><small>{calendar}</small></tt>",
           "calendar": {
             "mode"          : "month",
@@ -78,6 +61,37 @@
             "on-scroll-up": "shift_up",
             "on-scroll-down": "shift_down"
             }
+        },
+
+        "custom/weather": {
+          "exec": "~/.config/waybar/scripts/weather.sh",
+          "interval": 600,
+          "format": "🌤️ {}",
+          "tooltip": true
+        }
+      }
+    '';
+
+
+    # Define Waybar configuration
+    home.file.".config/waybar/config.jsonc".text = ''
+      {
+        "layer": "top",
+        "position": "top",
+
+        "modules-left": ["custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia"],
+        "modules-center": ["hyprland/window"],
+        "modules-right": ["cpu", "custom/gpu", "memory", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "tray", "custom/notifications"],
+
+
+        "hyprland/window": {
+          "separate-outputs": true
+        },
+        "hyprland/language": {
+          "format": "{}",
+          "format-en": "🇺🇸",
+          "format-gr": "🇬🇷",
+          "on-click": "hyprctl switchxkblayout current next"
         },
 
         "battery": {
@@ -208,6 +222,59 @@
       }
     '';
 
+    # left-bar-style.css
+    home.file.".config/waybar/left-bar-style.css".text = ''
+    * {
+      font-family: "FiraMono Nerd Font";
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+    }
+
+    #waybar {
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+      padding: 8px;
+      margin: 6px;
+    }
+    #workspaces {
+        text-shadow: 2px 1px 2px #a0a0a0;
+        background: none;
+    }
+
+    #workspaces button {
+        text-shadow: 2px 1px 2px #1e1e3f;
+        border-top: 5px solid #b877db;
+        background-color: rgba(46, 52, 64, 0.7);
+        margin: 0px 2px;
+        padding: 1px 7px;
+        font-size: 10px;
+        border-radius: 10px;
+    }
+
+    #workspaces:hover {
+        background-color:rgb(11, 64, 11);
+    }
+
+    #workspaces button:active {
+        background-color: rgb(105, 204, 43);
+        border-top: 5px solid #b877db;
+    }
+
+    #workspaces button.visible {
+        color: #87ceeb;
+        border-top: 5px solid #ff9f00;
+    }
+    
+    #clock, #custom-weather {
+      margin: 12px 0;
+      padding: 6px 10px;
+      border: 2px solid #c7ab7a;
+      border-radius: 8px;
+      background-color: #2b2b2b;
+    }
+    '';
+
     # Define Waybar styling
     home.file.".config/waybar/style.css".text = ''
     * {
@@ -276,35 +343,6 @@
     #waybar.empty #window {
         background: none;
     }
-
-    #workspaces {
-        text-shadow: 2px 1px 2px #a0a0a0;
-        background: none;
-    }
-
-    #workspaces button {
-        text-shadow: 2px 1px 2px #1e1e3f;
-        border-top: 5px solid #b877db;
-        background-color: rgba(46, 52, 64, 0.7);
-        margin: 0px 2px;
-        padding: 1px 7px;
-        font-size: 10px;
-        border-radius: 10px;
-    }
-
-    #workspaces:hover {
-        background-color:rgb(11, 64, 11);
-    }
-
-    #workspaces button:active {
-        background-color: rgb(105, 204, 43);
-        border-top: 5px solid #b877db;
-    }
-
-    #workspaces button.visible {
-        color: #87ceeb;
-        border-top: 5px solid #ff9f00;
-    }
     '';
 
     # Script for language settings
@@ -317,6 +355,23 @@
         while true; do
           sleep 1
         done
+      '';
+    };
+
+    # scrfipt for weather
+    home.file.".config/waybar/scripts/weather.sh" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+
+        # Get the weather
+        CONDITION=$(curl -s wttr.in?format="%C")
+        WIND=$(curl -s wttr.in?format="%t")
+        WEATHER=$(curl -s wttr.in?format="%w")
+
+        # Print the weather with a newline
+        echo -e "$WIND $WEATHER\n$CONDITION"
+
       '';
     };
 
