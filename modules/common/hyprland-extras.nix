@@ -10,9 +10,9 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "custom/gpu"],
+        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "cpu", "memory", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "tray", "custom/notifications"],
+        "modules-right": ["clock", "cpu", "custom/gpu", "memory", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "tray", "custom/notifications"],
 
         "hyprland/workspaces": {
           "persistent_workspaces": {
@@ -95,11 +95,13 @@
         },
 
         "cpu": {
-          "format": "CPU: {usage}%"
+          "format": "{icon} {usage}%",
+          "format-icons": ["󰻠 "]
         },
 
         "memory": {
-          "format": "RAM: {used} / {total} GB"
+          "format": "{icon} {used}/{total}",
+          "format-icons": [" "]
         },
 
         "tray": {
@@ -216,7 +218,7 @@
     }
 
     #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray,
-    #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
+    #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-gpu, #custom-notifications, #window {
         border-radius: 10px;
         border: 2px solid #c7ab7a;
         padding: 2px 10px;
@@ -328,8 +330,20 @@
       text = ''
         #!/usr/bin/env bash
 
-        read -r TEMP FAN <<< $(nvidia-smi --query-gpu=temperature.gpu,fan.speed --format=csv,noheader,nounits | tr ',' ' ')
-        echo "GPU: $TEMP°C | $FAN%"
+        # detect GPU vendor
+        if lspci | grep -i "nvidia" > /dev/null; then
+            # nvidia
+            read -r TEMP FAN <<< $(nvidia-smi --query-gpu=temperature.gpu,fan.speed --format=csv,noheader,nounits | tr ',' ' ')
+            echo "GPU: $TEMP°C | $FAN%"
+        elif lspci | grep -i "amd" > /dev/null; then
+            # amd
+            TEMP=$(cat /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input)
+            TEMP=$((TEMP / 1000)) # Convert millidegrees to degrees Celsius
+            FAN=$(cat /sys/class/drm/card0/device/hwmon/hwmon0/pwm1)
+            echo "GPU: $TEMP°C | Fan: $FAN"
+        else
+            echo "No supported GPU detected."
+        fi
         '';
     };
 
