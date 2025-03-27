@@ -18,7 +18,7 @@
           "persistent_workspaces": {
             "*": 5 // persist 5 workspaces for every monitor
           },
-          
+
           "format": "{name} {windows}",
           "format-window-separator": " ",
           "window-rewrite-default": "",
@@ -261,8 +261,7 @@
     }
 
     #workspaces:hover {
-        background-color: #303040;
-        border-top: 5px solid #b877db;
+        background-color:rgb(25, 143, 27);
     }
 
     #workspaces button:active {
