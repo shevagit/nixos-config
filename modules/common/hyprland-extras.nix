@@ -158,24 +158,35 @@
           "on-click": "env GDK_BACKEND=x11 blueman-manager"
         },
 
-        "custom/launcher": {
-          "exec": "~/.config/waybar/launcher.sh",
-          "format": "{}",
-          "on-click": "rofi -show drun -config ~/.config/rofi/launcher.rasi"
-        },
-
         "custom/vscode": {
           "format": "",
+          "tooltip": true,
+          "tooltip-format": "Visual Studio Code",
           "interval": 600,
-          "on-click": "code",
-          "tooltip": "Launch Visual Studio Code"
+          "on-click": "code"
         },
 
         "custom/chrome": {
           "format": "",
+          "tooltip": true,
+          "tooltip-format": "Google Chrome",
           "interval": 600,
-          "on-click": "google-chrome-stable",
-          "tooltip": "Launch Chrome"
+          "on-click": "google-chrome-stable"
+        },
+
+        "custom/insomnia": {
+          "format": "",
+          "tooltip": true,
+          "tooltip-format": "Insomnia",
+          "interval": 600,
+          "on-click": "insomnia"
+        },
+
+        "custom/launcher": {
+          "format": " ",
+          "tooltip": true,
+          "tooltip-format": "App Launcher",
+          "on-click": "rofi -show drun -config ~/.config/rofi/launcher.rasi"
         },
 
         "custom/notifications": {
@@ -184,13 +195,6 @@
             "on-click": "swaync-client -t",
             "tooltip": false,
             "interval": 2
-        },
-      
-        "custom/insomnia": {
-          "format": "",
-          "interval": 600,
-          "on-click": "insomnia",
-          "tooltip": "Launch Insomnia"
         }
       }
     '';
@@ -205,13 +209,36 @@
     }
 
     #cpu, #memory, #network, #pulseaudio, #bluetooth, #tray,
-    #workspaces, #language, #custom-launcher, #custom-vscode,
-    #custom-chrome, #custom-insomnia, #custom-notifications, #window {
+    #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
         border-radius: 10px;
         border: 2px solid #c7ab7a;
         padding: 2px 10px;
         background-color: rgb(192, 41, 41);
         margin: 0 2px;
+    }
+
+    #custom-vscode {
+      color: #007ACC;
+      background-color: rgb(134, 34, 34);
+      padding: 2px 13px;
+    }
+
+    #custom-chrome {
+      color: #fbbc05;
+      background-color: rgb(134, 34, 34);
+      padding: 2px 13px;
+    }
+
+    #custom-insomnia {
+      color: #400080;
+      background-color: rgb(134, 34, 34);
+      padding: 2px 13px;
+    }
+
+    #custom-launcher {
+      color: #32cd32;
+      background-color: rgb(134, 34, 34);
+      padding: 2px 13px;
     }
 
     #clock {
@@ -261,7 +288,7 @@
     }
 
     #workspaces:hover {
-        background-color:rgb(25, 143, 27);
+        background-color:rgb(11, 64, 11);
     }
 
     #workspaces button:active {
