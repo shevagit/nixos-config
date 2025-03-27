@@ -160,7 +160,7 @@
         },
 
         "custom/vscode": {
-          "format": "",
+          "format": " ",
           "tooltip": true,
           "tooltip-format": "Visual Studio Code",
           "interval": 600,
@@ -168,7 +168,7 @@
         },
 
         "custom/chrome": {
-          "format": "",
+          "format": " ",
           "tooltip": true,
           "tooltip-format": "Google Chrome",
           "interval": 600,
@@ -176,7 +176,7 @@
         },
 
         "custom/insomnia": {
-          "format": "",
+          "format": " ",
           "tooltip": true,
           "tooltip-format": "Insomnia",
           "interval": 600,
@@ -229,25 +229,21 @@
     #custom-vscode {
       color: #007ACC;
       background-color: rgb(134, 34, 34);
-      padding: 2px 13px;
     }
 
     #custom-chrome {
       color: #fbbc05;
       background-color: rgb(134, 34, 34);
-      padding: 2px 13px;
     }
 
     #custom-insomnia {
       color: #400080;
       background-color: rgb(134, 34, 34);
-      padding: 2px 13px;
     }
 
     #custom-launcher {
       color: #32cd32;
       background-color: rgb(134, 34, 34);
-      padding: 2px 13px;
     }
 
     #clock {
