@@ -38,7 +38,7 @@
         },
 
         "clock": {
-          "format": "📅{:%A\n%d %B %Y\n %H:%M}",
+          "format": "📅{:%A\n%d %B %Y}",
           "tooltip-format": "<tt><small>{calendar}</small></tt>",
           "calendar": {
             "mode"          : "month",
@@ -103,7 +103,7 @@
 
         "modules-left": ["custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
+        "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
 
 
         "hyprland/window": {
@@ -147,6 +147,12 @@
           "tooltip-format": "{ifname} via {gwaddr}",
           "on-click": "alacritty -e nmtui"
         },
+
+        "clock": {
+          "format": "⏰ {:%H:%M}",
+          "interval": 60,
+          "tooltip": false
+          },
 
         "pulseaudio": {
           "format": "{icon} {volume}%  {format_source}",
@@ -284,39 +290,12 @@
         color: white;
     }
 
-    #network, #pulseaudio, #bluetooth, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
+    #network, #pulseaudio, #clock, #bluetooth, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
         border-radius: 10px;
         border: 2px solid #c7ab7a;
         padding: 2px 10px;
         background-color: rgb(192, 41, 41);
         margin: 0 2px;
-    }
-
-    #custom-vscode {
-      color: #007ACC;
-      background-color: rgb(134, 34, 34);
-    }
-
-    #custom-chrome {
-      color: #fbbc05;
-      background-color: rgb(134, 34, 34);
-    }
-
-    #custom-insomnia {
-      color: #400080;
-      background-color: rgb(134, 34, 34);
-    }
-
-    #custom-launcher {
-      color: #32cd32;
-      background-color: rgb(134, 34, 34);
-    }
-
-    #clock {
-        background-color: rgba(13, 88, 50, 0.72);
-        border: 2px solid #c7ab7a;
-        border-radius: 10px;
-        padding: 2px 12px;
     }
 
     #waybar {
