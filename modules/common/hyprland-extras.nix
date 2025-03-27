@@ -198,7 +198,7 @@
     home.file.".config/waybar/style.css".text = ''
     * {
         font-family: "FiraMono Nerd Font";
-        font-size: 10px;
+        font-size: 12px;
         font-weight: bold;
         color: white;
     }
@@ -217,6 +217,7 @@
         background-color: rgba(13, 88, 50, 0.72);
         border: 2px solid #c7ab7a;
         border-radius: 10px;
+        padding: 2px 12px;
     }
 
     #waybar {
