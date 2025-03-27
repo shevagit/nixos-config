@@ -10,7 +10,7 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "wlr/taskbar"],
+        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia"],
         "modules-center": ["hyprland/window"],
         "modules-right": ["clock", "cpu", "memory", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "tray", "custom/notifications"],
 
@@ -18,6 +18,7 @@
           "persistent_workspaces": {
             "*": 5 // persist 5 workspaces for every monitor
           },
+          
           "format": "{name} {windows}",
           "format-window-separator": " ",
           "window-rewrite-default": "",
@@ -246,7 +247,7 @@
 
     #workspaces {
         text-shadow: 2px 1px 2px #a0a0a0;
-        background-color: rgba(91, 115, 163, 0.7);
+        background: none;
     }
 
     #workspaces button {
