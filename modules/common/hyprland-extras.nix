@@ -10,7 +10,7 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia"],
+        "modules-left": ["hyprland/workspaces", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "custom/gpu"],
         "modules-center": ["hyprland/window"],
         "modules-right": ["clock", "cpu", "memory", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "tray", "custom/notifications"],
 
@@ -39,7 +39,6 @@
               "Visual Studio Code": "",
               "title<.*vim.*>": "",
               //"title<.*is sharing your screen>": """
-              //"title<.* - (.*) - VSCodium>": "codium $1"  // captures part of the window title and formats it into output
               },
                 "show-special": true,
                 "special-visible-only": true
@@ -189,6 +188,14 @@
           "on-click": "rofi -show drun -config ~/.config/rofi/launcher.rasi"
         },
 
+        "custom/gpu": {
+          "format": "{}",
+          "exec": "~/.config/waybar/gpu-status.sh",
+          "interval": 30,
+          "tooltip": true,
+          "tooltip-format": "GPU Temp &amp; Fan"
+        },
+
         "custom/notifications": {
             "format": "🔔 {}",
             "exec": "swaync-client --count",
@@ -313,6 +320,17 @@
           sleep 1
         done
       '';
+    };
+
+    # Script for language settings
+    home.file.".config/waybar/gpu-status.sh" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+
+        read -r TEMP FAN <<< $(nvidia-smi --query-gpu=temperature.gpu,fan.speed --format=csv,noheader,nounits | tr ',' ' ')
+        echo "GPU: $TEMP°C | $FAN%"
+        '';
     };
 
     # Script for app launcher
