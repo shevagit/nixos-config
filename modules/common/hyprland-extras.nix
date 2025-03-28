@@ -9,7 +9,7 @@
       {
         "layer": "top",
         "position": "left",
-        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "cpu", "memory", "custom/gpu", "tray"],
+        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "custom/gpu", "tray"],
 
         "hyprland/workspaces": {
           "format": "{name} {windows}",
@@ -38,7 +38,7 @@
         },
 
         "clock": {
-          "format": "📅{:%A\n%d %B %Y}",
+          "format": "📅{:%A\n%d %B\n%Y}",
           "tooltip-format": "<tt><small>{calendar}</small></tt>",
           "calendar": {
             "mode"          : "month",
@@ -61,16 +61,6 @@
             "on-scroll-up": "shift_up",
             "on-scroll-down": "shift_down"
             }
-        },
-
-        "cpu": {
-          "format": "{icon} {usage}%",
-          "format-icons": ["󰻠 "]
-        },
-
-        "memory": {
-          "format": "{icon} {used}/{total}",
-          "format-icons": [" "]
         },
 
         "tray": {
@@ -101,7 +91,7 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia"],
+        "modules-left": ["custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "cpu", "memory"],
         "modules-center": ["hyprland/window"],
         "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
 
@@ -114,6 +104,17 @@
           "format-en": "🇺🇸",
           "format-gr": "🇬🇷",
           "on-click": "hyprctl switchxkblayout current next"
+        },
+
+        "cpu": {
+          "interval": 15,
+          "format": " {usage:>2}%",
+          "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+        },
+
+        "memory": {
+          "format": "{icon} {used}|{total}",
+          "format-icons": [" "]
         },
 
         "battery": {
@@ -232,7 +233,7 @@
     home.file.".config/waybar/left-bar-style.css".text = ''
     * {
       font-family: "FiraMono Nerd Font";
-      font-size: 14px;
+      font-size: 12px;
       font-weight: bold;
       color: white;
     }
@@ -272,7 +273,7 @@
         border-top: 5px solid #ff9f00;
     }
     
-    #clock, #custom-weather, #cpu, #memory, #custom-gpu, #tray {
+    #clock, #custom-weather, #custom-gpu, #tray {
       margin: 12px 0;
       padding: 6px 10px;
       border: 2px solid #c7ab7a;
@@ -290,7 +291,7 @@
         color: white;
     }
 
-    #network, #pulseaudio, #clock, #bluetooth, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
+    #network, #pulseaudio, #clock, #cpu, #memory, #bluetooth, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
         border-radius: 10px;
         border: 2px solid #c7ab7a;
         padding: 2px 10px;
@@ -344,11 +345,11 @@
 
         # Get the weather
         CONDITION=$(curl -s wttr.in?format="%C")
-        WIND=$(curl -s wttr.in?format="%t")
-        WEATHER=$(curl -s wttr.in?format="%w")
+        WIND=$(curl -s wttr.in?format="%w")
+        WEATHER=$(curl -s wttr.in?format="%t")
 
         # Print the weather with a newline
-        echo -e "$WIND $WEATHER\n$CONDITION"
+        echo -e "$WEATHER\n$CONDITION"
 
       '';
     };
@@ -363,13 +364,13 @@
         if lspci | grep -i "nvidia" > /dev/null; then
             # nvidia
             read -r TEMP FAN <<< $(nvidia-smi --query-gpu=temperature.gpu,fan.speed --format=csv,noheader,nounits | tr ',' ' ')
-            echo "GPU: $TEMP°C | $FAN%"
+            echo "GPU:$TEMP°C"
         elif lspci | grep -i "amd" > /dev/null; then
             # amd
             TEMP=$(cat /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input)
             TEMP=$((TEMP / 1000)) # Convert millidegrees to degrees Celsius
             FAN=$(cat /sys/class/drm/card0/device/hwmon/hwmon0/pwm1)
-            echo "GPU: $TEMP°C | Fan: $FAN"
+            echo "GPU:$TEMP°C"
         else
             echo "No supported GPU detected."
         fi
