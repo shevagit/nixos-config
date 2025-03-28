@@ -9,7 +9,8 @@
       {
         "layer": "top",
         "position": "left",
-        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "tray"],
+        "modules-left": ["hyprland/workspaces", "clock", "custom/weather"],
+        "modules-right": [ "tray"],
 
         "hyprland/workspaces": {
           "format": "{name} {windows}",
@@ -239,11 +240,14 @@
     }
 
     #waybar {
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 12px;
-      padding: 8px;
-      margin: 6px;
+        background-color: rgba(76, 175, 80, 0.0);
+        border: none;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
     }
+
     #workspaces {
         text-shadow: 2px 1px 2px #a0a0a0;
         background: none;
