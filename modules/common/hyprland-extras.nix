@@ -9,7 +9,7 @@
       {
         "layer": "top",
         "position": "left",
-        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "custom/gpu", "tray"],
+        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "tray"],
 
         "hyprland/workspaces": {
           "format": "{name} {windows}",
@@ -67,18 +67,10 @@
           "spacing": 10
         },
 
-        "custom/gpu": {
-          "format": "{}",
-          "exec": "~/.config/waybar/gpu-status.sh",
-          "interval": 30,
-          "tooltip": true,
-          "tooltip-format": "GPU Temp &amp; Fan"
-        },
-
         "custom/weather": {
           "exec": "~/.config/waybar/scripts/weather.sh",
           "interval": 600,
-          "format": "🌤️ {}",
+          "format": "{}",
           "tooltip": true
         }
       }
@@ -91,7 +83,7 @@
         "layer": "top",
         "position": "top",
 
-        "modules-left": ["custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "cpu", "memory"],
+        "modules-left": ["custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "cpu", "memory", "custom/gpu"],
         "modules-center": ["hyprland/window"],
         "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
 
@@ -188,6 +180,14 @@
           "on-click": "env GDK_BACKEND=x11 blueman-manager"
         },
 
+        "custom/gpu": {
+          "format": "󰏈  {}",
+          "exec": "~/.config/waybar/gpu-status.sh",
+          "interval": 30,
+          "tooltip": true,
+          "tooltip-format": "GPU temp"
+        },
+
         "custom/vscode": {
           "format": " ",
           "tooltip": true,
@@ -273,9 +273,9 @@
         border-top: 5px solid #ff9f00;
     }
     
-    #clock, #custom-weather, #custom-gpu, #tray {
+    #clock, #custom-weather, #tray {
       margin: 12px 0;
-      padding: 6px 10px;
+      padding: 4px 4px;
       border: 2px solid #c7ab7a;
       border-radius: 8px;
       background-color: #2b2b2b;
@@ -291,7 +291,7 @@
         color: white;
     }
 
-    #network, #pulseaudio, #clock, #cpu, #memory, #bluetooth, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
+    #network, #pulseaudio, #clock, #cpu, #custom-gpu, #memory, #bluetooth, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
         border-radius: 10px;
         border: 2px solid #c7ab7a;
         padding: 2px 10px;
@@ -341,20 +341,32 @@
     home.file.".config/waybar/scripts/weather.sh" = {
       executable = true;
       text = ''
-        #!/usr/bin/env bash
+        LOCATION="Athens"
 
-        # Get the weather
-        CONDITION=$(curl -s wttr.in?format="%C")
-        WIND=$(curl -s wttr.in?format="%w")
-        WEATHER=$(curl -s wttr.in?format="%t")
+        CONDITION=$(curl -s "wttr.in/$LOCATION?format=%C")
+        WIND=$(curl -s "wttr.in/$LOCATION?format=%w")
+        TEMP=$(curl -s "wttr.in/$LOCATION?format=%t")
 
-        # Print the weather with a newline
-        echo -e "$WEATHER\n$CONDITION"
+        # Basic emoji mapping
+        ICON="❓"
 
+        case "$CONDITION" in
+          *Clear*|*Sunny*) ICON="☀️" ;;
+          *Partly*|*Clouds*) ICON="🌤️" ;;
+          *Cloudy*) ICON="☁️" ;;
+          *Overcast*) ICON="🌥️" ;;
+          *Rain*|*Drizzle*) ICON="🌧️" ;;
+          *Thunder*|*Storm*) ICON="⛈️" ;;
+          *Snow*) ICON="❄️" ;;
+          *Mist*|*Fog*) ICON="🌫️" ;;
+        esac
+
+        # Output with newline
+        echo -e "$ICON$TEMP\n$CONDITION"
       '';
     };
 
-    # Script for language settings
+    # Script for gpu temp based on vendor
     home.file.".config/waybar/gpu-status.sh" = {
       executable = true;
       text = ''
@@ -364,13 +376,13 @@
         if lspci | grep -i "nvidia" > /dev/null; then
             # nvidia
             read -r TEMP FAN <<< $(nvidia-smi --query-gpu=temperature.gpu,fan.speed --format=csv,noheader,nounits | tr ',' ' ')
-            echo "GPU:$TEMP°C"
+            echo "$TEMP°C"
         elif lspci | grep -i "amd" > /dev/null; then
             # amd
             TEMP=$(cat /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input)
             TEMP=$((TEMP / 1000)) # Convert millidegrees to degrees Celsius
             FAN=$(cat /sys/class/drm/card0/device/hwmon/hwmon0/pwm1)
-            echo "GPU:$TEMP°C"
+            echo "$TEMP°C"
         else
             echo "No supported GPU detected."
         fi
