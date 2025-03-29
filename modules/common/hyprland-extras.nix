@@ -382,16 +382,16 @@
             read -r TEMP FAN <<< $(nvidia-smi --query-gpu=temperature.gpu,fan.speed --format=csv,noheader,nounits | tr ',' ' ')
             echo "$TEMP°C"
         elif lspci | grep -qi "amd"; then
-            # AMD – dynamically find temp file
-            TEMP_PATH=$(find /sys/class/drm/ -type f -name temp1_input 2>/dev/null | grep card.*/device | head -n 1)
-
-            if [[ -f "$TEMP_PATH" ]]; then
-                RAW_TEMP=$(cat "$TEMP_PATH")
-                TEMP=$((RAW_TEMP / 1000))
-                echo "$TEMP°C"
-            else
-                echo "No temp sensor found"
-            fi
+            # AMD – look for hwmon with 'amdgpu' in name
+            for dir in /sys/class/hwmon/hwmon*; do
+                if grep -q "amdgpu" "$dir/name"; then
+                    RAW_TEMP=$(cat "$dir/temp1_input")
+                    TEMP=$((RAW_TEMP / 1000))
+                    echo "$TEMP°C"
+                    exit 0
+                fi
+            done
+            echo "AMD GPU temp not found"
         else
             echo "No supported GPU detected."
         fi
