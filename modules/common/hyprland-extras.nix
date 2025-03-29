@@ -124,7 +124,7 @@
             "tooltip-format": "🔋 {capacity}%\n🔁 {cycles} cycles",
             "tooltip-format-charging": "🔌 Charging\n🔋 {capacity}%\n🔁 {cycles} cycles",
             "tooltip-format-full": "✅ Full\n🔋 {capacity}%\n🔁 {cycles} cycles",
-            "on-click": "alacritty -e upower -i /org/freedesktop/UPower/devices/battery_BAT0"
+            "on-click": "~/.config/waybar/scripts/battery-info.sh"
         },
 
         "wlr/taskbar": {
@@ -186,7 +186,7 @@
 
         "custom/gpu": {
           "format": "󰏈  {}",
-          "exec": "~/.config/waybar/gpu-status.sh",
+          "exec": "~/.config/waybar/scripts/gpu-status.sh",
           "interval": 30,
           "tooltip": true,
           "tooltip-format": "GPU temp"
@@ -373,8 +373,20 @@
       '';
     };
 
+    # Sript for battery info
+    home.file.".config/waybar/scripts/battery-info.sh" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+
+        BAT_INFO=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "state|to go|percentage|time to|capacity|cycle-count" | sed 's/^ *//')
+
+        echo "$BAT_INFO" | rofi -dmenu -p "🔋 Battery Info"
+      '';
+    };
+
     # Script for gpu temp based on vendor
-    home.file.".config/waybar/gpu-status.sh" = {
+    home.file.".config/waybar/scripts/gpu-status.sh" = {
       executable = true;
       text = ''
         #!/usr/bin/env bash
