@@ -86,7 +86,7 @@
 
         "modules-left": ["custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "cpu", "memory", "custom/gpu"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
+        "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "custom/battery-notifications", "hyprland/language", "custom/notifications"],
 
 
         "hyprland/window": {
@@ -221,6 +221,13 @@
           "tooltip": true,
           "tooltip-format": "App Launcher",
           "on-click": "rofi -show drun -config ~/.config/rofi/launcher.rasi"
+        },
+
+        "custom/battery-notifications": {
+          "exec": "~/.config/waybar/scripts/battery-notifications.sh",
+          "interval": 60,
+          "tooltip": false,
+          "format": ""
         },
 
         "custom/notifications": {
@@ -382,6 +389,29 @@
         BAT_INFO=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "state|to go|percentage|time to|capacity|cycle-count" | sed 's/^ *//')
 
         echo "$BAT_INFO" | rofi -dmenu -p "🔋 Battery Info"
+      '';
+    };
+
+    # Script for battery notifications
+    home.file.".config/waybar/scripts/battery-notifications.sh" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+
+        # Check if a battery exists
+        BATTERY_PATH=$(upower -e | grep battery | head -n1)
+        if [[ -z "$BATTERY_PATH" ]]; then
+          exit 0
+        fi
+
+        # Get battery level and state
+        LEVEL=$(upower -i "$BATTERY_PATH" | awk '/percentage:/ {gsub(/%/, "", $2); print $2}')
+        STATE=$(upower -i "$BATTERY_PATH" | awk '/state:/ {print $2}')
+
+        # Send notification if low and discharging
+        if [[ "$STATE" == "discharging" && "$LEVEL" -le 15 ]]; then
+          notify-send -u critical "⚠️ Battery Low" "Level: $LEVEL%"
+        fi
       '';
     };
 

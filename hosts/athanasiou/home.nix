@@ -15,6 +15,7 @@
   ",preferred,auto,1"
   ];
   
+  # host-specific packages
   home.packages = with pkgs; [
     libnotify # add notify-send for battery notifications
   ];
