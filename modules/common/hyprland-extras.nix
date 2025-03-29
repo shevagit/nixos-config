@@ -121,8 +121,10 @@
                 "warning": 25,
                 "critical": 10
             },
-            "tooltip": false,
-            "on-click": "2"
+            "tooltip-format": "🔋 {capacity}%\n🔁 {cycles} cycles",
+            "tooltip-format-charging": "🔌 Charging\n🔋 {capacity}%\n🔁 {cycles} cycles",
+            "tooltip-format-full": "✅ Full\n🔋 {capacity}%\n🔁 {cycles} cycles",
+            "on-click": "alacritty -e upower -i /org/freedesktop/UPower/devices/battery_BAT0"
         },
 
         "wlr/taskbar": {
