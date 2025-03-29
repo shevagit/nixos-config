@@ -111,8 +111,6 @@
         },
 
         "battery": {
-          "bat": "BAT0",
-          "adapter": "AC",
           "interval": 90,
           "states": {
             "warning": 30,
