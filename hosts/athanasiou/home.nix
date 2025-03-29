@@ -15,7 +15,7 @@
   ",preferred,auto,1"
   ];
   
-  home.packages = with.pkgs; [
+  home.packages = with pkgs; [
     libnotify # add notify-send for battery notifications
   ]
 
