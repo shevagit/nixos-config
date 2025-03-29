@@ -15,6 +15,10 @@
   ",preferred,auto,1"
   ];
   
+  home.packages = with.pkgs; [
+    libnotify # add notify-send for battery notifications
+  ]
+
   # Override vscode.extensions
   programs.vscode.extensions = lib.mkForce null;
 
