@@ -118,8 +118,7 @@
           },
           "format": "{icon} {capacity}%",
           "format-time": "{icon} {capacity}% {time}",
-          "format-icons": [" ", " ", " ", " ", " "],
-          "tooltip-format": "Capacity: {capacity}%"
+          "format-icons": [" ", " ", " ", " ", " "]
         },
 
         "wlr/taskbar": {
