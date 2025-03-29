@@ -295,7 +295,7 @@
         color: white;
     }
 
-    #network, #pulseaudio, #clock, #cpu, #custom-gpu, #memory, #bluetooth, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
+    #network, #pulseaudio, #clock, #battery, #cpu, #custom-gpu, #memory, #bluetooth, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
         border-radius: 10px;
         border: 2px solid #c7ab7a;
         padding: 2px 10px;
