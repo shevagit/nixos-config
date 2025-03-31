@@ -75,6 +75,8 @@
     zstd
     gnupg
     flameshot
+    grimblast
+    swappy
     blueman
     discord
     slack

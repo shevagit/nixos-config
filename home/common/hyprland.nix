@@ -96,7 +96,8 @@
         "CONTROL_ALT, L, exec, swaylock"
 
         # Screenshot
-        "$mod, Print, exec, grim -g \"$(slurp)\""
+        # deprecated: "$mod, Print, exec, grim -g \"$(slurp)\""
+        "$mod, Print, exec, grimblast save area /tmp/screenshot.png && swappy -f /tmp/screenshot.png"
 
         # Volume control
         ", XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
