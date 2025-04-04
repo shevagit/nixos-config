@@ -360,6 +360,12 @@
         CONDITION=$(curl -s "wttr.in/$LOCATION?format=%C")
         WIND=$(curl -s "wttr.in/$LOCATION?format=%w")
         TEMP=$(curl -s "wttr.in/$LOCATION?format=%t")
+        
+        # handle bad response
+        if [[ -z "$CONDITION" ]] || echo "$CONDITION" | grep -qi "Unknown location"; then
+          echo -e "❓\nwttr unavailable"
+          exit 0
+        fi
 
         # Basic emoji mapping
         ICON="❓"
