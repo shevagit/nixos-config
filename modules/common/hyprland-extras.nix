@@ -355,7 +355,7 @@
     home.file.".config/waybar/scripts/weather.sh" = {
       executable = true;
       text = ''
-        LOCATION="Athens"
+        LOCATION="Athens,Greece"
 
         CONDITION=$(curl -s "wttr.in/$LOCATION?format=%C")
         WIND=$(curl -s "wttr.in/$LOCATION?format=%w")
