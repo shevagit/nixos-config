@@ -19,10 +19,10 @@
         :anchor "right top"
         :exclusive false
         :focusable false
-        :geometry (geometry :x "10px" :y "10px" :width "60px" :height "auto")
+        :geometry (geometry :x "10px" :y "10px" :width "60px")
         :stacking "fg"
         :visible true
-        sidebar)
+        "sidebar")
 
     '';
     };
