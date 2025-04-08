@@ -6,25 +6,26 @@
 
     home.file.".config/eww/eww.yuck" = {
     text = ''
-        (defwidget sidebar []
-        (box :class "sidebar"
-            :orientation "v"
-            :spacing "10px"
-            (button :onclick "foot" :tooltip "Terminal" (label :text ""))
-            (button :onclick "firefox" :tooltip "Browser" (label :text ""))
-            (button :onclick "rofi -show run" :tooltip "Run" (label :text ""))
-        )
-        )
+        (defwidget greeter [?text name]
+        (box :orientation "horizontal"
+            :halign "right"
+            text
+            (button :onclick "notify-send 'Hello' 'Hello, $${name}'"
+            "Greet")))
 
-        (defwindow sidebar
-        :monitor "0"
-        :anchor "right top"
-        :exclusive false
-        :focusable false
-        :geometry (geometry :x "10px" :y "10px" :width "60px")
-        :stacking "fg"
-        :visible true
-        "sidebar")
+        (defwindow example
+                :monitor 0
+                :geometry (geometry :x "0%"
+                                    :y "20px"
+                                    :width "90%"
+                                    :height "30px"
+                                    :anchor "top right")
+                :stacking "fg"
+                :reserve (struts :distance "40px" :side "top")
+                :windowtype "dock"
+                :wm-ignore false
+        (greeter :text "Say hello!"
+                :name "sheva"))
 
     '';
     };
