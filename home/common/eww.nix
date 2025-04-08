@@ -9,6 +9,7 @@
         (defwidget sidebar []
         (box :class "sidebar"
             :orientation "v"
+            :spacing "10px"
             (button :onclick "foot" :tooltip "Terminal" (label :text ""))
             (button :onclick "firefox" :tooltip "Browser" (label :text ""))
             (button :onclick "rofi -show run" :tooltip "Run" (label :text ""))
@@ -16,6 +17,7 @@
         )
 
         (defwindow sidebar
+        :monitor "0"
         :anchor "right top"
         :exclusive false
         :focusable false
@@ -44,7 +46,6 @@
         border-radius: 12px;
         padding: 10px;
         box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        spacing: 12px;
         }
     '';
     };
