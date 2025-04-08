@@ -10,5 +10,6 @@
         ./docker.nix
         ./hyprland.nix
         ./hyprland-theme.nix
+        ./eww.nix
     ];
 }
