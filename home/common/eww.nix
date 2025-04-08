@@ -1,6 +1,7 @@
 {
     programs.eww = {
       enable = true;
+      configDir = ./skel-eww-config;
     };
 
     home.file.".config/eww/eww.yuck" = {
@@ -14,8 +15,7 @@
         )
         )
 
-        (window
-        :name "sidebar"
+        (defwindow sidebar
         :anchor "right top"
         :exclusive false
         :focusable false
@@ -23,6 +23,7 @@
         :stacking "fg"
         :visible true
         sidebar)
+
     '';
     };
 
