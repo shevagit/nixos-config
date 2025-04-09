@@ -375,9 +375,9 @@
           *Partly*|*Clouds*) ICON="🌤️" ;;
           *Cloudy*) ICON="☁️" ;;
           *Overcast*) ICON="🌥️" ;;
-          *Rain*|*Drizzle*) ICON="🌧️" ;;
           *Thunder*|*Storm*) ICON="⛈️" ;;
           *Snow*) ICON="❄️" ;;
+          *Light*|*Heavy*|*Showers*|*Drizzle*) ICON="🌧️" ;;
           *Mist*|*Fog*) ICON="🌫️" ;;
         esac
 
