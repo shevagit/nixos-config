@@ -197,7 +197,7 @@
           "tooltip": true,
           "tooltip-format": "Visual Studio Code",
           "interval": 600,
-          "on-click": "code"
+          "on-click": "code --enable-features=UseOzonePlatform --ozone-platform=wayland"
         },
 
         "custom/chrome": {
