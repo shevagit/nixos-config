@@ -187,7 +187,7 @@
     ".config/hyprland/scripts/waybars-wrapper.sh".text = ''
       #!/usr/bin/env bash
       waybar -c ~/.config/waybar/left-bar-config.jsonc -s ~/.config/waybar/left-bar-style.css &
-      sleep 0.5
+      sleep 1
       waybar &
     '';
   };
