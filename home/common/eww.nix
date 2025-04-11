@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }:{
     programs.eww = {
       enable = true;
       configDir = ./skel-eww-config;
@@ -23,22 +23,13 @@
 
         (defwindow bottom-bar
         :monitor 0
-        :geometry (geometry :x "0%"
-                            :y "100%"
-                            :width "100%"
-                            :height "40px"
-                            :anchor "bottom center")
+        :geometry (geometry :x "50%" :y "50%" :width "400px" :height "80px" :anchor "center")
         :stacking "fg"
-        :reserve (struts :distance "40px" :side "bottom")
         :windowtype "dock"
         :wm-ignore false
         (box :orientation "horizontal"
-            :space-evenly true
             :class "bar"
-            (wifi)
-            (battery)
-            (clock)
-            (greeter :name "Sheva")))
+            (label :text "Can you see me now? 👀")))
 
     '';
     };
@@ -58,7 +49,6 @@
         .bar {
         background-color: $bg;
         padding: 0 20px;
-        height: 100%;
         border-top: 1px solid lighten($bg, 10%);
         box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
         }
@@ -92,12 +82,20 @@
 
     #{# End Scripts #}
 
-    #systemd service that starts eww on login
+    # systemd service that starts eww on login
     systemd.user.services.eww-bottom = {
-      enable = true;
-      wantedBy = [ "default.target" ];
-      script = ''
-      ''${pkgs.eww}/bin/eww daemon
-      ''${pkgs.eww}/bin/eww open bottom-bar
-    '';
-  };
+        Unit = {
+        Description = "Eww bottom bar";
+        After = [ "graphical-session.target" ];
+        };
+
+        Service = {
+        ExecStart = "${pkgs.eww}/bin/eww daemon --no-daemon && ${pkgs.eww}/bin/eww open bottom-bar";
+        Restart = "on-failure";
+        };
+
+        Install = {
+        WantedBy = [ "default.target" ];
+        };
+    };
+}
