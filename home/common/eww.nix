@@ -10,7 +10,7 @@
         (box :orientation "horizontal"
             :halign "right"
             text
-            (button :onclick "notify-send 'Hello' 'Hello, $${name}'"
+            (button :onclick "notify-send 'Hello' 'Hello, ''${name}'"
             "Greet")))
 
         (defwindow example
@@ -19,7 +19,7 @@
                                     :y "20px"
                                     :width "90%"
                                     :height "30px"
-                                    :anchor "top right")
+                                    :anchor "bottom right")
                 :stacking "fg"
                 :reserve (struts :distance "40px" :side "top")
                 :windowtype "dock"
