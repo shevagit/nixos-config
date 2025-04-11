@@ -11,5 +11,6 @@
         ./hyprland.nix
         ./hyprland-theme.nix
         ./eww.nix
+        ./vscode-plugins.nix
     ];
 }
