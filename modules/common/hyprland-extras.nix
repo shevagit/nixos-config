@@ -386,7 +386,7 @@
       '';
     };
 
-    # Sript for battery info
+    # Sript for battery info if on laptop
     home.file.".config/waybar/scripts/battery-info.sh" = {
       executable = true;
       text = ''

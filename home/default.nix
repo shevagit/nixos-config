@@ -80,6 +80,8 @@
     blueman
     discord
     slack
+    weather
+    wthrr
 
     # nix related
     #
