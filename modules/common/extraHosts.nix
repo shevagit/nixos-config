@@ -2,7 +2,7 @@
   networking.extraHosts = ''
 
     # add hosts
-
+    127.0.0.1   client.lw.develop
   '';
 
   services.dnsmasq = {
