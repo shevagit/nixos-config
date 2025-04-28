@@ -35,6 +35,7 @@
     terraform
     gnome-keyring # required by mongodb-compass
     libreoffice
+    rclone
 
     # xrhsima
     openrgb-with-all-plugins
