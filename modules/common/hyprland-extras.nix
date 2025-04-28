@@ -10,7 +10,7 @@
         "layer": "top",
         "position": "left",
         "modules-left": ["hyprland/workspaces", "clock", "custom/weather"],
-        "modules-right": [ "tray"],
+        "modules-right": ["tray", "custom/power-menu"],
 
         "hyprland/workspaces": {
           "format": "{name} {windows}",
@@ -73,6 +73,12 @@
           "interval": 600,
           "format": "{}",
           "tooltip": true
+        },
+
+        "custom/power-menu": {
+          "format": "⏻",
+          "tooltip": "Power Menu",
+          "on-click": "~/.config/hyprland/scripts/wofi-power-menu.sh"
         }
       }
     '';
