@@ -293,7 +293,7 @@
         border-top: 5px solid #ff9f00;
     }
     
-    #clock, #custom-weather, #tray {
+    #clock, #custom-weather, #tray, #power-menu {
       margin: 12px 0;
       padding: 4px 4px;
       border: 2px solid #c7ab7a;
