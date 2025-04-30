@@ -3,6 +3,7 @@
 
     # add hosts
     127.0.0.1   client.lw.develop
+    127.0.0.1   aurora.lw.develop
   '';
 
   services.dnsmasq = {
