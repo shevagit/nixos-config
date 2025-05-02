@@ -4,6 +4,8 @@
     # add hosts
     127.0.0.1   client.lw.develop
     127.0.0.1   aurora.lw.develop
+    127.0.0.1   companion.lw.develop
+    127.0.0.1   assets.lw.develop
   '';
 
   services.dnsmasq = {
