@@ -16,6 +16,7 @@
       ../../modules/common/docker.nix
       ../../modules/common/extraHosts.nix
       ../../modules/services/systemd-tmpfiles-rules.nix
+      ../../modules/common/fprintd.nix
     ];
 
   # Bootloader.
