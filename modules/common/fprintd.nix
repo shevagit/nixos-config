@@ -7,5 +7,9 @@
     enable = true;
   };
 
+  services.fprintd.tod = {
+    enable = true;
+  };
+
   security.pam.services.login.fprintAuth = false;
 }
