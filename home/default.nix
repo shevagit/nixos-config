@@ -83,6 +83,7 @@
     slack
     weather
     wthrr
+    spotify
 
     # nix related
     #
