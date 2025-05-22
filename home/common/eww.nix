@@ -4,59 +4,35 @@
       configDir = ./skel-eww-config;
     };
 
+    # Try a spotify pop-up using eww
     home.file.".config/eww/eww.yuck" = {
     text = ''
-        (defwidget clock []
-        (label :text (date "%a %b %d - %H:%M")))
 
-        (defwidget battery []
-        (label :text (poll "~/.config/eww/scripts/battery.sh" :interval "10s")))
-
-        (defwidget wifi []
-        (label :text (poll "~/.config/eww/scripts/wifi.sh" :interval "15s")))
-
-        (defwidget greeter [?name]
-        (button
-            :onclick "notify-send 'Hi' 'Hey there, ''${name}!'"
-            :class "widget"
-            "👋 ''${name}"))
-
-        (defwindow bottom-bar
-        :monitor 0
-        :geometry (geometry :x "50%" :y "50%" :width "400px" :height "80px" :anchor "center")
-        :stacking "fg"
-        :windowtype "dock"
-        :wm-ignore false
-        (box :orientation "horizontal"
-            :class "bar"
-            (label :text "Can you see me now? 👀")))
-
+        (defwindow spotify_popup
+          :monitor 0
+          :geometry (geometry :x 100 :y 100 :width 250 :height 250)
+          :stacking "overlay"
+          :visible false
+          (box
+            :class "spotify-popup"
+            :orientation "vertical"
+            :spacing 10
+            (image :path "/tmp/spotify_cover.jpg" :width 200 :height 200)
+            (label :text "$EWW_SPOTIFY_TITLE")
+            (label :text "$EWW_SPOTIFY_ARTIST")
+          )
+        )
     '';
     };
 
     home.file.".config/eww/eww.scss" = {
     text = ''
-        $bg: rgba(30, 30, 46, 0.9);
-        $fg: #cdd6f4;
-
-        * {
-        all: unset;
-        font-family: "JetBrainsMono Nerd Font", monospace;
-        font-size: 16px;
-        color: $fg;
+        .spotify-popup {
+          background-color: #222;
+          border-radius: 12px;
+          padding: 10px;
+          color: white;
         }
-
-        .bar {
-        background-color: $bg;
-        padding: 0 20px;
-        border-top: 1px solid lighten($bg, 10%);
-        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .widget {
-        padding: 0 10px;
-        }
-
     '';
     };
 
