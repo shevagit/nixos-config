@@ -9,7 +9,7 @@
       {
         "layer": "top",
         "position": "left",
-        "modules-left": ["hyprland/workspaces", "clock", "custom/weather"],
+        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "custom/spotify"],
         "modules-right": ["tray", "custom/power-menu"],
 
         "hyprland/workspaces": {
@@ -73,6 +73,15 @@
           "interval": 600,
           "format": "{}",
           "tooltip": true
+        },
+
+        "custom/spotify": {
+          "format": "{}",
+          "exec": "~/.config/waybar/scripts/spotify.sh",
+          "interval": 2,
+          "on-click": "playerctl play-pause",
+          "on-click-right": "playerctl next",
+          "on-click-middle": "playerctl previous"
         },
 
         "custom/power-menu": {
@@ -300,6 +309,15 @@
       border-radius: 8px;
       background-color: #2b2b2b;
     }
+
+    #custom-spotify {
+    font-family: "JetBrainsMono Nerd Font";
+    padding: 0 10px;
+    color: #ffffff;
+    background: #1db954;
+    border-radius: 8px;
+  }
+
     '';
 
     # Define Waybar styling
@@ -464,6 +482,31 @@
         while true; do
           sleep 1
         done
+      '';
+    };
+
+    # script for spotify
+    home.file.".config/waybar/scripts/spotify.sh" = {
+      executable = true;
+      text = ''
+      #!/usr/bin/env bash
+
+      if ! playerctl --list-all | grep -q spotify; then
+        exit 0
+      fi
+
+      status=$(playerctl status -p spotify 2>/dev/null)
+      if [ "$status" != "Playing" ] && [ "$status" != "Paused" ]; then
+        exit 0
+      fi
+
+      artist=$(playerctl metadata -p spotify artist)
+      title=$(playerctl metadata -p spotify title)
+
+      icon=""
+      [ "$status" = "Playing" ] && icon=""
+
+      echo "{\"text\": \"$icon $artist - $title\", \"tooltip\": \"Click to Play/Pause\"}"
       '';
     };
 

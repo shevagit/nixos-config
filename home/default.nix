@@ -84,6 +84,7 @@
     weather
     wthrr
     spotify
+    playerctl
 
     # nix related
     #
