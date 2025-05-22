@@ -82,7 +82,9 @@
           "interval": 2,
           "on-click": "playerctl -p spotify play-pause",
           "on-click-right": "playerctl -p spotify next",
-          "on-click-middle": "playerctl -p spotify previous"
+          "on-click-middle": "playerctl -p spotify previous",
+          "on-scroll-up": "~/.config/eww/update_spotify_popup.sh && eww open spotify_popup",
+          "on-scroll-down": "~/.config/eww/update_spotify_popup.sh && eww close spotify_popup",
         },
 
         "custom/power-menu": {
@@ -512,7 +514,7 @@
       title=$(playerctl metadata -p spotify title)
 
       short_title=$(echo "$title" | cut -c1-10)
-      short_artist=$(echo "$artist" | cut -c1-8)
+      short_artist=$(echo "$artist" | cut -c1-9)
 
       icon=""
       bgcolor="#888888" # paused = grey
@@ -522,6 +524,23 @@
       tooltip="$title by $artist"
 
       echo "{\"text\": \"$text\", \"tooltip\": \"$tooltip\", \"class\": \"$status\"}"
+      '';
+    };
+
+    # script for spotify pop-up using eww
+    home.file.".config/eww/update_spotify_popup.sh" = {
+      executable = true;
+      text = ''
+      #!/usr/bin/env bash
+
+      title=$(playerctl metadata -p spotify title)
+      artist=$(playerctl metadata -p spotify artist)
+      arturl=$(playerctl metadata -p spotify mpris:artUrl | sed 's/open.spotify.com/i.scdn.co/')
+
+      wget -q "$arturl" -O /tmp/spotify_cover.jpg
+
+      eww update EWW_SPOTIFY_TITLE="$title"
+      eww update EWW_SPOTIFY_ARTIST="$artist"
       '';
     };
 
