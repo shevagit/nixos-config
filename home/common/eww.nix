@@ -8,10 +8,7 @@
     home.file.".config/eww/eww.yuck" = {
     text = ''
 
-        (defvar EWW_SPOTIFY_TITLE "")
-        (defvar EWW_SPOTIFY_ARTIST "")
-
-        (defwindow spotify_popup
+         (defwindow spotify_popup
           :monitor 0
           :geometry (geometry :x 100 :y 100 :width 250 :height 250)
           :stacking "overlay"
@@ -25,16 +22,6 @@
               :width 200
               :height 200
             )
-            (label
-              :text EWW_SPOTIFY_TITLE
-              :wrap true
-              :xalign 0.5
-            )
-            (label
-              :text EWW_SPOTIFY_ARTIST
-              :wrap true
-              :xalign 0.5
-            )
         )
       )
     '';
@@ -45,6 +32,7 @@
         .spotify-popup {
           background-color: #222;
           border-radius: 12px;
+          border: 2px solid #1db954;
           padding: 10px;
           color: white;
         }
