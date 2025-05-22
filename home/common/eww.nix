@@ -8,6 +8,9 @@
     home.file.".config/eww/eww.yuck" = {
     text = ''
 
+        (defvar EWW_SPOTIFY_TITLE "")
+        (defvar EWW_SPOTIFY_ARTIST "")
+
         (defwindow spotify_popup
           :monitor 0
           :geometry (geometry :x 100 :y 100 :width 250 :height 250)
@@ -17,11 +20,23 @@
             :class "spotify-popup"
             :orientation "vertical"
             :spacing 10
-            (image :path "/tmp/spotify_cover.jpg" :width 200 :height 200)
-            (label :text "$EWW_SPOTIFY_TITLE")
-            (label :text "$EWW_SPOTIFY_ARTIST")
-          )
+            (image
+              :path "/tmp/spotify_cover.jpg"
+              :width 200
+              :height 200
+            )
+            (label
+              :text EWW_SPOTIFY_TITLE
+              :wrap true
+              :xalign 0.5
+            )
+            (label
+              :text EWW_SPOTIFY_ARTIST
+              :wrap true
+              :xalign 0.5
+            )
         )
+      )
     '';
     };
 
