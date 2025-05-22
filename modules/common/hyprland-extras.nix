@@ -78,10 +78,11 @@
         "custom/spotify": {
           "format": "{}",
           "exec": "~/.config/waybar/scripts/spotify.sh",
+          "return-type": "json",
           "interval": 2,
-          "on-click": "playerctl play-pause",
-          "on-click-right": "playerctl next",
-          "on-click-middle": "playerctl previous"
+          "on-click": "playerctl -p spotify play-pause",
+          "on-click-right": "playerctl -p spotify next",
+          "on-click-middle": "playerctl -p spotify previous"
         },
 
         "custom/power-menu": {
@@ -311,12 +312,19 @@
     }
 
     #custom-spotify {
-    font-family: "JetBrainsMono Nerd Font";
-    padding: 0 10px;
-    color: #ffffff;
-    background: #1db954;
-    border-radius: 8px;
-  }
+      border: 2px solid #c7ab7a;
+      border-radius: 8px;
+      padding: 4px;
+      color: white;
+    }
+
+    #custom-spotify.Playing {
+      background-color: #1db954;
+    }
+
+    #custom-spotify.Paused {
+      background-color: #888888;
+    }
 
     '';
 
@@ -503,10 +511,17 @@
       artist=$(playerctl metadata -p spotify artist)
       title=$(playerctl metadata -p spotify title)
 
-      icon=""
-      [ "$status" = "Playing" ] && icon=""
+      short_title=$(echo "$title" | cut -c1-10)
+      short_artist=$(echo "$artist" | cut -c1-8)
 
-      echo "{\"text\": \"$icon $artist - $title\", \"tooltip\": \"Click to Play/Pause\"}"
+      icon=""
+      bgcolor="#888888" # paused = grey
+      [ "$status" = "Playing" ] && icon="" && bgcolor="#1db954"
+
+      text="$short_artist -\n$short_title"
+      tooltip="$title by $artist"
+
+      echo "{\"text\": \"$text\", \"tooltip\": \"$tooltip\", \"class\": \"$status\"}"
       '';
     };
 
