@@ -8,6 +8,16 @@
     home.file.".config/eww/eww.yuck" = {
     text = ''
 
+        (defwindow spotify_thumb
+          :monitor 0
+          :geometry (geometry :x 12 :y 120 :width 48 :height 48)
+          :stacking "overlay"
+          (box
+            :class "spotify-thumb"
+            (image :path "/tmp/spotify_cover.jpg" :width 40 :height 40)
+          )
+        )
+
         (defwindow keepalive
           :monitor 0
           :visible false
@@ -15,26 +25,36 @@
         )
 
         (defwindow spotify_popup
-        :monitor 0
-        :geometry (geometry :x 100 :y 100 :width 250 :height 250)
-        :stacking "overlay"
-        :visible false
-        (box
-          :class "spotify-popup"
-          :orientation "vertical"
-          :spacing 10
-          (image
-            :path "/tmp/spotify_cover.jpg"
-            :width 200
-            :height 200
+          :monitor 0
+          :geometry (geometry :x 100 :y 100 :width 250 :height 250)
+          :stacking "overlay"
+          :visible false
+          (box
+            :class "spotify-popup"
+            :orientation "vertical"
+            :spacing 10
+            (image
+              :path "/tmp/spotify_cover.jpg"
+              :width 200
+              :height 200
+            )
           )
         )
-      )
-    '';
+
+      '';
     };
 
     home.file.".config/eww/eww.scss" = {
     text = ''
+
+        .spotify-thumb {
+          margin: 12px 0;
+          padding: 4px;
+          border: 2px solid #c7ab7a;
+          border-radius: 8px;
+          background-color: #2b2b2b;
+        }
+
         .spotify-popup {
           background-color: #222;
           border-radius: 12px;
@@ -65,6 +85,35 @@
       executable = true;
     };
 
+    # script for spotify thumb window using eww
+    home.file.".config/eww/spotify-thumb.sh" = {
+      executable = true;
+      text = ''
+
+          #!/usr/bin/env bash
+
+          # Default JSON output
+          echo '{"text": ""}'
+
+          # Only proceed silently if spotify is a known player
+          if playerctl --list-all 2>/dev/null | grep -q spotify; then
+            status=$(playerctl status -p spotify 2>/dev/null)
+            if [[ "$status" == "Playing" || "$status" == "Paused" ]]; then
+              arturl=$(playerctl metadata -p spotify mpris:artUrl 2>/dev/null | sed 's/open.spotify.com/i.scdn.co/')
+              if [[ -n "$arturl" ]]; then
+                wget -q "$arturl" -O /tmp/spotify_cover.jpg
+              fi
+              eww open spotify_thumb 2>/dev/null
+              exit 0
+            fi
+          fi
+
+          # Hide thumbnail
+          eww close spotify_thumb 2>/dev/null
+          exit 0
+
+      '';
+    };
     #{# End Scripts #}
 
     # systemd service that starts eww on login

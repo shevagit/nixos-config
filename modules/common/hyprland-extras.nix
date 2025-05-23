@@ -9,7 +9,7 @@
       {
         "layer": "top",
         "position": "left",
-        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "custom/spotify"],
+        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "custom/spotify-thumb-sync", "custom/spotify"],
         "modules-right": ["tray", "custom/power-menu"],
 
         "hyprland/workspaces": {
@@ -83,8 +83,15 @@
           "on-click": "playerctl -p spotify play-pause",
           "on-click-right": "playerctl -p spotify next",
           "on-click-middle": "playerctl -p spotify previous",
-          "on-scroll-up": "~/.config/eww/update_spotify_popup.sh && eww open spotify_popup",
-          "on-scroll-down": "~/.config/eww/update_spotify_popup.sh && eww close spotify_popup",
+          "on-scroll-up": "~/.config/eww/spotify-album-popup.sh && eww open spotify_popup",
+          "on-scroll-down": "~/.config/eww/spotify-album-popup.sh && eww close spotify_popup",
+        },
+
+        "custom/spotify-thumb-sync": {
+          "exec": "~/.config/eww/spotify-thumb.sh",
+          "interval": 5,
+          "return-type": "json",
+          "format": ""
         },
 
         "custom/power-menu": {
@@ -528,7 +535,7 @@
     };
 
     # script for spotify pop-up using eww
-    home.file.".config/eww/update_spotify_popup.sh" = {
+    home.file.".config/eww/spotify-album-popup.sh" = {
       executable = true;
       text = ''
       #!/usr/bin/env bash
