@@ -92,10 +92,10 @@
 
           #!/usr/bin/env bash
 
-          # Default JSON output
+          # Output empty JSON for Waybar to stay happy
           echo '{"text": ""}'
 
-          # Only proceed silently if spotify is a known player
+          # Only proceed if Spotify is running and active
           if playerctl --list-all 2>/dev/null | grep -q spotify; then
             status=$(playerctl status -p spotify 2>/dev/null)
             if [[ "$status" == "Playing" || "$status" == "Paused" ]]; then
@@ -103,14 +103,12 @@
               if [[ -n "$arturl" ]]; then
                 wget -q "$arturl" -O /tmp/spotify_cover.jpg
               fi
-              eww open spotify_thumb 2>/dev/null
+              eww open spotify_thumb &>/dev/null
               exit 0
             fi
           fi
 
-          # Hide thumbnail
-          eww close spotify_thumb 2>/dev/null
-          exit 0
+          eww close spotify_thumb &>/dev/null
 
       '';
     };

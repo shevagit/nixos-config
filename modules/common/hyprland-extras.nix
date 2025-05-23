@@ -508,7 +508,8 @@
       text = ''
       #!/usr/bin/env bash
 
-      if ! playerctl --list-all | grep -q spotify; then
+      if ! (playerctl --list-all 2>/dev/null | grep -q spotify); then
+        echo '{"text": ""}'
         exit 0
       fi
 
@@ -531,6 +532,9 @@
       tooltip="$title by $artist"
 
       echo "{\"text\": \"$text\", \"tooltip\": \"$tooltip\", \"class\": \"$status\"}"
+      echo '{"text": ""}'
+      exit 0
+
       '';
     };
 
