@@ -8,8 +8,12 @@
     enable = true;
     settings = {
       "$mod" = "SUPER";
-      exec-once = "~/.config/hyprland/scripts/waybars-wrapper.sh";
-      exec-once = "eww daemon";
+      
+      exec-once = [
+        "~/.config/hyprland/scripts/waybars-wrapper.sh"
+        "${pkgs.eww}/bin/eww daemon"
+      ];
+
     monitor = [
       # cheatsheet: "monitor = name, resolution, position, scale"
       # transform: 
