@@ -8,20 +8,26 @@
     home.file.".config/eww/eww.yuck" = {
     text = ''
 
-         (defwindow spotify_popup
+        (defwindow keepalive
           :monitor 0
-          :geometry (geometry :x 100 :y 100 :width 250 :height 250)
-          :stacking "overlay"
           :visible false
-          (box
-            :class "spotify-popup"
-            :orientation "vertical"
-            :spacing 10
-            (image
-              :path "/tmp/spotify_cover.jpg"
-              :width 200
-              :height 200
-            )
+          (box)
+        )
+
+        (defwindow spotify_popup
+        :monitor 0
+        :geometry (geometry :x 100 :y 100 :width 250 :height 250)
+        :stacking "overlay"
+        :visible false
+        (box
+          :class "spotify-popup"
+          :orientation "vertical"
+          :spacing 10
+          (image
+            :path "/tmp/spotify_cover.jpg"
+            :width 200
+            :height 200
+          )
         )
       )
     '';
@@ -62,19 +68,22 @@
     #{# End Scripts #}
 
     # systemd service that starts eww on login
-    systemd.user.services.eww-bottom = {
-        Unit = {
-        Description = "Eww bottom bar";
-        After = [ "graphical-session.target" ];
-        };
+    # systemd.user.services.eww = {
+    #   Unit = {
+    #     Description = "Eww daemon";
+    #     After = [ "graphical-session.target" "xdg-desktop-autostart.target" ];
+    #     PartOf = [ "graphical-session.target" ];
+    #     WantedBy = [ "default.target" ];
+    #   };
 
-        Service = {
-        ExecStart = "${pkgs.eww}/bin/eww daemon --no-daemon && ${pkgs.eww}/bin/eww open bottom-bar";
-        Restart = "on-failure";
-        };
+    #   Service = {
+    #     ExecStart = "${pkgs.eww}/bin/eww daemon";
+    #     ExecStartPost = "${pkgs.eww}/bin/eww open keepalive";
+    #     Restart = "on-failure";
+    #   };
 
-        Install = {
-        WantedBy = [ "default.target" ];
-        };
-    };
+    #   Install = {
+    #     WantedBy = [ "default.target" ];
+    #   };
+    # };
 }
