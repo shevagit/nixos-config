@@ -27,3 +27,10 @@ upgrade: update switch
 # Collect garbage to free disk space
 gc:
 	nix-collect-garbage -d
+
+deep-gc:
+	sudo nix-collect-garbage -d
+
+# List all available system profiles
+list-generations:
+	sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
