@@ -9,7 +9,7 @@
       {
         "layer": "top",
         "position": "left",
-        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "custom/spotify-thumb-sync", "custom/spotify"],
+        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "cpu", "custom/gpu", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "custom/spotify-thumb-sync", "custom/spotify"],
         "modules-right": ["tray", "custom/power-menu"],
 
         "hyprland/workspaces": {
@@ -38,34 +38,14 @@
                 "special-visible-only": true
         },
 
-        "clock": {
-          "format": "📅{:%A\n%d %B\n%Y}",
-          "tooltip-format": "<tt><small>{calendar}</small></tt>",
-          "calendar": {
-            "mode"          : "month",
-            "mode-mon-col"  : 3,
-            "weeks-pos"     : "right",
-            "on-scroll"     : 1,
-            "on-click-right": "mode",
-            "format": {
-                "months":     "<span color='#ffead3'><b>{}</b></span>",
-                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
-                },
-        },
-        "actions": {
-            "on-click-right": "mode",
-            "on-click-forward": "tz_up",
-            "on-click-backward": "tz_down",
-            "on-scroll-up": "shift_up",
-            "on-scroll-down": "shift_down"
-            }
-        },
-
         "tray": {
           "spacing": 10
+        },
+
+        "cpu": {
+          "interval": 15,
+          "format": " {usage:>2}%",
+          "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
         },
 
         "custom/weather": {
@@ -75,138 +55,10 @@
           "tooltip": true
         },
 
-        "custom/spotify": {
-          "format": "{}",
-          "exec": "~/.config/waybar/scripts/spotify.sh",
-          "return-type": "json",
-          "interval": 2,
-          "on-click": "playerctl -p spotify play-pause",
-          "on-click-right": "playerctl -p spotify next",
-          "on-click-middle": "playerctl -p spotify previous",
-          "on-scroll-up": "~/.config/eww/spotify-album-popup.sh && eww open spotify_popup",
-          "on-scroll-down": "~/.config/eww/spotify-album-popup.sh && eww close spotify_popup",
-        },
-
-        "custom/spotify-thumb-sync": {
-          "exec": "~/.config/eww/spotify-thumb.sh",
-          "interval": 5,
-          "return-type": "json",
-          "format": ""
-        },
-
-        "custom/power-menu": {
-          "format": "⏻",
-          "tooltip": "Power Menu",
-          "on-click": "~/.config/hyprland/scripts/wofi-power-menu.sh"
-        }
-      }
-    '';
-
-
-    # Define Waybar configuration
-    home.file.".config/waybar/config.jsonc".text = ''
-      {
-        "layer": "top",
-        "position": "top",
-
-        "modules-left": ["custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "cpu", "memory", "custom/gpu"],
-        "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "custom/battery-notifications", "hyprland/language", "custom/notifications"],
-
-
-        "hyprland/window": {
-          "separate-outputs": true
-        },
-        "hyprland/language": {
-          "format": "{}",
-          "format-en": "🇺🇸",
-          "format-gr": "🇬🇷",
-          "on-click": "hyprctl switchxkblayout current next"
-        },
-
-        "cpu": {
-          "interval": 15,
-          "format": " {usage:>2}%",
-          "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
-        },
-
-        "memory": {
-          "format": "{icon} {used}|{total}",
-          "format-icons": [" "]
-        },
-
-        "battery": {
-            "format": "<span font='Font Awesome 5 Free 11'>{icon}</span>  {capacity}% - {time}",
-            "format-icons": ["", "", "", "", ""],
-            "format-time": "{H}h{M}m",
-            "format-charging": "<span font='Font Awesome 5 Free'></span>  <span font='Font Awesome 5 Free 11'>{icon}</span>  {capacity}% - {time}",
-            "format-full": "<span font='Font Awesome 5 Free'></span>  <span font='Font Awesome 5 Free 11'>{icon}</span>  Charged",
-            "interval": 30,
-            "states": {
-                "warning": 25,
-                "critical": 10
-            },
-            "tooltip-format": "🔋 {capacity}%\n🔁 {cycles} cycles",
-            "tooltip-format-charging": "🔌 Charging\n🔋 {capacity}%\n🔁 {cycles} cycles",
-            "tooltip-format-full": "✅ Full\n🔋 {capacity}%\n🔁 {cycles} cycles",
-            "on-click": "~/.config/waybar/scripts/battery-info.sh"
-        },
-
-        "wlr/taskbar": {
-          "format": "{icon}",
-          "icon-size": 14,
-          "icon-theme": "Numix-Circle",
-          "tooltip-format": "{title}",
-          "on-click": "activate",
-          "on-click-middle": "close"
-        },
-
-        "network": {
-          "interval": 30,
-          "format-wifi": "  {essid} ({signalStrength}%)",
-          "format-ethernet": "󰈀 {ipaddr}",
-          "format-disconnected": "⚠️ No network",
-          "tooltip-format": "{ifname} via {gwaddr}",
-          "on-click": "alacritty -e nmtui"
-        },
-
         "clock": {
           "format": "⏰ {:%H:%M}",
           "interval": 60,
           "tooltip": false
-          },
-
-        "pulseaudio": {
-          "format": "{icon} {volume}%  {format_source}",
-          "format-bluetooth": "{icon} {volume}%  {format_source}",
-          "format-bluetooth-muted": " {icon}  {format_source}",
-          "format-muted": " {format_source}",
-          "format-source": " {volume}%",
-          "format-source-muted": "",
-          "format-icons": {
-            "headphone": " ",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": [
-              "",
-              "",
-              ""
-            ]
-          },
-          "on-click": "pavucontrol",
-          "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
-          "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
-        },
-
-        "bluetooth": {
-          "format": " {status}",
-          "format-connected": "󰂯 {num_connections}",
-          "format-disconnected": "󰂲 Off",
-          "tooltip": true,
-          "on-click": "env GDK_BACKEND=x11 blueman-manager"
         },
 
         "custom/gpu": {
@@ -246,6 +98,154 @@
           "tooltip": true,
           "tooltip-format": "App Launcher",
           "on-click": "rofi -show drun -config ~/.config/rofi/launcher.rasi"
+        },
+
+        "custom/spotify": {
+          "format": "{}",
+          "exec": "~/.config/waybar/scripts/spotify.sh",
+          "return-type": "json",
+          "interval": 2,
+          "on-click": "playerctl -p spotify play-pause",
+          "on-click-right": "playerctl -p spotify next",
+          "on-click-middle": "playerctl -p spotify previous",
+          "on-scroll-up": "~/.config/eww/spotify-album-popup.sh && eww open spotify_popup",
+          "on-scroll-down": "~/.config/eww/spotify-album-popup.sh && eww close spotify_popup",
+        },
+
+        "custom/spotify-thumb-sync": {
+          "exec": "~/.config/eww/spotify-thumb.sh",
+          "interval": 5,
+          "return-type": "json",
+          "format": ""
+        },
+
+        "custom/power-menu": {
+          "format": "⏻",
+          "tooltip": "Power Menu",
+          "on-click": "~/.config/hyprland/scripts/wofi-power-menu.sh"
+        }
+      }
+    '';
+
+
+    # Define Waybar configuration
+    home.file.".config/waybar/config.jsonc".text = ''
+      {
+        "layer": "top",
+        "position": "top",
+
+        "modules-left": ["memory"],
+        "modules-center": ["hyprland/window"],
+        "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "custom/battery-notifications", "hyprland/language", "custom/notifications"],
+
+
+        "hyprland/window": {
+          "separate-outputs": true
+        },
+        "hyprland/language": {
+          "format": "{}",
+          "format-en": "🇺🇸",
+          "format-gr": "🇬🇷",
+          "on-click": "hyprctl switchxkblayout current next"
+        },
+
+        "battery": {
+            "format": "<span font='Font Awesome 5 Free 11'>{icon}</span>  {capacity}% - {time}",
+            "format-icons": ["", "", "", "", ""],
+            "format-time": "{H}h{M}m",
+            "format-charging": "<span font='Font Awesome 5 Free'></span>  <span font='Font Awesome 5 Free 11'>{icon}</span>  {capacity}% - {time}",
+            "format-full": "<span font='Font Awesome 5 Free'></span>  <span font='Font Awesome 5 Free 11'>{icon}</span>  Charged",
+            "interval": 30,
+            "states": {
+                "warning": 25,
+                "critical": 10
+            },
+            "tooltip-format": "🔋 {capacity}%\n🔁 {cycles} cycles",
+            "tooltip-format-charging": "🔌 Charging\n🔋 {capacity}%\n🔁 {cycles} cycles",
+            "tooltip-format-full": "✅ Full\n🔋 {capacity}%\n🔁 {cycles} cycles",
+            "on-click": "~/.config/waybar/scripts/battery-info.sh"
+        },
+
+        "clock": {
+          "format": "📅{:%A %d %B %Y}",
+          "tooltip-format": "<tt><small>{calendar}</small></tt>",
+          "calendar": {
+            "mode"          : "month",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "on-click-right": "mode",
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                },
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+            }
+        },
+
+        "memory": {
+          "format": "{icon} {used}/{total}",
+          "format-icons": [" "]
+        },
+
+        "wlr/taskbar": {
+          "format": "{icon}",
+          "icon-size": 14,
+          "icon-theme": "Numix-Circle",
+          "tooltip-format": "{title}",
+          "on-click": "activate",
+          "on-click-middle": "close"
+        },
+
+        "network": {
+          "interval": 30,
+          "format-wifi": "  {essid} ({signalStrength}%)",
+          "format-ethernet": "󰈀 {ipaddr}",
+          "format-disconnected": "⚠️ No network",
+          "tooltip-format": "{ifname} via {gwaddr}",
+          "on-click": "alacritty -e nmtui"
+        },
+
+        "pulseaudio": {
+          "format": "{icon} {volume}%  {format_source}",
+          "format-bluetooth": "{icon} {volume}%  {format_source}",
+          "format-bluetooth-muted": " {icon}  {format_source}",
+          "format-muted": " {format_source}",
+          "format-source": " {volume}%",
+          "format-source-muted": "",
+          "format-icons": {
+            "headphone": " ",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+              "",
+              "",
+              ""
+            ]
+          },
+          "on-click": "pavucontrol",
+          "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+          "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+        },
+
+        "bluetooth": {
+          "format": " {status}",
+          "format-connected": "󰂯 {num_connections}",
+          "format-disconnected": "󰂲 Off",
+          "tooltip": true,
+          "on-click": "env GDK_BACKEND=x11 blueman-manager"
         },
 
         "custom/battery-notifications": {
@@ -312,12 +312,12 @@
         border-top: 5px solid #ff9f00;
     }
     
-    #clock, #custom-weather, #tray, #custom-power-menu {
+    #clock, #custom-weather, #tray, #custom-power-menu, #cpu, #custom-gpu, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia {
       margin: 12px 0;
       padding: 4px 4px;
       border: 2px solid #c7ab7a;
       border-radius: 8px;
-      background-color: #2b2b2b;
+      background-color: rgb(192, 41, 41);
     }
 
     #custom-spotify {
@@ -346,7 +346,7 @@
         color: white;
     }
 
-    #network, #pulseaudio, #clock, #battery, #cpu, #custom-gpu, #memory, #bluetooth, #workspaces, #language, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-notifications, #window {
+    #network, #pulseaudio, #clock, #memory, #battery, #bluetooth, #workspaces, #language, #custom-notifications, #window {
         border-radius: 10px;
         border: 2px solid #c7ab7a;
         padding: 2px 10px;
