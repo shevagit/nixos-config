@@ -15,6 +15,7 @@
       du = "du -hsc";
       cdnix = "cd ~/githubdir/nixos-config";
       cdlwgit = "cd ~/learnworlds/gitlabdir";
+      cdlwdatsunprep = "cd ~/learnworlds/gitlabdir/datsunpreparator";
       rm = "rm -i";
     };
 
@@ -23,7 +24,7 @@
     history.path = "$HOME/.zsh_history";
     history.ignorePatterns = ["rm *" "pkill *" "cp *"];
     # Add paths in PATH
-    initExtra = ''
+    initContent = ''
       export PATH="$HOME/bin:$PATH"
       export KUBE_EDITOR=vim
 
