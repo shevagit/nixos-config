@@ -2,14 +2,12 @@
   description = "NixOS configuration";
 
   inputs = {
-    # Stable NixOS 25.05
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     home-manager-stable = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
-    # Unstable NixOS
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager-unstable = {
       url = "github:nix-community/home-manager";
@@ -25,7 +23,6 @@
     ...
   }: {
     nixosConfigurations = {
-      # Stable machine
       simos = nixpkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
@@ -39,7 +36,6 @@
         ];
       };
 
-      # Unstable machine
       athanasiou = nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
