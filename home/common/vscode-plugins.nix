@@ -1,5 +1,5 @@
 { pkgs, ... }:{
-  programs.vscode.extensions = with pkgs.vscode-extensions; [
+  programs.vscode.profiles.default.extensions = with pkgs.vscode-extensions; [
     bbenoist.nix
     eamodio.gitlens
     github.copilot

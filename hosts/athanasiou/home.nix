@@ -20,18 +20,4 @@
     libnotify # add notify-send for battery notifications
   ];
 
-  # Override vscode.extensions
-  # programs.vscode.profiles.default.extensions = lib.mkForce null;
-
-  # programs.vscode.profiles.default.extensions = with pkgs.vscode-extensions; [
-  #   bbenoist.nix
-  #   eamodio.gitlens
-  #   github.copilot
-  #   github.copilot-chat
-  #   golang.go
-  #   mechatroner.rainbow-csv
-  #   ms-vscode.makefile-tools
-  #   hashicorp.terraform
-  #   4ops.terraform
-  # ];
 }
