@@ -70,7 +70,7 @@
         },
 
         "custom/vscode": {
-          "format": " ",
+          "format": "󰘐 ",
           "tooltip": true,
           "tooltip-format": "Visual Studio Code",
           "interval": 600,
@@ -78,7 +78,7 @@
         },
 
         "custom/chrome": {
-          "format": " ",
+          "format": "󰊯 ",
           "tooltip": true,
           "tooltip-format": "Google Chrome",
           "interval": 600,
@@ -86,7 +86,7 @@
         },
 
         "custom/insomnia": {
-          "format": " ",
+          "format": " ",
           "tooltip": true,
           "tooltip-format": "Insomnia",
           "interval": 600,
@@ -94,7 +94,7 @@
         },
 
         "custom/launcher": {
-          "format": " ",
+          "format": "󰌧 ",
           "tooltip": true,
           "tooltip-format": "App Launcher",
           "on-click": "rofi -show drun -config ~/.config/rofi/launcher.rasi"
