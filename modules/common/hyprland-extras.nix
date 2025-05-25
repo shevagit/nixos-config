@@ -86,7 +86,7 @@
         },
 
         "custom/insomnia": {
-          "format": " ",
+          "format": "󱂛 ",
           "tooltip": true,
           "tooltip-format": "Insomnia",
           "interval": 600,
