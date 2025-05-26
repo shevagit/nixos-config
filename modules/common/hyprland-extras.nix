@@ -90,7 +90,7 @@
           "tooltip": true,
           "tooltip-format": "Insomnia",
           "interval": 600,
-          "on-click": "insomnia --enable-features=UseOzonePlatform --ozone-platform=wayland"
+          "on-click": "insomnia"
         },
 
         "custom/launcher": {
