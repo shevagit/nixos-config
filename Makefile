@@ -13,6 +13,10 @@ build:
 switch:
 	sudo nixos-rebuild switch --flake ./#$(HOSTNAME)
 
+# Apply the system configuration on the next boot
+boot:
+	sudo nixos-rebuild boot --flake ./#$(HOSTNAME)
+
 # Show differences between the current and built system
 diff:
 	nvd diff /run/current-system /nix/var/nix/profiles/system
