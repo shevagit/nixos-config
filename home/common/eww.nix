@@ -8,6 +8,26 @@
     home.file.".config/eww/eww.yuck" = {
     text = ''
 
+        (defwindow power_popup
+          :monitor 0
+          :geometry (geometry :x 100 :y 100 :width 200 :height 180)
+          :stacking "overlay"
+          :visible false
+          (box
+            :class "power-popup"
+            :orientation "vertical"
+            :spacing 15
+            :halign "center"
+            :valign "center"
+            :space-evenly true
+
+            (button :onclick "hyprlock" (label :text "🔒 Lock"))
+            (button :onclick "hyprctl dispatch exit 0" (label :text "🚪 Logout"))
+            (button :onclick "systemctl reboot" (label :text "🔄 Reboot"))
+            (button :onclick "systemctl poweroff" (label :text "⏻ Shutdown"))
+          )
+        )
+
         (defwindow spotify_thumb
           :monitor 0
           :geometry (geometry :x 12 :y 120 :width 48 :height 48)
@@ -46,6 +66,27 @@
 
     home.file.".config/eww/eww.scss" = {
     text = ''
+
+        .power-popup {
+          background-color: #1e1e2e;
+          border-radius: 10px;
+          padding: 15px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.6);
+        }
+
+        .power-popup button {
+          font-family: JetBrainsMono, "Noto Color Emoji", sans-serif;
+          background-color: #313244;
+          border-radius: 5px;
+          padding: 8px;
+          font-size: 16px;
+          color: #cdd6f4;
+          transition: background 0.2s;
+        }
+
+        .power-popup button:hover {
+          background-color: #45475a;
+        }
 
         .spotify-thumb {
           margin: 12px 0;
@@ -133,4 +174,11 @@
     #     WantedBy = [ "default.target" ];
     #   };
     # };
+  
+    # Install noto fonts
+    home.packages = with pkgs; [
+      noto-fonts
+      noto-fonts-emoji
+      jetbrains-mono
+    ];
 }
