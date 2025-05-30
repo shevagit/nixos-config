@@ -8,58 +8,63 @@
     home.file.".config/eww/eww.yuck" = {
     text = ''
 
-        (defwindow power_popup
-          :monitor 0
-          :geometry (geometry :x 100 :y 100 :width 200 :height 180)
-          :stacking "overlay"
-          :visible false
-          (box
-            :class "power-popup"
-            :orientation "vertical"
-            :spacing 15
-            :halign "center"
-            :valign "center"
-            :space-evenly true
+      (defwindow power_popup
+        :monitor 0
+        :geometry (geometry
+          :x (- (/ (monitor-width) 2) 110)
+          :y (- (/ (monitor-height) 2) 120)
+          :width 220
+          :height 240)
+        :stacking "overlay"
+        :visible false
+        (box
+          :class "power-popup"
+          :orientation "vertical"
+          :spacing 15
+          :halign "center"
+          :valign "center"
+          :space-evenly true
 
-            (button :onclick "hyprlock" (label :text "🔒 Lock"))
-            (button :onclick "hyprctl dispatch exit 0" (label :text "🚪 Logout"))
-            (button :onclick "systemctl reboot" (label :text "🔄 Reboot"))
-            (button :onclick "systemctl poweroff" (label :text "⏻ Shutdown"))
+          (button :onclick "hyprlock" (label :text "🔒 Lock"))
+          (button :onclick "hyprctl dispatch exit 0" (label :text "🚪 Logout"))
+          (button :onclick "systemctl reboot" (label :text "🔄 Reboot"))
+          (button :onclick "systemctl poweroff" (label :text "⏻ Shutdown"))
+        )
+      )
+
+
+      (defwindow spotify_thumb
+        :monitor 0
+        :geometry (geometry :x 12 :y 120 :width 48 :height 48)
+        :stacking "overlay"
+        (box
+          :class "spotify-thumb"
+          (image :path "/tmp/spotify_cover.jpg" :width 40 :height 40)
+        )
+      )
+
+      (defwindow keepalive
+        :monitor 0
+        :visible false
+        (box)
+      )
+
+      (defwindow spotify_popup
+        :monitor 0
+        :geometry (geometry :x 100 :y 100 :width 250 :height 250)
+        :stacking "overlay"
+        :visible false
+        (box
+          :class "spotify-popup"
+          :orientation "vertical"
+          :spacing 10
+          (image
+            :path "/tmp/spotify_cover.jpg"
+            :width 200
+            :height 200
           )
         )
-
-        (defwindow spotify_thumb
-          :monitor 0
-          :geometry (geometry :x 12 :y 120 :width 48 :height 48)
-          :stacking "overlay"
-          (box
-            :class "spotify-thumb"
-            (image :path "/tmp/spotify_cover.jpg" :width 40 :height 40)
-          )
-        )
-
-        (defwindow keepalive
-          :monitor 0
-          :visible false
-          (box)
-        )
-
-        (defwindow spotify_popup
-          :monitor 0
-          :geometry (geometry :x 100 :y 100 :width 250 :height 250)
-          :stacking "overlay"
-          :visible false
-          (box
-            :class "spotify-popup"
-            :orientation "vertical"
-            :spacing 10
-            (image
-              :path "/tmp/spotify_cover.jpg"
-              :width 200
-              :height 200
-            )
-          )
-        )
+      )
 
       '';
     };
@@ -67,25 +72,39 @@
     home.file.".config/eww/eww.scss" = {
     text = ''
 
+        * {
+          all: unset;
+          font-family: JetBrainsMono, "Noto Color Emoji", sans-serif;
+        }
+
         .power-popup {
-          background-color: #1e1e2e;
-          border-radius: 10px;
-          padding: 15px;
-          box-shadow: 0 0 10px rgba(0,0,0,0.6);
+          background-color: rgba(30, 30, 46, 0.6); // translucent
+          border-radius: 12px;
+          padding: 16px;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+          transition: all 0.25s ease;
         }
 
         .power-popup button {
-          font-family: JetBrainsMono, "Noto Color Emoji", sans-serif;
-          background-color: #313244;
-          border-radius: 5px;
-          padding: 8px;
+          background-color: #313244cc;
+          border-radius: 8px;
+          padding: 10px 12px;
           font-size: 16px;
           color: #cdd6f4;
-          transition: background 0.2s;
+          transition: background 0.2s, transform 0.1s ease;
+          min-width: 140px;
+          text-align: center;
         }
 
         .power-popup button:hover {
-          background-color: #45475a;
+          background-color: #45475acc;
+          transform: scale(1.03);
+        }
+
+        .power-popup label {
+          color: #cdd6f4;
+          font-weight: 500;
+          text-shadow: 1px 1px #1e1e2e;
         }
 
         .spotify-thumb {
