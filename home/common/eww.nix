@@ -11,8 +11,8 @@
       (defwindow power_popup
         :monitor 0
         :geometry (geometry
-          :x (- (/ (monitor-width) 2) 110)
-          :y (- (/ (monitor-height) 2) 120)
+          :x 850
+          :y 420
           :width 220
           :height 240)
         :stacking "overlay"
@@ -31,7 +31,6 @@
           (button :onclick "systemctl poweroff" (label :text "⏻ Shutdown"))
         )
       )
-
 
       (defwindow spotify_thumb
         :monitor 0
