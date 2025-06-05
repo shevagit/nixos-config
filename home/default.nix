@@ -36,6 +36,7 @@
     gnome-keyring # required by mongodb-compass
     libreoffice
     rclone
+    linkerd
 
     # xrhsima
     openrgb-with-all-plugins
@@ -56,6 +57,7 @@
     mkcert
     duf
     zoxide
+    lazydocker
 
     # networking tools
     mtr # A network diagnostic tool
