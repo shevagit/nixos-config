@@ -28,9 +28,14 @@
       export PATH="$HOME/bin:$PATH"
       export KUBE_EDITOR=vim
 
+      # zoxide init
+      eval "$(zoxide init zsh)"
+
       # Bind Ctrl + Left Arrow to backward-word and Ctrl + Right Arrow to forward-word
       bindkey "^[[1;5D" backward-word
       bindkey "^[[1;5C" forward-word
+
+      # getnix-index
       function getnixindexdb {
         local _index="index-$(uname -m | sed 's/^arm64$/aarch64/')-$(uname | tr A-Z a-z)"
         local _cache=~/.cache/nix-index

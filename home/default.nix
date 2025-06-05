@@ -54,6 +54,8 @@
     fzf # A command-line fuzzy finder
     nss_latest # certutil
     mkcert
+    duf
+    zoxide
 
     # networking tools
     mtr # A network diagnostic tool
