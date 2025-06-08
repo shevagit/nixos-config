@@ -7,64 +7,7 @@
     # Try a spotify pop-up using eww
     home.file.".config/eww/eww.yuck" = {
     text = ''
-
-      (defwindow power_popup
-        :monitor 0
-        :geometry (geometry
-          :x 850
-          :y 420
-          :width 220
-          :height 240)
-        :stacking "overlay"
-        :visible false
-        (box
-          :class "power-popup"
-          :orientation "vertical"
-          :spacing 15
-          :halign "center"
-          :valign "center"
-          :space-evenly true
-
-          (button :onclick "hyprlock" (label :text "🔒 Lock"))
-          (button :onclick "hyprctl dispatch exit 0" (label :text "🚪 Logout"))
-          (button :onclick "systemctl reboot" (label :text "🔄 Reboot"))
-          (button :onclick "systemctl poweroff" (label :text "⏻ Shutdown"))
-        )
-      )
-
-      (defwindow spotify_thumb
-        :monitor 0
-        :geometry (geometry :x 12 :y 120 :width 48 :height 48)
-        :stacking "overlay"
-        (box
-          :class "spotify-thumb"
-          (image :path "/tmp/spotify_cover.jpg" :width 40 :height 40)
-        )
-      )
-
-      (defwindow keepalive
-        :monitor 0
-        :visible false
-        (box)
-      )
-
-      (defwindow spotify_popup
-        :monitor 0
-        :geometry (geometry :x 100 :y 100 :width 250 :height 250)
-        :stacking "overlay"
-        :visible false
-        (box
-          :class "spotify-popup"
-          :orientation "vertical"
-          :spacing 10
-          (image
-            :path "/tmp/spotify_cover.jpg"
-            :width 200
-            :height 200
-          )
-        )
-      )
-
+      (include "eww_windows.yuck")
       '';
     };
 
@@ -85,23 +28,21 @@
         }
 
         .power-popup button {
-          background-color: #313244cc;
+          background-color:rgba(69, 71, 90, 0.8);
           border-radius: 8px;
           padding: 10px 12px;
           font-size: 16px;
-          color: #cdd6f4;
+          color: rgba(205, 214, 244, 0.9);
           transition: background 0.2s, transform 0.1s ease;
           min-width: 140px;
-          text-align: center;
         }
 
         .power-popup button:hover {
-          background-color: #45475acc;
-          transform: scale(1.03);
+          background-color: rgba(69, 71, 90, 0.8);
         }
 
         .power-popup label {
-          color: #cdd6f4;
+          color: rgba(205, 214, 244, 0.9);
           font-weight: 500;
           text-shadow: 1px 1px #1e1e2e;
         }
@@ -121,6 +62,95 @@
           padding: 10px;
           color: white;
         }
+
+        .left-bar {
+          background-color: rgba(30, 30, 46, 0.8);
+          border-radius: 0 12px 12px 0;
+          padding: 10px 4px;
+          transition: width 0.25s ease, padding 0.25s ease;
+          box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
+        }
+
+    '';
+    };
+
+    # eww_windows.yuck
+    home.file.".config/eww/eww_windows.yuck" = {
+    text = ''
+
+    (defwindow power_popup
+      :monitor 0
+      :geometry (geometry :x 850 :y 420 :width 220 :height 240)
+      :stacking "overlay"
+      :visible false
+      (box
+        :class "power-popup"
+        :orientation "vertical"
+        :spacing 15
+        :halign "center"
+        :valign "center"
+        :space-evenly true
+
+        (button :onclick "hyprlock" (label :text "🔒 Lock"))
+        (button :onclick "hyprctl dispatch exit 0" (label :text "🚪 Logout"))
+        (button :onclick "systemctl reboot" (label :text "🔄 Reboot"))
+        (button :onclick "systemctl poweroff" (label :text "⏻ Shutdown"))
+      )
+    )
+
+    (defwindow spotify_thumb
+      :monitor 0
+      :geometry (geometry :x 12 :y 120 :width 48 :height 48)
+      :stacking "overlay"
+      (box
+        :class "spotify-thumb"
+        (image :path "/tmp/spotify_cover.jpg" :width 40 :height 40)
+      )
+    )
+
+    (defwindow spotify_popup
+      :monitor 0
+      :geometry (geometry :x 100 :y 100 :width 250 :height 250)
+      :stacking "overlay"
+      :visible false
+      (box
+        :class "spotify-popup"
+        :orientation "vertical"
+        :spacing 10
+        (image
+          :path "/tmp/spotify_cover.jpg"
+          :width 200
+          :height 200
+        )
+      )
+    )
+
+    (defpoll weather :interval "1800s" "curl -s 'wttr.in?format=1'")
+    (defpoll gpu_temp :interval "10s" "~/.config/waybar/scripts/gpu-status.sh")
+
+    (defwindow left_bar
+      :monitor 0
+      :geometry (geometry :x 0 :y 0 :width 60 :height 1080)
+      :stacking "bottom"
+      :anchor "left center"
+      :exclusive true
+      :visible true
+      (box
+        :class "left-bar"
+        :orientation "vertical"
+        :halign "center"
+        :valign "start"
+        :spacing 20
+
+        (label :class "clock" :text (strftime "%H:%M"))
+        (label :class "weather" :text (weather))
+        (label :class "gpu-temp" :text (gpu_temp))
+
+        (button :onclick "google-chrome-stable &" (label :text "🌐"))
+        (button :onclick "code --enable-features=UseOzonePlatform --ozone-platform=wayland &" (label :text "🧠"))
+        (button :onclick "insomnia &" (label :text "💤"))
+      )
+    )
     '';
     };
 
