@@ -162,12 +162,12 @@
               if [[ -n "$arturl" ]]; then
                 wget -q "$arturl" -O /tmp/spotify_cover.jpg
               fi
-              eww open spotify_thumb &>/dev/null
+              #eww open spotify_thumb &>/dev/null
               exit 0
             fi
           fi
 
-          eww close spotify_thumb &>/dev/null
+          #eww close spotify_thumb &>/dev/null
 
       '';
     };
