@@ -37,6 +37,10 @@
     libreoffice
     rclone
     linkerd
+    neovim
+    tree-sitter
+    fd
+
 
     # xrhsima
     openrgb-with-all-plugins
