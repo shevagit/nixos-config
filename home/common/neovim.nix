@@ -109,7 +109,6 @@
     '';
 
     home.file.".config/nvim/lua/lsp.lua".text = ''
-        -- ~/.config/nvim/lua/lsp.lua
         local lspconfig = require("lspconfig")
 
         -- Enable gopls (Go)
@@ -143,5 +142,38 @@
             { name = "luasnip" },
         }),
         })
+
+        -- Set keymaps when an LSP attaches
+        vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(event)
+            local opts = { buffer = event.buf }
+
+            -- Go to definition
+            vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+
+            -- Hover documentation
+            vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+
+            -- Go to implementation
+            vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+
+            -- Signature help (arguments popup)
+            vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+
+            -- Rename symbol
+            vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+
+            -- Code actions (fixes, suggestions)
+            vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+
+            -- Show diagnostics
+            vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
+
+            -- Jump to next/prev diagnostics
+            vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+            vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+        end,
+        })
+
     '';
 }
