@@ -136,7 +136,7 @@
 
         "modules-left": ["memory"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "custom/battery-notifications", "hyprland/language", "custom/notifications"],
+        "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
 
 
         "hyprland/window": {
@@ -246,13 +246,6 @@
           "format-disconnected": "󰂲 Off",
           "tooltip": true,
           "on-click": "env GDK_BACKEND=x11 blueman-manager"
-        },
-
-        "custom/battery-notifications": {
-          "exec": "~/.config/waybar/scripts/battery-notifications.sh",
-          "interval": 60,
-          "tooltip": false,
-          "format": ""
         },
 
         "custom/notifications": {
