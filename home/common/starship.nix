@@ -7,7 +7,7 @@
       add_newline = true;
 
       format = ''
-        $hostname$nix_shell $kubernetes$directory$git_branch$git_status$gcloud
+        $nix_shell $kubernetes$directory$git_branch$git_status$gcloud$hostname
         $time$character
       '';
 
@@ -15,7 +15,7 @@
         ssh_only = false;
         ssh_symbol = "🌏 ";
         style = "bold dimmed green";
-        format = "[$symbol$hostname -]($style)";
+        format = "[@$symbol$hostname]($style)";
       };
 
       character = {
