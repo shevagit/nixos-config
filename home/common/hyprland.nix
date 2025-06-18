@@ -260,9 +260,6 @@
 
   programs.keychain = {
     enable = true;
-    agents = [
-      "ssh"
-    ];
     keys = [
       "nixsimos-github"
       "ed25519_gitlab"
