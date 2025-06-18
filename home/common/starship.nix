@@ -7,9 +7,16 @@
       add_newline = true;
 
       format = ''
-        $nix_shell $kubernetes $directory $git_branch $git_status $gcloud
-        $time $character
+        $hostname$nix_shell $kubernetes$directory$git_branch$git_status$gcloud
+        $time$character
       '';
+
+      hostname = {
+        ssh_only = false;
+        ssh_symbol = "🌏 ";
+        style = "bold dimmed green";
+        format = "[$symbol$hostname -]($style)";
+      };
 
       character = {
         success_symbol = "[➜](bold green)";
