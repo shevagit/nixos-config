@@ -7,14 +7,8 @@
       add_newline = true;
 
       format = ''
-        $nix_shell\
-        $kubernetes\
-        $directory\
-        $git_branch\
-        $git_status\
-        $gcloud\
-        $time\
-        $character
+        $nix_shell $kubernetes $directory $git_branch $git_status $gcloud
+        $time $character
       '';
 
       character = {
