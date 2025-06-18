@@ -72,6 +72,15 @@
         detect_folders = [ ".terraform" ];
       };
 
+      nix_shell = {
+        symbol = "🐚 ";
+        format = "[$symbol NIX-SHELL ($state)]($style)  ";
+        style = "bold red";
+        pure_msg = "pure";
+        impure_msg = "impure";
+        unknown_msg = "unknown";
+      };
+
       helm = { format = "via [⎈ $version](bold white) "; };
     };
   };
