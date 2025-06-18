@@ -56,7 +56,9 @@
       };
 
       gcloud = { 
-        format = "on [$symbol($project)]($style) "; 
+        symbol = " ";
+        style = "bold blue";
+        format = "[$symbol$account(@$domain)(\($region\))]($style) "; 
       };
 
       kubernetes = {
