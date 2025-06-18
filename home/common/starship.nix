@@ -37,7 +37,6 @@
 
       git_status = {
         conflicted = "🏳";
-        ahead = "⇡$${count}";
         diverged = "⇕⇡$${ahead_count}⇣$${behind_count}";
         behind = "⇣$${count}";
         up_to_date = "✓";
