@@ -9,6 +9,5 @@
     gofumpt
     golangci-lint
     gopls
-    gotools
   ];
 }
