@@ -4,20 +4,35 @@
     settings = {
       "$schema" = "https://starship.rs/config-schema.json";
 
-      # General settings
       add_newline = true;
 
-      # Prompt character
+      format = ''
+        $nix_shell\
+        $kubernetes\
+        $directory\
+        $git_branch\
+        $git_status\
+        $gcloud\
+        $time\
+        $character
+      '';
+
       character = {
         success_symbol = "[➜](bold green)";
         error_symbol = "[✗](bold red)";
       };
 
-      direnv = { disabled = false; };
+      direnv = { 
+        disabled = false; 
+      };
 
-      directory = { truncation_length = 6; };
+      directory = { 
+        truncation_length = 6; 
+      };
 
-      git_branch = { symbol = "🌱 "; };
+      git_branch = { 
+        symbol = "🌱 "; 
+      };
 
       git_status = {
         conflicted = "🏳";
@@ -39,7 +54,9 @@
         disabled = false;
       };
 
-      gcloud = { format = "on [$symbol($project)]($style) "; };
+      gcloud = { 
+        format = "on [$symbol($project)]($style) "; 
+      };
 
       kubernetes = {
         symbol = "☸️ ";
@@ -58,7 +75,9 @@
         format = "via [$symbol$version]($style) ";
       };
 
-      docker_context = { format = "via [🐋 $context](blue bold)"; };
+      docker_context = { 
+        format = "via [🐋 $context](blue bold)"; 
+      };
 
       time = {
         disabled = false;
@@ -81,7 +100,9 @@
         unknown_msg = "unknown";
       };
 
-      helm = { format = "via [⎈ $version](bold white) "; };
+      helm = { 
+        format = "via [⎈ $version](bold white) "; 
+      };
     };
   };
 }
