@@ -50,7 +50,7 @@
 
         "custom/weather": {
           "exec": "~/.config/waybar/scripts/weather.sh",
-          "interval": 600,
+          "interval": 1800,
           "format": "{}",
           "tooltip": true
         },
@@ -64,7 +64,7 @@
         "custom/gpu": {
           "format": "󰏈  {}",
           "exec": "~/.config/waybar/scripts/gpu-status.sh",
-          "interval": 30,
+          "interval": 90,
           "tooltip": true,
           "tooltip-format": "GPU temp"
         },
