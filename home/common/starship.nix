@@ -7,7 +7,7 @@
       add_newline = true;
 
       format = ''
-        $nix_shell $kubernetes$directory$git_branch$git_status$gcloud$hostname
+        $nix_shell $kubernetes$directory$git_branch$git_status$gcloud
         $time$character
       '';
 
