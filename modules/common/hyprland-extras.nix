@@ -209,7 +209,7 @@
         "network": {
           "interval": 30,
           "format-wifi": "  {essid} ({signalStrength}%)",
-          "format-ethernet": "󰈀 {ipaddr}",
+          "format-ethernet": "󰈀 {ipaddr} total {bandwidthTotalBytes}",
           "format-disconnected": "⚠️ No network",
           "tooltip-format": "{ifname} via {gwaddr}",
           "on-click": "alacritty -e nmtui"
