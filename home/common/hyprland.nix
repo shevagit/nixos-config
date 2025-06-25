@@ -12,7 +12,7 @@
       exec-once = [
         "~/.config/hyprland/scripts/waybars-wrapper.sh"
         "${pkgs.eww}/bin/eww daemon"
-        "nwg-dock-hyprland -d"
+        "nwg-dock-hyprland -x -f -mb 10 -ml 20 -mr 20 -p top -d"
       ];
 
     monitor = [
