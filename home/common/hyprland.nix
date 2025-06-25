@@ -12,6 +12,7 @@
       exec-once = [
         "~/.config/hyprland/scripts/waybars-wrapper.sh"
         "${pkgs.eww}/bin/eww daemon"
+        "nwg-dock-hyprland -d"
       ];
 
     monitor = [
@@ -150,6 +151,8 @@
       wofi
       rofi-wayland
       nwg-displays
+      nwg-dock-hyprland
+      nwg-drawer
       swaylock
       pavucontrol
       pulseaudio
