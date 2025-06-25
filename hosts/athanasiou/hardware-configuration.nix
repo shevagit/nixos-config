@@ -13,6 +13,9 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # use latest kernel for athanasiou
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/4a383e6a-ffa3-4ef3-8d1b-48a23d9bd505";
       fsType = "ext4";
