@@ -19,7 +19,7 @@ boot:
 
 # Show differences between the current and built system
 diff:
-	nvd diff /run/current-system /nix/var/nix/profiles/system
+	nvd diff /run/current-system result
 
 # Update flake inputs
 update:
