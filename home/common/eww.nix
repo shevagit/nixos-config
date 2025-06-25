@@ -71,6 +71,21 @@
           box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
         }
 
+        .dock-box {
+          background-color: #1e1e2eff;
+          border-radius: 20px;
+          padding: 10px;
+          box-shadow: 0 4px 20px #00000088;
+        }
+
+        button {
+          font-size: 24px;
+          margin: 0 10px;
+          background: transparent;
+          border: none;
+          color: white;
+        }
+
     '';
     };
 
@@ -151,6 +166,24 @@
         (button :onclick "insomnia &" (label :text "💤"))
       )
     )
+
+    (defwindow dock
+      :monitor 0
+      :geometry (geometry :x "center" :y "95%" :width "400px" :height "60px")
+      :stacking "fg"
+      :anchor "top"
+      :focusable false
+      :exclusive false
+      :class "eww-dock"
+      (box :class "dock-box"
+        :orientation "horizontal"
+        :space-evenly true
+        (button :onclick "hyprctl dispatch exec [kitty]" "🐱")
+        (button :onclick "hyprctl dispatch exec [firefox]" "🌐")
+        (button :onclick "hyprctl dispatch exec [code]" "🖥️")
+        )
+    )
+
     '';
     };
 
