@@ -108,8 +108,11 @@
           "on-click": "playerctl -p spotify play-pause",
           "on-click-right": "playerctl -p spotify next",
           "on-click-middle": "playerctl -p spotify previous",
-          "on-scroll-up": "~/.config/eww/spotify-album-popup.sh && eww open spotify_popup",
-          "on-scroll-down": "~/.config/eww/spotify-album-popup.sh && eww close spotify_popup",
+          "on-scroll-up": "playerctl -p spotify volume 0.05+",
+          "on-scroll-down": "playerctl -p spotify volume 0.05-"
+          // keep old commented lines for eww popup
+          // "on-scroll-up": "~/.config/eww/spotify-album-popup.sh && eww open spotify_popup",
+          // "on-scroll-down": "~/.config/eww/spotify-album-popup.sh && eww close spotify_popup",
         },
 
         "custom/spotify-thumb-sync": {
