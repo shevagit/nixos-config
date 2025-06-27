@@ -145,6 +145,7 @@
         "hyprland/window": {
           "separate-outputs": true
         },
+
         "hyprland/language": {
           "format": "{}",
           "format-en": "🇺🇸",
@@ -186,6 +187,7 @@
                 "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
                 },
         },
+
         "actions": {
             "on-click-right": "mode",
             "on-click-forward": "tz_up",
@@ -212,7 +214,7 @@
         "network": {
           "interval": 30,
           "format-wifi": "  {essid} ({signalStrength}%)",
-          "format-ethernet": "󰈀 {ipaddr} total {bandwidthTotalBytes}",
+          "format-ethernet": "󰈀 {ipaddr}",
           "format-disconnected": "⚠️ No network",
           "tooltip-format": "{ifname} via {gwaddr}",
           "on-click": "alacritty -e nmtui"
