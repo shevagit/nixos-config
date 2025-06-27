@@ -138,13 +138,13 @@
         "position": "top",
 
         "modules-left": ["memory"],
-        "modules-center": ["hyprland/window"],
+        //"modules-center": ["hyprland/window"],
         "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
 
 
-        "hyprland/window": {
-          "separate-outputs": true
-        },
+        //"hyprland/window": {
+        //  "separate-outputs": true
+        //},
 
         "hyprland/language": {
           "format": "{}",
