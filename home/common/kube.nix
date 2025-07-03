@@ -6,5 +6,6 @@
     kubectx
     kubernetes-helm
     stern
+    kubie
   ];
 }
