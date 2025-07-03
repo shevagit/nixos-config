@@ -68,6 +68,7 @@
         contexts = [
           { context_pattern = "dev-eu-w1"; style = "green"; }
           { context_pattern = "test-playground-us-w3"; style = "yellow"; }
+          { context_pattern = "us-c1-internal"; style = "yellow"; }
         ];
       };
 
