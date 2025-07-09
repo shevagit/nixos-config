@@ -10,7 +10,7 @@
         "layer": "top",
         "position": "left",
         "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "cpu", "custom/gpu", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "custom/spotify-thumb-sync", "custom/spotify"],
-        "modules-right": ["tray", "custom/power-menu"],
+        "modules-right": ["tray", "custom/power-menu", "custom/restart-waybar"],
 
         "hyprland/workspaces": {
           "format": "{name} {windows}",
@@ -126,6 +126,12 @@
           "format": "⏻",
           "tooltip": "Power Menu",
           "on-click": "~/.config/hyprland/scripts/wofi-power-menu.sh"
+        },
+
+        "custom/restart-waybar": {
+          "format": "🔄",
+          "tooltip": "Restart Waybar",
+          "on-click": "pkill waybar && sleep 2 && ~/.config/hyprland/scripts/waybars-wrapper.sh"
         }
       }
     '';
@@ -311,7 +317,7 @@
         border-top: 5px solid #ff9f00;
     }
     
-    #clock, #custom-weather, #tray, #custom-power-menu, #cpu, #custom-gpu, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia {
+    #clock, #custom-weather, #tray, #custom-power-menu, #cpu, #custom-gpu, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-restart-waybar {
       margin: 12px 0;
       padding: 4px 4px;
       border: 2px solid #c7ab7a;
