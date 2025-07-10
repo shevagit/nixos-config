@@ -126,7 +126,19 @@
    gnome-tweaks
    comma
    git
+   brightnessctl # used for laptop brightness control
   ];
+
+  # enable
+  systemd.services.set-kbd-backlight = {
+    description = "Set keyboard backlight brightness to 1 on boot";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-udev-settle.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.brightnessctl}/bin/brightnessctl -d tpacpi::kbd_backlight set 1";
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
