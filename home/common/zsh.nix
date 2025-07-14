@@ -25,7 +25,7 @@
     history.ignorePatterns = [ "rm *" ];
     # Add paths in PATH
     initContent = ''
-      export PATH="$HOME/bin:$PATH"
+      export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
       export KUBE_EDITOR=vim
 
       # zoxide init
