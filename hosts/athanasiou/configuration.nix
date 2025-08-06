@@ -17,6 +17,7 @@
       ../../modules/common/extraHosts.nix
       ../../modules/services/systemd-tmpfiles-rules.nix
       ../../modules/common/fprintd.nix
+      ../../modules/common/tailscale.nix
     ];
 
   # Bootloader.
