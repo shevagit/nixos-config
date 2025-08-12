@@ -123,6 +123,11 @@
         "kb_options" = "grp:win_space_toggle";
       };
 
+      # wlogout visual settings
+      layerrule = [
+        "blur, wlogout"
+        "dimaround, wlogout"
+      ];
 
       decoration = {
         rounding = 10;
