@@ -37,7 +37,7 @@
         #"$mod SHIFT, r exec, hyprctl reload"
 
         # Bind SUPER+p to the wofi power menu script.
-        "$mod, p, exec, ~/.config/hyprland/scripts/wofi-power-menu.sh"
+        "$mod, p, exec, ~/.config/wlogout/scripts/power-menu"
         # logout; to be removed
         "$mod SHIFT, e, exec, hyprctl dispatch exit 0"
         # close active window
