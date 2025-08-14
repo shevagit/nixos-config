@@ -13,6 +13,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    ags = {
+      url = "github:Aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = inputs@{
@@ -20,6 +25,7 @@
     nixpkgs-unstable,
     home-manager-stable,
     home-manager-unstable,
+    ags,
     ...
   }: {
     nixosConfigurations = {
@@ -32,6 +38,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.sheva = import ./hosts/simos/home.nix;
+            home-manager.extraSpecialArgs = { inherit ags; };
           }
         ];
       };
