@@ -28,7 +28,7 @@
         [commit]
             gpgSign = false
         [core]
-            sshCommand = ssh -i ~/.ssh/nixsimos-github.pub
+            sshCommand = ssh -i ~/.ssh/nixsimos-github
       '';
     };
     ".gitconfig-gitlab" = {
@@ -42,7 +42,7 @@
         [commit]
             gpgSign = true
         [core]
-            sshCommand = ssh -i ~/.ssh/ed25519_gitlab.pub
+            sshCommand = ssh -i ~/.ssh/ed25519_gitlab
       '';
     };
   };

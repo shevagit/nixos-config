@@ -97,7 +97,7 @@
     isNormalUser = true;
     description = "andreas sheva";
     group = "sheva";
-    extraGroups = [ "networkmanager" "wheel" "sudo" ];
+    extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
   };
 
