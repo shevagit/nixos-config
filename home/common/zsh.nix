@@ -26,7 +26,8 @@
     # Add paths in PATH
     initContent = ''
       export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-      export KUBE_EDITOR=vim
+      export KUBE_EDITOR=nvim
+      export EDITOR=nvim
 
       # zoxide init
       eval "$(zoxide init zsh)"
