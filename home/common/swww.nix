@@ -42,7 +42,7 @@
         # Find all image and video files
         wallpapers=($(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.mp4" -o -iname "*.webm" \) | sort))
         
-        if [ ${#wallpapers[@]} -eq 0 ]; then
+        if [ ''${#wallpapers[@]} -eq 0 ]; then
           echo "No wallpapers found in $WALLPAPER_DIR"
           exit 1
         fi
@@ -71,7 +71,7 @@
       # Get all wallpapers
       wallpapers=($(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.mp4" -o -iname "*.webm" \) | sort))
       
-      if [ ${#wallpapers[@]} -eq 0 ]; then
+      if [ ''${#wallpapers[@]} -eq 0 ]; then
         echo "No wallpapers found in $WALLPAPER_DIR"
         exit 1
       fi
@@ -83,7 +83,7 @@
       fi
 
       # Move to next wallpaper
-      current_index=$(( (current_index + 1) % ${#wallpapers[@]} ))
+      current_index=$(( (current_index + 1) % ''${#wallpapers[@]} ))
       echo "$current_index" > "$CURRENT_FILE"
 
       # Set wallpaper
@@ -106,17 +106,17 @@
       # Get all wallpapers
       wallpapers=($(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.mp4" -o -iname "*.webm" \) | sort))
       
-      if [ ${#wallpapers[@]} -eq 0 ]; then
+      if [ ''${#wallpapers[@]} -eq 0 ]; then
         echo "No wallpapers found in $WALLPAPER_DIR"
         exit 1
       fi
 
       # Pick random wallpaper
-      random_index=$((RANDOM % ${#wallpapers[@]}))
+      random_index=$((RANDOM % ''${#wallpapers[@]}))
       
       # Set wallpaper with random transition
       transitions=("slide" "grow" "outer" "wave" "wipe")
-      random_transition=''${transitions[$((RANDOM % ${#transitions[@]}))]}
+      random_transition=''${transitions[$((RANDOM % ''${#transitions[@]}))]}
       
       swww img "''${wallpapers[$random_index]}" --transition-type "$random_transition" --transition-duration 2
     '';
