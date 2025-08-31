@@ -39,8 +39,11 @@
       fi
 
       while true; do
-        # Find all image and video files
-        wallpapers=($(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.mp4" -o -iname "*.webm" \) | sort))
+        # Get all wallpapers - use null delimiter to handle spaces properly
+        wallpapers=()
+        while IFS= read -r -d $'\0' file; do
+          wallpapers+=("$file")
+        done < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.mp4" -o -iname "*.webm" \) -print0 | sort -z)
         
         if [ ''${#wallpapers[@]} -eq 0 ]; then
           echo "No wallpapers found in $WALLPAPER_DIR"
@@ -68,8 +71,11 @@
         exit 1
       fi
 
-      # Get all wallpapers
-      wallpapers=($(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.mp4" -o -iname "*.webm" \) | sort))
+      # Get all wallpapers - use null delimiter to handle spaces properly
+      wallpapers=()
+      while IFS= read -r -d $'\0' file; do
+        wallpapers+=("$file")
+      done < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.mp4" -o -iname "*.webm" \) -print0 | sort -z)
       
       if [ ''${#wallpapers[@]} -eq 0 ]; then
         echo "No wallpapers found in $WALLPAPER_DIR"
@@ -103,8 +109,11 @@
         exit 1
       fi
 
-      # Get all wallpapers
-      wallpapers=($(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.mp4" -o -iname "*.webm" \) | sort))
+      # Get all wallpapers - use null delimiter to handle spaces properly
+      wallpapers=()
+      while IFS= read -r -d $'\0' file; do
+        wallpapers+=("$file")
+      done < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.mp4" -o -iname "*.webm" \) -print0 | sort -z)
       
       if [ ''${#wallpapers[@]} -eq 0 ]; then
         echo "No wallpapers found in $WALLPAPER_DIR"
@@ -115,7 +124,7 @@
       random_index=$((RANDOM % ''${#wallpapers[@]}))
       
       # Set wallpaper with random transition
-      transitions=("slide" "grow" "outer" "wave" "wipe")
+      transitions=("fade" "grow" "outer" "wave" "wipe")
       random_transition=''${transitions[$((RANDOM % ''${#transitions[@]}))]}
       
       swww img "''${wallpapers[$random_index]}" --transition-type "$random_transition" --transition-duration 2
