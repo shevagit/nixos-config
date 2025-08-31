@@ -12,7 +12,9 @@
       exec-once = [
         "~/.config/hyprland/scripts/waybars-wrapper.sh"
         "${pkgs.eww}/bin/eww daemon"
-        "nwg-dock-hyprland -x -mb 10 -ml 20 -mr 20 -d"
+        # "nwg-dock-hyprland -x -mb 10 -ml 20 -mr 20 -d"
+        "swww-daemon"
+        "~/.config/hyprland/scripts/wallpaper-init.sh"
       ];
 
     monitor = [
@@ -110,6 +112,10 @@
         ", XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
         ", XF86AudioMute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
 
+        # Wallpaper controls
+        "$mod, w, exec, ~/.config/hyprland/scripts/wallpaper-next.sh"
+        "$mod SHIFT, w, exec, ~/.config/hyprland/scripts/wallpaper-random.sh"
+
       ];
 
       bindm = [
@@ -148,7 +154,6 @@
 
   # required packages for the hyprland configuration
   home.packages = with pkgs; [
-      swaybg
       waybar
       wl-clipboard
       grim

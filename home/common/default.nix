@@ -10,6 +10,7 @@
         ./docker.nix
         ./hyprland.nix
         ./hyprland-theme.nix
+        ./swww.nix
         ./wlogout.nix
         ./eww.nix
         ./vscode-plugins.nix
