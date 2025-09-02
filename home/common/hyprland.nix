@@ -160,7 +160,6 @@
       slurp
       wofi
       rofi-wayland
-      nwg-displays
       nwg-dock-hyprland
       nwg-drawer
       swaylock
