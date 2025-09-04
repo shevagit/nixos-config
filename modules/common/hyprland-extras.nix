@@ -10,7 +10,7 @@
         "layer": "top",
         "position": "left",
         "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "cpu", "custom/gpu", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "custom/spotify-thumb-sync", "custom/spotify"],
-        "modules-right": ["tray", "custom/power-menu", "custom/restart-waybar"],
+        "modules-right": ["custom/wallpaper", "custom/power-menu", "custom/restart-waybar"],
 
         "hyprland/workspaces": {
           "format": "{name} {windows}",
@@ -46,6 +46,12 @@
           "interval": 15,
           "format": " {usage:>2}%",
           "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+        },
+
+        "custom/wallpaper": {
+          "format": "🖼️",
+          "tooltip": "Rotate wallpaper",
+          "on-click": "~/.config/hyprland/scripts/wallpaper-random.sh"
         },
 
         "custom/weather": {
@@ -125,7 +131,7 @@
         "custom/power-menu": {
           "format": "⏻",
           "tooltip": "Power Menu",
-          "on-click": "~/.config/hyprland/scripts/wofi-power-menu.sh"
+          "on-click": "~/.config/wlogout/scripts/power-menu"
         },
 
         "custom/restart-waybar": {
@@ -317,7 +323,7 @@
         border-top: 5px solid #ff9f00;
     }
     
-    #clock, #custom-weather, #tray, #custom-power-menu, #cpu, #custom-gpu, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-restart-waybar {
+    #clock, #custom-weather, #custom-power-menu, #cpu, #custom-gpu, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-restart-waybar, #custom-wallpaper {
       margin: 12px 0;
       padding: 4px 4px;
       border: 2px solid #c7ab7a;
