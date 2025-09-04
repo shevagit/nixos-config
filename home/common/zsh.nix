@@ -17,6 +17,8 @@
       cdlwgit = "cd ~/learnworlds/gitlabdir";
       cdlwdatsunprep = "cd ~/learnworlds/gitlabdir/datsunpreparator";
       rm = "rm -i";
+      gp = "git pull";
+      gs = "git status";
     };
 
     history.size = 10000;
