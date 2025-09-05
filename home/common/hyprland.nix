@@ -17,20 +17,20 @@
         "~/.config/hyprland/scripts/wallpaper-init.sh"
       ];
 
-    monitor = [
-      # cheatsheet: "monitor = name, resolution, position, scale"
-      # transform: 
-      # 0 -> normal (no transforms)
-      # 1 -> 90 degrees
-      # 2 -> 180 degrees
-      # 3 -> 270 degrees
-      # 4 -> flipped
-      # 5 -> flipped + 90 degrees
-      # 6 -> flipped + 180 degrees
-      # 7 -> flipped + 270 degrees
-      "DP-1,2560x1440@164,0x0,1"
-      "DP-4,2560x1440@99.95,2560x0,1"
-    ];
+      monitor = [
+        # cheatsheet: "monitor = name, resolution, position, scale"
+        # transform: 
+        # 0 -> normal (no transforms)
+        # 1 -> 90 degrees
+        # 2 -> 180 degrees
+        # 3 -> 270 degrees
+        # 4 -> flipped
+        # 5 -> flipped + 90 degrees
+        # 6 -> flipped + 180 degrees
+        # 7 -> flipped + 270 degrees
+        "DP-1,2560x1440@164,0x0,1"
+        "DP-4,2560x1440@99.95,2560x0,1"
+      ];
 
       bind = [
         # --- Actions ---
@@ -134,6 +134,11 @@
         "blur, wlogout"
         "dimaround, wlogout"
       ];
+
+      general ={
+        gaps_in = 10;
+        gaps_out = 20;
+      };
 
       decoration = {
         rounding = 10;
