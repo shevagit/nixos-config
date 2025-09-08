@@ -15,5 +15,6 @@
         ./eww.nix
         ./vscode-plugins.nix
         ./neovim.nix
+        ./ai.nix
     ];
 }
