@@ -29,9 +29,9 @@
   home.file = {
     ".config/hyprland/scripts/wallpaper-rotate.sh".text = ''
       #!/usr/bin/env bash
-      # Rotate wallpapers every 10 minutes (600 seconds)
+      # Rotate wallpapers every 30 minutes
       WALLPAPER_DIR="$HOME/Pictures/wallpapers"
-      INTERVAL=600
+      INTERVAL=1800
 
       if [ ! -d "$WALLPAPER_DIR" ]; then
         echo "Wallpaper directory $WALLPAPER_DIR not found"
