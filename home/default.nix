@@ -41,6 +41,9 @@
     tree-sitter
     fd
 
+    # gitlab and github cli
+    glab
+    gh
 
     # xrhsima
     openrgb-with-all-plugins
