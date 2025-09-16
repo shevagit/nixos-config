@@ -99,6 +99,10 @@
         # next workspace on monitor
         "CONTROL_ALT, right, workspace, m+1"
         "CONTROL_ALT, left, workspace, m-1"
+        
+        # mouse scroll: must quote the m±1 token -> escape quotes in Nix strings
+        "$mod, mouse:4, workspace, \"m+1\""
+        "$mod, mouse:5, workspace, \"m-1\""
 
         # lock
         "CONTROL_ALT, L, exec, swaylock"
@@ -122,9 +126,6 @@
         # Move/resize windows with mod + LMB/RMB and dragging
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindowpixel"
-        # Next workspace on monitor with mod + scroll
-        "$mod, mouse:4, workspace, m+1"
-        "$mod, mouse:5, workspace, m-1"
       ];
 
       input = {
