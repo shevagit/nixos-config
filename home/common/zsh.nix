@@ -7,6 +7,7 @@
 
     shellAliases = {
       ll = "ls -lash";
+      l = "ls -lh";
       k  = "kubectl";
       kgp = "kubectl get pods";
       kns = "kubens";
