@@ -19,6 +19,7 @@
       rm = "rm -i";
       gp = "git pull";
       gs = "git status";
+      gd = "git diff";
     };
 
     history.size = 10000;

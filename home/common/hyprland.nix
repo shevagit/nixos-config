@@ -122,6 +122,9 @@
         # Move/resize windows with mod + LMB/RMB and dragging
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindowpixel"
+        # Next workspace on monitor with mod + scroll
+        "$mod, mouse:4, workspace, m+1"
+        "$mod, mouse:5, workspace, m-1"
       ];
 
       input = {
