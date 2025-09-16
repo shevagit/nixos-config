@@ -99,10 +99,9 @@
         # next workspace on monitor
         "CONTROL_ALT, right, workspace, m+1"
         "CONTROL_ALT, left, workspace, m-1"
-        
-        # mouse scroll: must quote the m±1 token -> escape quotes in Nix strings
-        "$mod, mouse:4, workspace, \"m+1\""
-        "$mod, mouse:5, workspace, \"m-1\""
+
+        "$mod, mouse_up, exec, hyprctl dispatch workspace m+1"
+        "$mod, mouse_down, exec, hyprctl dispatch workspace m-1"
 
         # lock
         "CONTROL_ALT, L, exec, swaylock"
