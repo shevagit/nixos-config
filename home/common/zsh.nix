@@ -13,6 +13,8 @@
       kns = "kubens";
       kgi = "kubectl get ingress";
       kctx = "kubectx";
+      kaccount = "kubectl get pods --context us-e2 -n production -w | grep -E '^account-[^-]+-[^-]+$'";
+      kwebsite = "kubectl get pods --context us-e1 -n production -w | grep -E '^website-[^-]+-[^-]+$'";
       du = "du -hsc";
       cdnix = "cd ~/githubdir/nixos-config";
       cdlwgit = "cd ~/learnworlds/gitlabdir";
