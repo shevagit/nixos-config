@@ -18,6 +18,7 @@
       ../../modules/services/systemd-tmpfiles-rules.nix
       ../../modules/common/fprintd.nix
       ../../modules/common/tailscale.nix
+      ../../modules/services/yubi-auth.nix
     ];
 
   # Bootloader.
