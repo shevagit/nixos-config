@@ -167,7 +167,7 @@
       grim
       slurp
       wofi
-      rofi-wayland
+      rofi
       nwg-dock-hyprland
       nwg-drawer
       swaylock
