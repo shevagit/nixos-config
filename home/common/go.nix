@@ -9,5 +9,6 @@
     gofumpt
     golangci-lint
     gopls
+    gcc
   ];
 }
