@@ -151,7 +151,7 @@
 
         "modules-left": ["memory"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
+        "modules-right": ["clock", "custom/tasks", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
 
 
         "hyprland/window": {
@@ -272,6 +272,16 @@
             "on-click": "swaync-client -t",
             "tooltip": false,
             "interval": 2
+        },
+
+        "custom/tasks": {
+            "format": "{}",
+            "exec": "~/.config/waybar/scripts/tasks-count.sh",
+            "interval": 5,
+            "on-click": "~/.config/waybar/scripts/tasks-viewer.sh",
+            "on-click-right": "~/.config/waybar/scripts/tasks-edit.sh",
+            "tooltip": true,
+            "tooltip-format": "Left-click: View/Toggle tasks\nRight-click: Edit in nvim"
         }
       }
     '';
@@ -357,7 +367,7 @@
         color: white;
     }
 
-    #network, #pulseaudio, #clock, #memory, #battery, #bluetooth, #workspaces, #language, #custom-notifications, #window {
+    #network, #pulseaudio, #clock, #memory, #battery, #bluetooth, #workspaces, #language, #custom-notifications, #custom-tasks, #window {
         border-radius: 10px;
         border: 2px solid #c7ab7a;
         padding: 2px 10px;
@@ -697,5 +707,105 @@
           text-color: @normal-foreground;
       }
     '';
+
+    # Script to count pending tasks
+    home.file.".config/waybar/scripts/tasks-count.sh" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        TASKS_FILE="$HOME/.config/waybar/tasks.md"
+        : "''${TASKS_FILE:?}"
+
+        if [[ ! -f "$TASKS_FILE" ]]; then
+          cat > "$TASKS_FILE" <<'EOF'
+        ## Today
+        - [ ] Your first task!
+
+        ## This Week
+        - [ ] Another task here
+        EOF
+        fi
+
+        PENDING=$(grep -cE '^- \[ \]' "$TASKS_FILE" 2>/dev/null || true)
+        if [[ "''${PENDING:-0}" -eq 0 ]]; then
+          echo "✅ 0"
+        else
+          echo "📝 ''${PENDING}"
+        fi
+      '';
+    };
+
+    home.file.".config/waybar/scripts/tasks-viewer.sh" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        TASKS_FILE="$HOME/.config/waybar/tasks.md"
+
+        if [[ ! -f "$TASKS_FILE" ]]; then
+          cat > "$TASKS_FILE" <<'EOF'
+        ## Today
+        - [ ] Your first task!
+
+        ## This Week
+        - [ ] Another task here
+        EOF
+        fi
+
+        TASKS=$(grep -nE '^- \[' "$TASKS_FILE" || true)
+        if [[ -z "''${TASKS}" ]]; then
+          if command -v notify-send >/dev/null 2>&1; then
+            notify-send "📝 Tasks" "No tasks found. Add some to ~/.config/waybar/tasks.md"
+          fi
+          exit 0
+        fi
+
+        DISPLAY_TASKS=""
+        while IFS= read -r line; do
+          LINE_NUM="''${line%%:*}"
+          TASK_TEXT="''${line#*:}"
+          if [[ "''${TASK_TEXT}" =~ ^-\ \[\ \] ]]; then
+            CLEAN_TASK=$(sed 's/^- \[ \] //' <<<"''${TASK_TEXT}")
+            DISPLAY_TASKS+="''${LINE_NUM}|☐ ''${CLEAN_TASK}\n"
+          else
+            CLEAN_TASK=$(sed 's/^- \[x\] //' <<<"''${TASK_TEXT}")
+            DISPLAY_TASKS+="''${LINE_NUM}|✓ ''${CLEAN_TASK}\n"
+          fi
+        done <<< "''${TASKS}"
+
+        SELECTED=$(echo -e "''${DISPLAY_TASKS}" | rofi -dmenu -i -p "📝 Tasks" -format "s" -theme-str 'window {width: 600px;}' -no-custom)
+        if [[ -n "''${SELECTED}" ]]; then
+          LINE_NUM="''${SELECTED%%|*}"
+          LINE_CONTENT=$(sed -n "''${LINE_NUM}p" "$TASKS_FILE")
+          if [[ "''${LINE_CONTENT}" =~ ^-\ \[\ \] ]]; then
+            sed -i "''${LINE_NUM}s/^- \[ \]/- [x]/" "$TASKS_FILE"
+          else
+            sed -i "''${LINE_NUM}s/^- \[x\]/- [ ]/" "$TASKS_FILE"
+          fi
+        fi
+      '';
+    };
+
+    # Script to open tasks in editor
+    home.file.".config/waybar/scripts/tasks-edit.sh" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        TASKS_FILE="$HOME/.config/waybar/tasks.md"
+        TERM_CMD="${TERMINAL:-alacritty}"
+
+        # Fall back to xterm if the chosen terminal isn't available
+        if ! command -v "$TERM_CMD" >/dev/null 2>&1; then
+          TERM_CMD="xterm"
+        fi
+
+        alacritty -e zsh -lc 'nvim ~/.config/waybar/tasks.md'
+      '';
+    };
   };
 }
