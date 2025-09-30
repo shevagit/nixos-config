@@ -151,7 +151,7 @@
 
         "modules-left": ["memory"],
         "modules-center": ["hyprland/window"],
-        "modules-right": ["clock", "custom/tasks", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
+        "modules-right": ["custom/tasks", "clock", "bluetooth", "network", "pulseaudio", "battery", "hyprland/language", "custom/notifications"],
 
 
         "hyprland/window": {
@@ -275,7 +275,7 @@
         },
 
         "custom/tasks": {
-            "format": "{}",
+            "format": "todos {}",
             "exec": "~/.config/waybar/scripts/tasks-count.sh",
             "interval": 5,
             "on-click": "~/.config/waybar/scripts/tasks-viewer.sh",
