@@ -15,6 +15,9 @@
       "includeIf.gitdir:/home/sheva/learnworlds/gitlabdir/" = {
         path = "~/.gitconfig-gitlab";
       };
+      "includeIf.gitdir:/home/sheva/learnworlds/githubdir/" = {
+        path = "~/.gitconfig-githublw";
+      };
     };
   };
 
@@ -43,6 +46,17 @@
             gpgSign = true
         [core]
             sshCommand = ssh -i ~/.ssh/ed25519_gitlab
+      '';
+    };
+    ".gitconfig-githublw" = {
+      text = ''
+        [user]
+            name = Andreas Sevastos
+            email = sheva@learnworlds.com
+        [commit]
+            gpgSign = false
+        [core]
+            sshCommand = ssh -i ~/.ssh/github-lw -o IdentitiesOnly=yes
       '';
     };
   };
