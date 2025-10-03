@@ -28,11 +28,14 @@
       };
 
       directory = { 
-        truncation_length = 6; 
+        truncation_length = 3;
+        fish_style_pwd_dir_length = 5;
+        read_only = "🔒 ";
+        read_only_style = "red";
       };
 
       git_branch = { 
-        symbol = "🌱 "; 
+        symbol = "🌱 branch -> "; 
       };
 
       git_status = {
@@ -66,7 +69,7 @@
         style = "red";
         format = "[$symbol$context(/$namespace)]($style) in ";
         contexts = [
-          { context_pattern = "dev-eu-w1"; style = "green"; }
+          { context_pattern = "eu-w1"; style = "green"; }
           { context_pattern = "test-playground-us-w3"; style = "yellow"; }
           { context_pattern = "us-c1-internal"; style = "yellow"; }
         ];
