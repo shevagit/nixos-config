@@ -53,10 +53,13 @@
         [user]
             name = Andreas Sevastos
             email = sheva@learnworlds.com
+            signingkey = ~/.ssh/lwgithub-signingkey.pub
+        [gpg]
+            format = ssh
         [commit]
-            gpgSign = false
+            gpgSign = true
         [core]
-            sshCommand = ssh -i ~/.ssh/github-lw -o IdentitiesOnly=yes
+            sshCommand = ssh -i ~/.ssh/github-lw-athanasiou -o IdentitiesOnly=yes
       '';
     };
   };
