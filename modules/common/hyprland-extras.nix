@@ -267,11 +267,10 @@
         },
 
         "custom/notifications": {
-            "format": "🔔 {}",
-            "exec": "swaync-client --count",
-            "on-click": "swaync-client -t",
-            "tooltip": false,
-            "interval": 2
+            "format": "🔔",
+            "tooltip": "Notifications (now handled by HyprPanel)",
+            "on-click": "echo 'Notifications moved to HyprPanel'",
+            "interval": 600
         },
 
         "custom/tasks": {

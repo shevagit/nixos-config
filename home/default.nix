@@ -8,9 +8,9 @@
     enable = true;
   };
 
-  # enable a notification daemon and swaync for waybar
-  services.mako.enable = true;
-  services.swaync.enable = true;
+  # Notification daemons disabled - using HyprPanel's built-in notification service
+  # services.mako.enable = true;
+  # services.swaync.enable = true;
 
   # set cursor size and dpi for 4k monitor
   xresources.properties = {

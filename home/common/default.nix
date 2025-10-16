@@ -16,5 +16,6 @@
         ./vscode-plugins.nix
         ./neovim.nix
         ./ai.nix
+        ./hyprpanel.nix
     ];
 }
