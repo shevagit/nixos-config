@@ -55,6 +55,19 @@
           }
         ];
       };
+
+      kaleipo = nixpkgs-stable.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/kaleipo/configuration.nix
+          home-manager-stable.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.sheva = import ./hosts/kaleipo/home.nix;
+          }
+        ];
+      };
     };
   };
 }
