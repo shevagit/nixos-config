@@ -227,7 +227,7 @@
       waybar -c ~/.config/waybar/left-bar-config.jsonc -s ~/.config/waybar/left-bar-style.css &
     '';
   };
-    home.file.".config/hyprland/scripts/waybars-wrapper.sh".executable = true;
+    home.file.".config/hyprland/scripts/bares-wrapper.sh".executable = true;
 
   home.file.".config/wofi/style.css".text = ''
     window {
