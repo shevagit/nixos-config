@@ -10,10 +10,10 @@
       "$mod" = "SUPER";
       
       exec-once = [
-        "~/.config/hyprland/scripts/waybars-wrapper.sh"
+        #"~/.config/hyprland/scripts/waybars-wrapper.sh"
         "${pkgs.eww}/bin/eww daemon"
         # "nwg-dock-hyprland -x -mb 10 -ml 20 -mr 20 -d" # disabled nwg-dock
-        # "hyprpanel" 
+        "hyprpanel" 
         "swww-daemon"
         "~/.config/hyprland/scripts/wallpaper-init.sh"
       ];

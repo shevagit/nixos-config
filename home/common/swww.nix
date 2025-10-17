@@ -1,10 +1,18 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 {
   # swww animated wallpaper daemon package
   home.packages = with pkgs; [
     swww
   ];
+
+  # Create a script that swww/hyprpanel can use to get the background path
+  # The actual wallpaper is at ~/Pictures/hyprlock-wallpaper.jpeg
+  home.activation.createBackgroundLink = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    $DRY_RUN_CMD ln -sf $VERBOSE_ARG \
+      ${config.home.homeDirectory}/Pictures/hyprlock-wallpaper.jpeg \
+      ${config.home.homeDirectory}/.config/background
+  '';
 
   # Wallpaper scripts for swww
   home.file = {
