@@ -13,7 +13,7 @@
         #"~/.config/hyprland/scripts/waybars-wrapper.sh"
         "${pkgs.eww}/bin/eww daemon"
         # "nwg-dock-hyprland -x -mb 10 -ml 20 -mr 20 -d" # disabled nwg-dock
-        "hyprpanel" 
+        "~/.config/hyprland/scripts/bares-wrapper.sh"
         "swww-daemon"
         "~/.config/hyprland/scripts/wallpaper-init.sh"
       ];
@@ -215,6 +215,16 @@
       waybar -c ~/.config/waybar/left-bar-config.jsonc -s ~/.config/waybar/left-bar-style.css &
       sleep 1
       waybar &
+    '';
+  };
+    home.file.".config/hyprland/scripts/waybars-wrapper.sh".executable = true;
+
+  home.file = {
+    ".config/hyprland/scripts/bares-wrapper.sh".text = ''
+      #!/usr/bin/env bash
+      hyprpanel &
+      sleep 1
+      waybar -c ~/.config/waybar/left-bar-config.jsonc -s ~/.config/waybar/left-bar-style.css &
     '';
   };
     home.file.".config/hyprland/scripts/waybars-wrapper.sh".executable = true;

@@ -9,8 +9,8 @@
       {
         "layer": "top",
         "position": "left",
-        "modules-left": ["hyprland/workspaces", "clock", "custom/weather", "cpu", "custom/gpu", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "custom/spotify-thumb-sync", "custom/spotify"],
-        "modules-right": ["custom/wallpaper", "custom/power-menu", "custom/restart-waybar"],
+        "modules-left": ["custom/weather", "custom/gpu", "custom/launcher", "custom/vscode", "custom/chrome", "custom/insomnia", "custom/spotify-thumb-sync", "custom/spotify"],
+        "modules-right": ["custom/tasks", "custom/wallpaper", "custom/power-menu"],
 
         "hyprland/workspaces": {
           "format": "{name} {windows}",
@@ -133,6 +133,16 @@
           "tooltip": "Power Menu",
           "on-click": "~/.config/wlogout/scripts/power-menu"
         },
+
+        "custom/tasks": {
+            "format": "todos {}",
+            "exec": "~/.config/waybar/scripts/tasks-count.sh",
+            "interval": 5,
+            "on-click": "~/.config/waybar/scripts/tasks-viewer.sh",
+            "on-click-right": "~/.config/waybar/scripts/tasks-edit.sh",
+            "tooltip": true,
+            "tooltip-format": "Left-click: View/Toggle tasks\nRight-click: Edit in nvim"
+        }
 
         "custom/restart-waybar": {
           "format": "🔄",
