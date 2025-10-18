@@ -142,7 +142,7 @@
             "on-click-right": "~/.config/waybar/scripts/tasks-edit.sh",
             "tooltip": true,
             "tooltip-format": "Left-click: View/Toggle tasks\nRight-click: Edit in nvim"
-        }
+        },
 
         "custom/restart-waybar": {
           "format": "🔄",
@@ -341,8 +341,8 @@
         color: #87ceeb;
         border-top: 5px solid #ff9f00;
     }
-    
-    #clock, #custom-weather, #custom-power-menu, #cpu, #custom-gpu, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-restart-waybar, #custom-wallpaper {
+
+    #clock, #custom-weather, #custom-power-menu, #cpu, #custom-gpu, #custom-launcher, #custom-vscode, #custom-chrome, #custom-insomnia, #custom-restart-waybar, #custom-wallpaper, #custom-tasks {
       margin: 12px 0;
       padding: 4px 4px;
       border: 2px solid #c7ab7a;
