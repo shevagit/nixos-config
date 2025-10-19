@@ -48,6 +48,9 @@
   # Allow unfree packages (needed for some proprietary software)
   nixpkgs.config.allowUnfree = true;
 
+  # Enable nix flakes and nix-command
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # This value determines the NixOS release from which the default
   # settings for stateful data were taken.
   system.stateVersion = "24.11"; # Don't change this after initial install

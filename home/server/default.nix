@@ -8,5 +8,6 @@
         ./fzf.nix
         ./kube.nix
         ./go.nix
+        ./tools.nix
     ];
 }
