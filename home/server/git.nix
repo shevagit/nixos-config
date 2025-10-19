@@ -9,6 +9,9 @@
       init = {
         defaultBranch = "main";
       };
+      "includeIf.gitdir:/home/sheva/githubdir/" = {
+        path = "~/.gitconfig-github";
+      };
     };
   };
 
@@ -22,7 +25,7 @@
         [commit]
             gpgSign = false
         [core]
-            sshCommand = ssh -i ~/.ssh/nixsimos-github
+            sshCommand = ssh -i ~/.ssh/kaleipo-github
       '';
     };
   };
