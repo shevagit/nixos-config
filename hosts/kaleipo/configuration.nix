@@ -47,9 +47,6 @@
     # ];
   };
 
-  # Enable bash (or zsh if preferred)
-  programs.bash.enable = true;
-
   # Allow unfree packages (needed for some proprietary software)
   nixpkgs.config.allowUnfree = true;
 
