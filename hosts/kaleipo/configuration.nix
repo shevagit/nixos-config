@@ -11,7 +11,7 @@
     # ../../modules/server/fail2ban.nix
     # ../../modules/server/acme.nix
     # ../../modules/common/docker.nix
-    # ../../modules/common/tailscale.nix
+    ../../modules/common/tailscale.nix
   ];
 
   # Bootloader
@@ -39,51 +39,14 @@
     isNormalUser = true;
     description = "andreas sheva";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    shell = pkgs.bash;
-
-    # Add your SSH public key here for remote access
-    # openssh.authorizedKeys.keys = [
-    #   "ssh-ed25519 AAAAC3...xxxxxx"
-    # ];
+    shell = pkgs.zsh;
   };
+
+  # zsh is enabled in home manager, but is not recognized if I don't add it here
+  programs.zsh.enable = true;
 
   # Allow unfree packages (needed for some proprietary software)
   nixpkgs.config.allowUnfree = true;
-
-  # Nginx virtual hosts configuration
-  # Customize this for your actual services
-  services.nginx.virtualHosts = {
-    # Example: Reverse proxy to a Docker container
-    # "app.xamal.eu" = {
-    #   enableACME = true;
-    #   forceSSL = true;
-    #   locations."/" = {
-    #     proxyPass = "http://localhost:8080";
-    #     proxyWebsockets = true;
-    #     extraConfig = ''
-    #       limit_req zone=mylimit burst=10 nodelay;
-    #     '';
-    #   };
-    # };
-
-    # Default catch-all (optional)
-    "_" = {
-      default = true;
-      locations."/" = {
-        return = "444";  # Close connection without response
-      };
-    };
-  };
-
-  # ACME certificates configuration
-  # Uncomment and configure when ready to issue certificates
-  # security.acme.certs."xamal.eu" = {
-  #   domain = "*.xamal.eu";
-  #   extraDomainNames = [ "xamal.eu" ];
-  #   dnsProvider = "cloudflare";
-  #   environmentFile = "/run/secrets/cloudflare-api";
-  #   group = "nginx";
-  # };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data were taken.
