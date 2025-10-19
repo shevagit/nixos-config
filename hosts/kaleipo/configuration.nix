@@ -34,11 +34,10 @@
   # Or use NetworkManager (simpler for homelab):
   networking.networkmanager.enable = true;
 
-  # Enable SSH (temporarily with password auth for initial setup)
   services.openssh = {
     enable = true;
     settings = {
-      PasswordAuthentication = true;
+      PasswordAuthentication = false;
       PermitRootLogin = "no";
     };
   };
