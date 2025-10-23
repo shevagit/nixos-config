@@ -10,7 +10,7 @@
     # ../../modules/server/nginx.nix
     # ../../modules/server/fail2ban.nix
     # ../../modules/server/acme.nix
-    # ../../modules/common/docker.nix
+    ../../modules/common/docker.nix
     ../../modules/common/tailscale.nix
   ];
 
