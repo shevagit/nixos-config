@@ -19,6 +19,7 @@
       ../../modules/common/fprintd.nix
       ../../modules/common/tailscale.nix
       ../../modules/services/yubi-auth.nix
+      ../../modules/services/speechd.nix
     ];
 
   # Bootloader.
