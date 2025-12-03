@@ -16,9 +16,6 @@
       kaccount = "kubectl get pods --context us-e2 -n production -w | grep -E '^account-[^-]+-[^-]+$'";
       kwebsite = "kubectl get pods --context us-e1 -n production -w | grep -E '^website-[^-]+-[^-]+$'";
       du = "du -hsc";
-      cdnix = "cd ~/githubdir/nixos-config";
-      cdlwgit = "cd ~/learnworlds/gitlabdir";
-      cdlwdatsunprep = "cd ~/learnworlds/gitlabdir/datsunpreparator";
       rm = "rm -i";
       gp = "git pull";
       gs = "git status";
@@ -60,6 +57,43 @@
         local _app=$1; shift
         kubectl logs --prefix -f -l app=''${_app} $@ | \
           grep -E -v 'health|metrics'
+      }
+
+      function kcopy {
+        local src=$1
+        local dest_or_app=$2
+        local dest_path=''${3:-/tmp}
+        
+        # Check if we're copying TO or FROM pod
+        if [[ "$src" == *:* ]]; then
+          # Format: kcopy service:file.log ./local-path
+          local app="''${src%%:*}"
+          local remote_path="''${src#*:}"
+          local local_path="$dest_or_app"
+          
+          local pod=$(kubectl get pods -l app="$app" -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
+          
+          if [[ -z "$pod" ]]; then
+            echo "No pod found for app=$app"
+            return 1
+          fi
+          
+          echo "Copying from $pod:$remote_path to $local_path"
+          kubectl cp "$pod:$remote_path" "$local_path"
+        else
+          # Format: kcopy file.log service [/remote/path]
+          local app="$dest_or_app"
+          
+          local pod=$(kubectl get pods -l app="$app" -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
+          
+          if [[ -z "$pod" ]]; then
+            echo "No pod found for app=$app"
+            return 1
+          fi
+          
+          echo "Copying $src to $pod:$dest_path"
+          kubectl cp "$src" "$pod:$dest_path"
+        fi
       }
     '';
   };
