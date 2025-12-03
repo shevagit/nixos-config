@@ -29,11 +29,11 @@
     ...
   }: {
     nixosConfigurations = {
-      simos = nixpkgs-stable.lib.nixosSystem {
+      simos = nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./hosts/simos/configuration.nix
-          home-manager-stable.nixosModules.home-manager
+          home-manager-unstable.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
