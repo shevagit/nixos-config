@@ -64,9 +64,19 @@
         local dest_or_app=$2
         local dest_path=''${3:-/tmp}
         
-        # Check if we're copying TO or FROM pod
+        if [[ -z "$src" ]] || [[ -z "$dest_or_app" ]]; then
+          echo "Usage:"
+          echo "  kcopy <local-file> <service> [remote-path]     # Copy TO pod"
+          echo "  kcopy <service>:<remote-file> <local-path>     # Copy FROM pod"
+          echo ""
+          echo "Examples:"
+          echo "  kcopy file.log myservice           # Copy to /tmp in pod"
+          echo "  kcopy file.log myservice /app/     # Copy to /app/ in pod"
+          echo "  kcopy myservice:/tmp/log.txt ./    # Copy from pod to local"
+          return 1
+        fi
+        
         if [[ "$src" == *:* ]]; then
-          # Format: kcopy service:file.log ./local-path
           local app="''${src%%:*}"
           local remote_path="''${src#*:}"
           local local_path="$dest_or_app"
@@ -81,7 +91,6 @@
           echo "Copying from $pod:$remote_path to $local_path"
           kubectl cp "$pod:$remote_path" "$local_path"
         else
-          # Format: kcopy file.log service [/remote/path]
           local app="$dest_or_app"
           
           local pod=$(kubectl get pods -l app="$app" -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
@@ -93,6 +102,12 @@
           
           echo "Copying $src to $pod:$dest_path"
           kubectl cp "$src" "$pod:$dest_path"
+        fi
+        
+        echo -n "Exec into $pod? [y/N] "
+        read -r response
+        if [[ "$response" =~ ^[Yy]$ ]]; then
+          kubectl exec -it "$pod" -- /bin/sh
         fi
       }
     '';
