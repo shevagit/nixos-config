@@ -9,7 +9,6 @@
       ll = "ls -lash";
       l = "ls -lh";
       k  = "kubectl";
-      kgp = "kubectl get pods";
       kns = "kubens";
       kgi = "kubectl get ingress";
       kctx = "kubectx";
@@ -110,6 +109,45 @@
           kubectl exec -it "$pod" -- /bin/sh
         fi
       }
+
+      function kgp {
+        local pattern="''${1:-}"
+        local mode="''${2:-}"
+
+        # No argument → normal behavior
+        if [[ -z "$pattern" ]]; then
+          kubectl get pods
+          return
+        fi
+
+        # Fetch all pod names as an array
+        local pods
+        IFS=' ' read -r -A pods <<< "$(kubectl get pods -o jsonpath='{.items[*].metadata.name}')"
+
+        local matches=()
+
+        # Regex match (no quotes around $pattern → correct matching)
+        for p in "''${pods[@]}"; do
+          if [[ $p =~ $pattern ]]; then
+            matches+=("$p")
+          fi
+        done
+
+        if (( ''${#matches[@]} == 0 )); then
+          echo "No pods match regex: $pattern"
+          return 1
+        fi
+
+        # Show all if requested
+        if [[ "$mode" == "--all" ]]; then
+          printf "%s\n" "''${matches[@]}"
+          return
+        fi
+
+        # Default: first match
+        echo "''${matches[1]}"
+      }
+
     '';
   };
 }
