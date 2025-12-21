@@ -40,6 +40,7 @@
     neovim
     tree-sitter
     fd
+    zoom-us
 
     # gitlab and github cli
     glab
