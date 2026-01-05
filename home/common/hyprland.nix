@@ -135,8 +135,7 @@
 
       # wlogout visual settings
       layerrule = [
-        "blur, wlogout"
-        "dimaround, wlogout"
+        "blur on, dim_around on, match:namespace wlogout"
       ];
 
       general ={
