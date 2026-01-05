@@ -151,9 +151,10 @@
   #   enableSSHSupport = true;
   # };
 
-  # flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  # List services that you want to enable:
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    download-buffer-size = 524288000;
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
