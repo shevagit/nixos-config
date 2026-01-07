@@ -18,6 +18,11 @@
       url = "github:Aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    snitch = {
+      url = "github:karol-broda/snitch";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = inputs@{
@@ -26,6 +31,7 @@
     home-manager-stable,
     home-manager-unstable,
     ags,
+    snitch,
     ...
   }: {
     nixosConfigurations = {
@@ -38,7 +44,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.sheva = import ./hosts/simos/home.nix;
-            home-manager.extraSpecialArgs = { inherit ags; };
+            home-manager.extraSpecialArgs = { inherit ags snitch; };
           }
         ];
       };
