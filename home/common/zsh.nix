@@ -148,6 +148,90 @@
         echo "''${matches[1]}"
       }
 
+      typeset -A KUBE_GROUPS=(
+        [all]="asia-se1 sa-br1 eu-w4 me-c2 us-e1 us-e2"
+        [emea]="eu-w4 me-c2"
+        [us]="us-e1 us-e2"
+        [apac]="asia-se1 sa-br1"
+      )
+
+      function krun {
+        local parallel=0 ns="" contexts=()
+
+        # print help if no args
+        if [[ $# -eq 0 ]]; then
+          echo ""
+          echo "Usage: krun [options] [kubectl command...]"
+          echo ""
+          echo "Options:"
+          echo "  --all                Run on all contexts"
+          echo "  --group <name>       Run on a predefined group (see below)"
+          echo "  --contexts \"c1 c2\"   Run on specific contexts"
+          echo "  -P, --parallel       Run all contexts in parallel"
+          echo "  -n, --namespace NS   Specify namespace for all contexts"
+          echo "  -y                   Skip confirmation for mutating commands"
+          echo ""
+          echo "Available context groups:"
+          for group in "''${(k)KUBE_GROUPS[@]}"; do
+            echo "  $group: ''${KUBE_GROUPS[$group]}"
+          done
+          echo ""
+          echo "Current kube contexts:"
+          kubectl config get-contexts -o name | sed 's/^/  /'
+          echo ""
+          echo "Examples:"
+          echo "  krun --all -- get pods -A"
+          echo "  krun --group us -P -- rollout restart deploy/myapp -n production"
+          echo "  krun --contexts \"us-e1 eu-w4\" -- get nodes -o wide"
+          echo ""
+          return 0
+        fi
+
+        # parse flags
+        while (( $# )); do
+          case "$1" in
+            --all)        contexts=(''${=KUBE_GROUPS[all]}); shift ;;
+            --group)      contexts=(''${=KUBE_GROUPS[$2]}); shift 2 ;;
+            --contexts)   contexts=(''${=2}); shift 2 ;;
+            -P|--parallel) parallel=1; shift ;;
+            -n|--namespace) ns="$2"; shift 2 ;;
+            --) shift; break ;;
+            *)  break ;;
+          esac
+        done
+
+        local cmd=("$@")
+        # default: current context only
+        (( ''${#contexts} == 0 )) && contexts=($(kubectl config current-context))
+
+        # safety prompt for mutating ops (unless user passed -y)
+        if [[ ! " $* " =~ " -y " ]]; then
+          if [[ " ''${cmd[*]} " =~ "( apply | delete | scale | rollout | cordon | drain )" ]]; then
+            echo "About to run on ''${#contexts} context(s): ''${contexts[*]}"
+            read "REPLY?Continue? [y/N] "; [[ $REPLY =~ ^[Yy]$ ]] || return 1
+          fi
+        fi
+
+        local pids=() rc=0
+        for ctx in "''${contexts[@]}"; do
+          if (( parallel )); then
+            (
+              echo ">>> [$ctx] kubectl ''${cmd[*]}"
+              kubectl --context "$ctx" ''${ns:+--namespace "$ns"} "''${cmd[@]}" \
+                | sed -e "s/^/[$ctx] /"
+            ) & pids+=($!)
+          else
+            echo ">>> [$ctx] kubectl ''${cmd[*]}"
+            kubectl --context "$ctx" ''${ns:+--namespace "$ns"} "''${cmd[@]}" \
+              | sed -e "s/^/[$ctx] /"
+          fi
+        done
+
+        if (( parallel )); then
+          for pid in "''${pids[@]}"; do wait "$pid" || rc=1; done
+          return $rc
+        fi
+      }
     '';
   };
 }
