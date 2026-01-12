@@ -111,22 +111,38 @@
       }
 
       function kgp {
-        local pattern="''${1:-}"
-        local mode="''${2:-}"
-
-        # No argument → normal behavior
-        if [[ -z "$pattern" ]]; then
-          kubectl get pods
+        # 1) Watch mode shortcut: kgp -w [extra kubectl args...]
+        if [[ "$1" == "-w" || "$1" == "--watch" ]]; then
+          shift
+          kubectl get pods -w "$@"
           return
         fi
 
-        # Fetch all pod names as an array
+        # 2) Regex mode + legacy behavior
+        local pattern="''${1:-}"
+        shift 2>/dev/null || true
+
+        # optional --all to print all matches
+        local mode=""
+        if [[ "''${1:-}" == "--all" ]]; then
+          mode="--all"
+          shift
+        fi
+
+        # any remaining args are passed to "kubectl get pods ..."
+        local extra_args=("$@")
+
+        # No args → plain get pods (preserves your original behavior)
+        if [[ -z "$pattern" ]]; then
+          kubectl get pods "''${extra_args[@]}"
+          return
+        fi
+
+        # Fetch pod names (respecting any extra args like -n, -A, -l, etc.)
         local pods
-        IFS=' ' read -r -A pods <<< "$(kubectl get pods -o jsonpath='{.items[*].metadata.name}')"
+        IFS=' ' read -r -A pods <<< "$(kubectl get pods "''${extra_args[@]}" -o jsonpath='{.items[*].metadata.name}')"
 
         local matches=()
-
-        # Regex match (no quotes around $pattern → correct matching)
         for p in "''${pods[@]}"; do
           if [[ $p =~ $pattern ]]; then
             matches+=("$p")
@@ -138,13 +154,12 @@
           return 1
         fi
 
-        # Show all if requested
         if [[ "$mode" == "--all" ]]; then
           printf "%s\n" "''${matches[@]}"
           return
         fi
 
-        # Default: first match
+        # Default: first match (zsh arrays are 1-indexed)
         echo "''${matches[1]}"
       }
 
