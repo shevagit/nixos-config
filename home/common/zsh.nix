@@ -164,8 +164,8 @@
       }
 
       typeset -A KUBE_GROUPS=(
-        [all]="asia-se1 sa-br1 eu-w4 me-c2 us-e1 us-e2"
-        [emea]="eu-w4 me-c2"
+        [all]="asia-se1 sa-br1 eu-w3 eu-w4 me-c2 us-e1 us-e2"
+        [emea]="eu-w3 eu-w4 me-c2"
         [us]="us-e1 us-e2"
         [apac]="asia-se1 sa-br1"
       )
