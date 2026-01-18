@@ -35,7 +35,7 @@
 
       bind = [
         # --- Actions ---
-        "$mod, Return, exec, terminator"
+        "$mod, Return, exec, kitty"
         "$mod, d, exec, rofi -show drun -config ~/.config/rofi/launcher.rasi"
         #"$mod SHIFT, r exec, hyprctl reload"
 
