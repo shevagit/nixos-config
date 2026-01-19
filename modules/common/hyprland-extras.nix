@@ -1,7 +1,9 @@
 {
   home-manager.users.sheva = {
+    # Waybar disabled - replaced by DMS (Dank Material Shell)
+    # Config files below are kept but waybar itself won't run
     programs.waybar = {
-      enable = true;
+      enable = false;
     };
 
     # left-bar-config.jsonc

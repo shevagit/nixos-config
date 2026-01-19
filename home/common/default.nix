@@ -16,6 +16,6 @@
         ./vscode-plugins.nix
         ./neovim.nix
         ./ai.nix
-        ./hyprpanel.nix
+        # ./hyprpanel.nix  # Disabled - replaced by DMS (Dank Material Shell)
     ];
 }

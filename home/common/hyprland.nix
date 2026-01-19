@@ -162,7 +162,7 @@
 
   # required packages for the hyprland configuration
   home.packages = with pkgs; [
-      waybar
+      # waybar  # Disabled - replaced by DMS (Dank Material Shell)
       wl-clipboard
       grim
       slurp
@@ -218,12 +218,24 @@
   };
     home.file.".config/hyprland/scripts/waybars-wrapper.sh".executable = true;
 
+  # Old bares-wrapper.sh (hyprpanel + waybar) - replaced by DMS
+  # home.file = {
+  #   ".config/hyprland/scripts/bares-wrapper.sh".text = ''
+  #     #!/usr/bin/env bash
+  #     hyprpanel &
+  #     sleep 1
+  #     waybar -c ~/.config/waybar/left-bar-config.jsonc -s ~/.config/waybar/left-bar-style.css &
+  #   '';
+  # };
+  #   home.file.".config/hyprland/scripts/bares-wrapper.sh".executable = true;
+
+  # DMS (Dank Material Shell) is started via systemd, no wrapper script needed
   home.file = {
     ".config/hyprland/scripts/bares-wrapper.sh".text = ''
       #!/usr/bin/env bash
-      hyprpanel &
-      sleep 1
-      waybar -c ~/.config/waybar/left-bar-config.jsonc -s ~/.config/waybar/left-bar-style.css &
+      # DMS is started via systemd, this script is kept for compatibility
+      # Old bars (hyprpanel + waybar) have been replaced by DMS
+      exit 0
     '';
   };
     home.file.".config/hyprland/scripts/bares-wrapper.sh".executable = true;
