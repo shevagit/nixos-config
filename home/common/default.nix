@@ -17,5 +17,6 @@
         ./neovim.nix
         ./ai.nix
         # ./hyprpanel.nix  # Disabled - replaced by DMS (Dank Material Shell)
+        ./dms  # DMS (Dank Material Shell) configuration
     ];
 }
