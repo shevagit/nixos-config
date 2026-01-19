@@ -83,6 +83,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    wireplumber.enable = true;  # Session manager needed for DMS audio controls
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -116,6 +117,12 @@
 
   # Install firefox.
   programs.firefox.enable = true;
+
+  # Dank Material Shell (DMS) - replaces hyprpanel and waybar
+  programs.dms-shell = {
+    enable = true;
+    systemd.enable = true;  # Auto-start DMS
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
