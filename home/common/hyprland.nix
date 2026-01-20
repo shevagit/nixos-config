@@ -39,8 +39,8 @@
         "$mod, d, exec, rofi -show drun -config ~/.config/rofi/launcher.rasi"
         #"$mod SHIFT, r exec, hyprctl reload"
 
-        # Bind SUPER+p to the wofi power menu script.
-        "$mod, p, exec, ~/.config/wlogout/scripts/power-menu"
+        # Bind SUPER+p to DMS power menu
+        "$mod, p, exec, dms ipc call powermenu toggle"
         # logout; to be removed
         "$mod SHIFT, e, exec, hyprctl dispatch exit 0"
         # close active window
@@ -133,11 +133,6 @@
         "kb_options" = "grp:win_space_toggle";
       };
 
-      # wlogout visual settings
-      layerrule = [
-        "blur on, dim_around on, match:namespace wlogout"
-      ];
-
       general ={
         gaps_in = 10;
         gaps_out = 20;
@@ -184,29 +179,6 @@
       pkgs.nerdfonts
     ]);
 
-
-  home.file = {
-    ".config/hyprland/scripts/wofi-power-menu.sh".text = ''
-      #!/usr/bin/env bash
-
-      # Define the options properly
-      OPTIONS=$(printf "🔒 Lock\n🚪 Logout\n🔄 Restart\n⏻ Shutdown")
-
-      # Launch Wofi with the correct style and options
-      CHOICE=$(echo "$OPTIONS" | wofi --dmenu --prompt "Power Menu" --lines=4 --width=250 --style ~/.config/wofi/style.css)
-
-      # Execute the corresponding command
-      case "$CHOICE" in
-        "🔒 Lock") hyprlock ;;
-        "🚪 Logout") hyprctl dispatch exit 0 ;;
-        "🔄 Restart") systemctl reboot ;;
-        "⏻ Shutdown") systemctl poweroff ;;
-        *) exit 1 ;;
-      esac
-
-    '';
-  };
-    home.file.".config/hyprland/scripts/wofi-power-menu.sh".executable = true;
 
   home.file = {
     ".config/hyprland/scripts/waybars-wrapper.sh".text = ''
