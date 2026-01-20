@@ -12,7 +12,12 @@
       background_opacity = "0.5";
       background_blur = 5;
       shell_integration = "no-rc";
+      copy_on_select = "clipboard";  # Auto-copy selected text
+      strip_trailing_spaces = "smart";  # Clean up copied text
     };
+    extraConfig = ''
+      mouse_map right press ungrabbed paste_from_clipboard
+    '';
     keybindings = {
       # Terminator-style splits
       "ctrl+shift+o" = "launch --location=hsplit --cwd=current";

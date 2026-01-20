@@ -12,7 +12,6 @@
         ./hyprland-theme.nix
         ./swww.nix
         ./wlogout.nix
-        ./eww.nix
         ./vscode-plugins.nix
         ./neovim.nix
         ./ai.nix

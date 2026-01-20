@@ -11,11 +11,11 @@
       
       exec-once = [
         #"~/.config/hyprland/scripts/waybars-wrapper.sh"
-        "${pkgs.eww}/bin/eww daemon"
-        # "nwg-dock-hyprland -x -mb 10 -ml 20 -mr 20 -d" # disabled nwg-dock
         "~/.config/hyprland/scripts/bares-wrapper.sh"
         "swww-daemon"
         "~/.config/hyprland/scripts/wallpaper-init.sh"
+        "wl-paste --type text --watch cliphist store"  # Clipboard history for DMS
+        "wl-paste --type image --watch cliphist store"  # Image clipboard history
       ];
 
       monitor = [
@@ -164,11 +164,11 @@
   home.packages = with pkgs; [
       # waybar  # Disabled - replaced by DMS (Dank Material Shell)
       wl-clipboard
+      cliphist  # Clipboard history for DMS
       grim
       slurp
       wofi
       rofi
-      nwg-dock-hyprland
       nwg-drawer
       swaylock
       pavucontrol
@@ -299,6 +299,10 @@
   };
     home.file.".config/hyprland/scripts/move-to-next-empty.sh".executable = true;
 
+
+  # Enable ssh-agent service for keychain to connect to
+  # handle ssh keys; gnome-keyring is used for password management
+  services.ssh-agent.enable = true;
 
   programs.keychain = {
     enable = true;
