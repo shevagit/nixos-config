@@ -6,7 +6,7 @@
   ];
 
   programs.wlogout = {
-    enable = true;
+    enable = false;
     package = pkgs.wlogout;
 
     layout = [

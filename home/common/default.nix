@@ -10,8 +10,8 @@
         ./docker.nix
         ./hyprland.nix
         ./hyprland-theme.nix
-        ./swww.nix
-        ./wlogout.nix
+        # ./swww.nix  # Disabled - DMS handles wallpapers
+        # ./wlogout.nix  # Disabled - DMS handles power menu
         ./vscode-plugins.nix
         ./neovim.nix
         ./ai.nix

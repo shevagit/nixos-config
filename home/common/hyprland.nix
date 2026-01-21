@@ -12,8 +12,8 @@
       exec-once = [
         #"~/.config/hyprland/scripts/waybars-wrapper.sh"
         "~/.config/hyprland/scripts/bares-wrapper.sh"
-        "swww-daemon"
-        "~/.config/hyprland/scripts/wallpaper-init.sh"
+        # "swww-daemon"  # Removed - DMS handles wallpapers
+        # "~/.config/hyprland/scripts/wallpaper-init.sh"  # Removed - DMS handles wallpapers
         "wl-paste --type text --watch cliphist store"  # Clipboard history for DMS
         "wl-paste --type image --watch cliphist store"  # Image clipboard history
       ];
@@ -116,9 +116,9 @@
         ", XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
         ", XF86AudioMute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
 
-        # Wallpaper controls
-        "$mod, w, exec, ~/.config/hyprland/scripts/wallpaper-next.sh"
-        "$mod SHIFT, w, exec, ~/.config/hyprland/scripts/wallpaper-random.sh"
+        # Wallpaper controls - Removed, DMS handles wallpapers
+        # "$mod, w, exec, ~/.config/hyprland/scripts/wallpaper-next.sh"
+        # "$mod SHIFT, w, exec, ~/.config/hyprland/scripts/wallpaper-random.sh"
 
       ];
 
