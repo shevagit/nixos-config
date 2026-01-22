@@ -286,6 +286,7 @@
     extraFlags = [
       "--quiet"
       "--timeout 120"
+      "--inherit any"
     ];
   };
 

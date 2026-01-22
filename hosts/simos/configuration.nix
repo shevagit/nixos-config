@@ -18,6 +18,7 @@
       ../../modules/services/systemd-tmpfiles-rules.nix
       ../../modules/common/tailscale.nix
       ../../modules/services/yubi-auth.nix
+      ../../modules/common/display-manager.nix
     ];
 
   # Bootloader.
@@ -61,7 +62,6 @@
   services.xserver.enable = true;
 
   # Use gdm and gnome keyring and disable gnome desktop manager
-  services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = false;
   services.gnome.gnome-keyring.enable = true;
 
