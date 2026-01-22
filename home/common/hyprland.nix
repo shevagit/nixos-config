@@ -286,7 +286,7 @@
     extraFlags = [
       "--quiet"
       "--timeout 120"
-      "--inherit any"
+      "--ssh-allow-forwarded"
     ];
   };
 
