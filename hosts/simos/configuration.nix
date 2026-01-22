@@ -115,6 +115,15 @@
     systemd.enable = true;  # Auto-start DMS
   };
 
+  # NVIDIA Wayland fixes for Qt6/EGL stability (fixes dms/quickshell freezes)
+  environment.sessionVariables = {
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    __GL_GSYNC_ALLOWED = "0";
+    __GL_VRR_ALLOWED = "0";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
