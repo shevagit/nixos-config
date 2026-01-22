@@ -1,4 +1,30 @@
 { config, pkgs, ... }:
+let
+  # Choose your theme preset here:
+  # Available options:
+  #   - "astronaut"
+  #   - "black_hole"
+  #   - "cyberpunk"
+  #   - "japanese_aesthetic"
+  #   - "pixel_sakura_static"
+  #   - "post-apocalyptic_hacker"
+  #   - "purple_leaves"
+  #   - "pixel_sakura" (animated gif)
+  #   - "jake_the_dog" (animated mp4)
+  #   - "hyprland_kath" (animated mp4)
+  themePreset = "pixel_sakura";
+
+  # Custom sddm-astronaut theme with selected preset
+  sddm-astronaut-custom = pkgs.runCommand "sddm-astronaut-${themePreset}" { } ''
+    mkdir -p $out/share/sddm/themes
+    cp -r ${pkgs.sddm-astronaut}/share/sddm/themes/sddm-astronaut-theme $out/share/sddm/themes/
+    chmod -R +w $out/share/sddm/themes/sddm-astronaut-theme
+
+    # Change the ConfigFile to the selected theme preset
+    sed -i 's|ConfigFile=Themes/astronaut.conf|ConfigFile=Themes/${themePreset}.conf|' \
+      $out/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
+  '';
+in
 {
   services.displayManager.sddm = {
     enable = true;
@@ -9,40 +35,9 @@
     extraPackages = with pkgs.kdePackages; [
       qtmultimedia
     ];
-
-    # Override theme settings here
-    # These settings override the default theme config
-    settings = {
-      General = {
-        # Background Options (choose one):
-        # Static backgrounds:
-        #   - "Backgrounds/astronaut.png"
-        #   - "Backgrounds/black_hole.png"
-        #   - "Backgrounds/cyberpunk.png"
-        #   - "Backgrounds/japanese_aesthetic.png"
-        #   - "Backgrounds/pixel_sakura_static.png"
-        #   - "Backgrounds/post-apocalyptic_hacker.png"
-        #   - "Backgrounds/purple_leaves.png"
-        # Animated backgrounds:
-        #   - "Backgrounds/pixel_sakura.gif"
-        #   - "Backgrounds/jake_the_dog.mp4"
-        #   - "Backgrounds/hyprland_kath.mp4"
-        Background = "Backgrounds/pixel_sakura.gif";
-
-        # Animated background settings
-        BackgroundSpeed = "1.0";  # Speed multiplier (0.0-10.0+)
-        # PauseBackground = "false"; # Pause GIF playback
-
-        # Other customizations
-        # HeaderText = "Welcome to NixOS!";
-        # DimBackground = "0.0";  # 0.0 = no dim, 1.0 = fully dimmed
-        # PartialBlur = "true";
-        # FormPosition = "center";  # left, center, right
-      };
-    };
   };
 
-  environment.systemPackages = with pkgs; [
-    sddm-astronaut
+  environment.systemPackages = [
+    sddm-astronaut-custom
   ];
 }
