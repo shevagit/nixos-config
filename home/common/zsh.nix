@@ -34,6 +34,9 @@
       # zoxide init
       eval "$(zoxide init zsh)"
 
+      # keychain init - load ssh keys
+      eval "$(keychain --eval --quiet)"
+
       # Bind Ctrl + Left Arrow to backward-word and Ctrl + Right Arrow to forward-word
       bindkey "^[[1;5D" backward-word
       bindkey "^[[1;5C" forward-word

@@ -20,8 +20,8 @@
     '';
     keybindings = {
       # Terminator-style splits
-      "ctrl+shift+o" = "launch --location=hsplit --cwd=current";
-      "ctrl+shift+e" = "launch --location=vsplit --cwd=current";
+      "ctrl+shift+o" = "launch --location=vsplit --cwd=current";
+      "ctrl+shift+e" = "launch --location=hsplit --cwd=current";
       "ctrl+shift+w" = "close_window";
       
       # Navigate between panes
