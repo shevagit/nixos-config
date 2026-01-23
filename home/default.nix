@@ -18,6 +18,19 @@
     "Xft.dpi" = 172;
   };
 
+  # Override MongoDB Compass desktop entry to include Wayland and password store flags
+  xdg.desktopEntries.mongodb-compass = {
+    name = "MongoDB Compass";
+    comment = "The MongoDB GUI";
+    genericName = "MongoDB Compass";
+    exec = "mongodb-compass --ignore-additional-command-line-flags --enable-features=UseOzonePlatform --ozone-platform=wayland --password-store=gnome-libsecret %U";
+    icon = "mongodb-compass";
+    type = "Application";
+    startupNotify = true;
+    categories = [ "GNOME" "GTK" "Utility" ];
+    mimeType = [ "x-scheme-handler/mongodb" "x-scheme-handler/mongodb+srv" ];
+  };
+
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     google-chrome
