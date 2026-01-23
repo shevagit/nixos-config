@@ -20,6 +20,8 @@
       ../../modules/common/tailscale.nix
       ../../modules/services/yubi-auth.nix
       ../../modules/services/speechd.nix
+      ../../modules/common/display-manager.nix
+      ../../modules/common/desktop-environment.nix
     ];
 
   # Bootloader.
@@ -62,9 +64,9 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+  # Use gdm and gnome keyring and disable gnome desktop manager
+  services.desktopManager.gnome.enable = false;
+  services.gnome.gnome-keyring.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
