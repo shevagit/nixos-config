@@ -14,3 +14,5 @@ result
 # Secrets - never commit!
 secrets.env
 secrets.nix
+# ignore plan files
+*.plan
