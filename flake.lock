@@ -122,7 +122,8 @@
         "home-manager-unstable": "home-manager-unstable",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "snitch": "snitch"
+        "snitch": "snitch",
+        "sops-nix": "sops-nix"
       }
     },
     "snitch": {
@@ -142,6 +143,26 @@
       "original": {
         "owner": "karol-broda",
         "repo": "snitch",
+        "type": "github"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769314333,
+        "narHash": "sha256-+Uvq9h2eGsbhacXpuS7irYO7fFlz514nrhPCSTkASlw=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "2eb9eed7ef48908e0f02985919f7eb9d33fa758f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
         "type": "github"
       }
     }
