@@ -153,9 +153,9 @@
 
       Keep the explanation clear and concise."""
 
-              # Call Claude API
+              # Call Claude API (using Haiku for cost efficiency)
               response = client.messages.create(
-                  model="claude-sonnet-4-5-20250929",
+                  model="claude-haiku-4-5-20251001",
                   max_tokens=1024,
                   messages=[{"role": "user", "content": prompt}]
               )
@@ -233,91 +233,586 @@
     '';
   };
 
-  # Natural Language to Command Kitten (Phase 2)
-  # Will be implemented in next phase
+  # Natural Language to Command Kitten
   home.file.".config/kitty/kittens/ai-command.py" = {
     executable = true;
     text = ''
       #!/usr/bin/env python3
       """
-      AI Command Generator Kitten - Coming in Phase 2
+      AI Command Generator Kitten
       Converts natural language to shell commands
       Keybinding: ctrl+shift+a
       """
 
-      print("""
-      ╔══════════════════════════════════════════════════════════╗
-      ║          AI Command Generator - Coming Soon!             ║
-      ╚══════════════════════════════════════════════════════════╝
+      import sys
+      import os
+      import subprocess
 
-      This kitten will convert natural language to shell commands.
+      def main():
+          # Clear screen and show prominent overlay indicator
+          print("\033[2J\033[H", end="")  # Clear screen
 
-      Example:
-        "find all python files modified in the last week"
-        → find . -name "*.py" -mtime -7
+          # Prominent overlay indicator
+          print("\033[48;5;53m" + " " * 70 + "\033[0m")
+          print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY WINDOW - Press Enter when done to return to terminal  " + "\033[0m")
+          print("\033[48;5;53m" + " " * 70 + "\033[0m")
+          print()
 
-      Status: Planned for Phase 2
-      """)
+          print("\n╔══════════════════════════════════════════════════════════╗")
+          print("║        AI Command Generator (Natural Language)          ║")
+          print("╚══════════════════════════════════════════════════════════╝\n")
+          print("Describe what you want to do in plain English:")
+          print("(e.g., 'find all python files modified in the last week')\n")
+          print("→ ", end="", flush=True)
 
-      input("\nPress Enter to close...")
+          try:
+              query = input().strip()
+          except (KeyboardInterrupt, EOFError):
+              print("\nCancelled.")
+              return
+
+          if not query:
+              print("Error: No query provided")
+              return
+
+          # Get current working directory for context
+          try:
+              cwd = os.getcwd()
+          except:
+              cwd = "~"
+
+          # Check for API key
+          api_key = os.environ.get('ANTHROPIC_API_KEY')
+
+          if not api_key:
+              secrets_file = os.path.expanduser('~/.config/secrets.env')
+              if os.path.exists(secrets_file):
+                  try:
+                      with open(secrets_file, 'r') as f:
+                          for line in f:
+                              line = line.strip()
+                              if line.startswith('export ANTHROPIC_API_KEY='):
+                                  api_key = line.split('=', 1)[1].strip().strip('"').strip("'")
+                                  break
+                              elif line.startswith('ANTHROPIC_API_KEY='):
+                                  api_key = line.split('=', 1)[1].strip().strip('"').strip("'")
+                                  break
+                  except:
+                      pass
+
+          if not api_key:
+              print("\n❌ Error: ANTHROPIC_API_KEY not set!")
+              print("Edit ~/.config/secrets.env to add your API key")
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+              try:
+                  input()
+              except:
+                  pass
+              return
+
+          try:
+              from anthropic import Anthropic
+
+              print("\n🤔 Thinking... Generating command...\n", flush=True)
+
+              client = Anthropic(api_key=api_key)
+
+              prompt = f"""Generate a shell command for this task: {query}
+
+      Current directory: {cwd}
+
+      Provide:
+      1. The exact command to run (just the command, no explanation yet)
+      2. A brief explanation of what it does
+      3. Any important warnings or notes
+
+      Format your response as:
+      COMMAND: <the actual command>
+      EXPLANATION: <explanation>
+      NOTES: <any warnings or tips>"""
+
+              response = client.messages.create(
+                  model="claude-haiku-4-5-20251001",
+                  max_tokens=512,
+                  messages=[{"role": "user", "content": prompt}]
+              )
+
+              result = response.content[0].text
+
+              print("╔══════════════════════════════════════════════════════════════════╗")
+              print("║                    Generated Command                             ║")
+              print("╚══════════════════════════════════════════════════════════════════╝\n")
+              print(result)
+              print()
+
+              # Try to extract just the command for clipboard
+              command_line = ""
+              for line in result.split('\n'):
+                  if line.strip().startswith('COMMAND:'):
+                      command_line = line.split('COMMAND:', 1)[1].strip()
+                      break
+
+              if command_line:
+                  # Try to copy to clipboard
+                  try:
+                      subprocess.run(['wl-copy'], input=command_line.encode(), timeout=1)
+                      print("✅ Command copied to clipboard!")
+                  except:
+                      try:
+                          subprocess.run(['xclip', '-selection', 'clipboard'], input=command_line.encode(), timeout=1)
+                          print("✅ Command copied to clipboard!")
+                      except:
+                          print("ℹ️  Could not copy to clipboard automatically")
+
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+
+              try:
+                  input()
+              except:
+                  pass
+
+          except ImportError:
+              print("\n❌ Error: anthropic package not found")
+              print("Try: home-manager switch --flake .#sheva@nixsimos")
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+              try:
+                  input()
+              except:
+                  pass
+
+          except Exception as e:
+              print(f"\n❌ Error: {str(e)}")
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+              try:
+                  input()
+              except:
+                  pass
+
+      if __name__ == '__main__':
+          main()
     '';
   };
 
-  # Smart Command Suggestions Kitten (Phase 2)
+  # Smart Command Suggestions Kitten
   home.file.".config/kitty/kittens/ai-suggest.py" = {
     executable = true;
     text = ''
       #!/usr/bin/env python3
       """
-      AI Smart Suggestions Kitten - Coming in Phase 2
-      Context-aware command suggestions
+      AI Smart Suggestions Kitten
+      Context-aware command suggestions based on current directory
       Keybinding: ctrl+shift+s
       """
 
-      print("""
-      ╔══════════════════════════════════════════════════════════╗
-      ║          AI Smart Suggestions - Coming Soon!             ║
-      ╚══════════════════════════════════════════════════════════╝
+      import sys
+      import os
+      import subprocess
+      from pathlib import Path
 
-      This kitten will analyze your current directory and suggest
-      relevant commands based on:
-      - Git status
-      - Project type (Nix, Node, Python, etc.)
-      - Available files and tools
+      def get_context():
+          """Gather context about current directory"""
+          context = {}
+          cwd = os.getcwd()
+          context['cwd'] = cwd
 
-      Status: Planned for Phase 2
-      """)
+          # Check if git repo
+          try:
+              result = subprocess.run(
+                  ['git', 'rev-parse', '--is-inside-work-tree'],
+                  capture_output=True,
+                  timeout=2,
+                  cwd=cwd
+              )
+              context['is_git_repo'] = result.returncode == 0
+              if context['is_git_repo']:
+                  # Get git status summary
+                  status = subprocess.run(
+                      ['git', 'status', '--short'],
+                      capture_output=True,
+                      text=True,
+                      timeout=2,
+                      cwd=cwd
+                  ).stdout.strip()
+                  context['git_status'] = status if status else 'clean'
+          except:
+              context['is_git_repo'] = False
 
-      input("\nPress Enter to close...")
+          # Detect project type by looking for common files
+          project_indicators = {
+              'package.json': 'Node.js/JavaScript',
+              'Cargo.toml': 'Rust',
+              'flake.nix': 'Nix Flake',
+              'pyproject.toml': 'Python (Poetry)',
+              'requirements.txt': 'Python',
+              'go.mod': 'Go',
+              'pom.xml': 'Java (Maven)',
+              'build.gradle': 'Java (Gradle)',
+              'Makefile': 'Make project',
+              'docker-compose.yml': 'Docker Compose',
+              'Dockerfile': 'Docker',
+          }
+
+          detected_types = []
+          for file, ptype in project_indicators.items():
+              if Path(cwd) / file in Path(cwd).iterdir() if (Path(cwd) / file).exists() else []:
+                  detected_types.append(ptype)
+
+          # Simpler check
+          for file, ptype in project_indicators.items():
+              if os.path.exists(os.path.join(cwd, file)):
+                  detected_types.append(ptype)
+
+          context['project_types'] = detected_types if detected_types else ['General']
+
+          # List some files (not too many)
+          try:
+              files = os.listdir(cwd)[:20]  # First 20 files
+              context['files'] = files
+          except:
+              context['files'] = []
+
+          return context
+
+      def main():
+          # Clear screen and show prominent overlay indicator
+          print("\033[2J\033[H", end="")
+
+          print("\033[48;5;53m" + " " * 70 + "\033[0m")
+          print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY WINDOW - Press Enter when done to return to terminal  " + "\033[0m")
+          print("\033[48;5;53m" + " " * 70 + "\033[0m")
+          print()
+
+          print("\n╔══════════════════════════════════════════════════════════╗")
+          print("║           AI Smart Command Suggestions                  ║")
+          print("╚══════════════════════════════════════════════════════════╝\n")
+          print("🔍 Analyzing current directory...\n", flush=True)
+
+          # Gather context
+          context = get_context()
+
+          print(f"📁 Directory: {context['cwd']}")
+          print(f"📦 Project type: {', '.join(context['project_types'])}")
+          if context['is_git_repo']:
+              print(f"🔀 Git repo: Yes (status: {context['git_status'][:50] if context['git_status'] != 'clean' else 'clean'})")
+          else:
+              print("🔀 Git repo: No")
+          print()
+
+          # Check for API key
+          api_key = os.environ.get('ANTHROPIC_API_KEY')
+
+          if not api_key:
+              secrets_file = os.path.expanduser('~/.config/secrets.env')
+              if os.path.exists(secrets_file):
+                  try:
+                      with open(secrets_file, 'r') as f:
+                          for line in f:
+                              line = line.strip()
+                              if line.startswith('export ANTHROPIC_API_KEY='):
+                                  api_key = line.split('=', 1)[1].strip().strip('"').strip("'")
+                                  break
+                              elif line.startswith('ANTHROPIC_API_KEY='):
+                                  api_key = line.split('=', 1)[1].strip().strip('"').strip("'")
+                                  break
+                  except:
+                      pass
+
+          if not api_key:
+              print("\n❌ Error: ANTHROPIC_API_KEY not set!")
+              print("Edit ~/.config/secrets.env to add your API key")
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+              try:
+                  input()
+              except:
+                  pass
+              return
+
+          try:
+              from anthropic import Anthropic
+
+              print("🤔 Asking Claude for suggestions...\n", flush=True)
+
+              client = Anthropic(api_key=api_key)
+
+              prompt = f"""Based on this directory context, suggest 5-8 useful shell commands:
+
+      Directory: {context['cwd']}
+      Project types: {', '.join(context['project_types'])}
+      Git repo: {context['is_git_repo']}
+      {f"Git status: {context['git_status']}" if context['is_git_repo'] else ""}
+
+      Sample files: {', '.join(context['files'][:10])}
+
+      Suggest practical commands I might want to run in this context.
+      For each command, provide a one-line description.
+
+      Format as:
+      1. command - description
+      2. command - description
+      etc."""
+
+              response = client.messages.create(
+                  model="claude-haiku-4-5-20251001",
+                  max_tokens=512,
+                  messages=[{"role": "user", "content": prompt}]
+              )
+
+              suggestions = response.content[0].text
+
+              print("╔══════════════════════════════════════════════════════════════════╗")
+              print("║                  Suggested Commands                              ║")
+              print("╚══════════════════════════════════════════════════════════════════╝\n")
+              print(suggestions)
+
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+
+              try:
+                  input()
+              except:
+                  pass
+
+          except ImportError:
+              print("\n❌ Error: anthropic package not found")
+              print("Try: home-manager switch --flake .#sheva@nixsimos")
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+              try:
+                  input()
+              except:
+                  pass
+
+          except Exception as e:
+              print(f"\n❌ Error: {str(e)}")
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+              try:
+                  input()
+              except:
+                  pass
+
+      if __name__ == '__main__':
+          main()
     '';
   };
 
-  # Error Helper Kitten (Phase 2)
+  # Error Helper Kitten
   home.file.".config/kitty/kittens/ai-error.py" = {
     executable = true;
     text = ''
       #!/usr/bin/env python3
       """
-      AI Error Helper Kitten - Coming in Phase 2
+      AI Error Helper Kitten
       Diagnoses errors and suggests fixes
       Keybinding: ctrl+shift+f
       """
 
-      print("""
-      ╔══════════════════════════════════════════════════════════╗
-      ║            AI Error Helper - Coming Soon!                ║
-      ╚══════════════════════════════════════════════════════════╝
+      import sys
+      import os
+      import subprocess
 
-      This kitten will:
-      - Capture the last command output from scrollback
-      - Detect error patterns
-      - Send to Claude for diagnosis
-      - Suggest fixes
+      def main():
+          # Clear screen and show prominent overlay indicator
+          print("\033[2J\033[H", end="")
 
-      Status: Planned for Phase 2
-      """)
+          print("\033[48;5;53m" + " " * 70 + "\033[0m")
+          print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY WINDOW - Press Enter when done to return to terminal  " + "\033[0m")
+          print("\033[48;5;53m" + " " * 70 + "\033[0m")
+          print()
 
-      input("\nPress Enter to close...")
+          print("\n╔══════════════════════════════════════════════════════════╗")
+          print("║              AI Error Helper & Debugger                  ║")
+          print("╚══════════════════════════════════════════════════════════╝\n")
+
+          # Try to get error from clipboard first
+          error_text = ""
+          try:
+              try:
+                  error_text = subprocess.run(
+                      ['wl-paste'],
+                      capture_output=True,
+                      text=True,
+                      timeout=1
+                  ).stdout.strip()
+              except:
+                  try:
+                      error_text = subprocess.run(
+                          ['xclip', '-selection', 'clipboard', '-o'],
+                          capture_output=True,
+                          text=True,
+                          timeout=1
+                      ).stdout.strip()
+                  except:
+                      error_text = ""
+          except:
+              error_text = ""
+
+          # If clipboard has something that looks like an error (contains common error keywords), use it
+          error_keywords = ['error', 'failed', 'exception', 'traceback', 'fatal', 'warning', 'not found', 'permission denied', 'cannot']
+          has_error_keywords = any(keyword in error_text.lower() for keyword in error_keywords)
+
+          if error_text and has_error_keywords and len(error_text) < 3000:
+              print("📋 Found error text in clipboard:\n")
+              preview = error_text[:200] + "..." if len(error_text) > 200 else error_text
+              print(f"  {preview}\n")
+              print("Use this error? [Y/n]: ", end="", flush=True)
+              try:
+                  choice = input().strip().lower()
+                  if choice and choice != 'y' and choice != 'yes' and choice != ''':
+                      error_text = ""
+              except:
+                  pass
+          else:
+              error_text = ""
+
+          if not error_text:
+              print("Paste your error message or command output below.")
+              print("(Paste and press Ctrl+D when done, or Ctrl+C to cancel)\n")
+              print("→ ", end="", flush=True)
+
+              try:
+                  lines = []
+                  while True:
+                      try:
+                          line = input()
+                          lines.append(line)
+                      except EOFError:
+                          break
+                  error_text = '\n'.join(lines)
+              except KeyboardInterrupt:
+                  print("\nCancelled.")
+                  return
+
+          if not error_text or not error_text.strip():
+              print("Error: No error text provided")
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+              try:
+                  input()
+              except:
+                  pass
+              return
+
+          # Get current directory for context
+          try:
+              cwd = os.getcwd()
+          except:
+              cwd = "~"
+
+          # Check for API key
+          api_key = os.environ.get('ANTHROPIC_API_KEY')
+
+          if not api_key:
+              secrets_file = os.path.expanduser('~/.config/secrets.env')
+              if os.path.exists(secrets_file):
+                  try:
+                      with open(secrets_file, 'r') as f:
+                          for line in f:
+                              line = line.strip()
+                              if line.startswith('export ANTHROPIC_API_KEY='):
+                                  api_key = line.split('=', 1)[1].strip().strip('"').strip("'")
+                                  break
+                              elif line.startswith('ANTHROPIC_API_KEY='):
+                                  api_key = line.split('=', 1)[1].strip().strip('"').strip("'")
+                                  break
+                  except:
+                      pass
+
+          if not api_key:
+              print("\n❌ Error: ANTHROPIC_API_KEY not set!")
+              print("Edit ~/.config/secrets.env to add your API key")
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+              try:
+                  input()
+              except:
+                  pass
+              return
+
+          try:
+              from anthropic import Anthropic
+
+              print("\n🤔 Analyzing error... Asking Claude for help...\n", flush=True)
+
+              client = Anthropic(api_key=api_key)
+
+              prompt = f"""Analyze this error/output and help debug it:
+
+      Current directory: {cwd}
+
+      Error output:
+      ```
+      {error_text}
+      ```
+
+      Please provide:
+      1. What the error means (explain in simple terms)
+      2. The likely root cause
+      3. Step-by-step fix suggestions
+      4. Any relevant commands to try
+
+      Be concise but thorough."""
+
+              response = client.messages.create(
+                  model="claude-haiku-4-5-20251001",
+                  max_tokens=1024,
+                  messages=[{"role": "user", "content": prompt}]
+              )
+
+              diagnosis = response.content[0].text
+
+              print("╔══════════════════════════════════════════════════════════════════╗")
+              print("║                    Error Analysis & Fix                          ║")
+              print("╚══════════════════════════════════════════════════════════════════╝\n")
+              print(diagnosis)
+
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+
+              try:
+                  input()
+              except:
+                  pass
+
+          except ImportError:
+              print("\n❌ Error: anthropic package not found")
+              print("Try: home-manager switch --flake .#sheva@nixsimos")
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+              try:
+                  input()
+              except:
+                  pass
+
+          except Exception as e:
+              print(f"\n❌ Error: {str(e)}")
+              print("\n\033[48;5;53m" + " " * 70 + "\033[0m")
+              print("\033[48;5;53m\033[1;97m" + "  🪟  OVERLAY - Press Enter to close and return to terminal     " + "\033[0m")
+              print("\033[48;5;53m" + " " * 70 + "\033[0m")
+              try:
+                  input()
+              except:
+                  pass
+
+      if __name__ == '__main__':
+          main()
     '';
   };
 }
