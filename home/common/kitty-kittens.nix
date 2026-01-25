@@ -85,11 +85,21 @@
               print("Error: No command provided")
               return
 
-          # Check for API key - try env var first, then secrets file
+          # Check for API key - try multiple sources
           api_key = os.environ.get('ANTHROPIC_API_KEY')
 
           if not api_key:
-              # Try to load from secrets file
+              # Try sops-managed secret (preferred method)
+              sops_secret = '/run/secrets/anthropic_api_key'
+              if os.path.exists(sops_secret):
+                  try:
+                      with open(sops_secret, 'r') as f:
+                          api_key = f.read().strip()
+                  except:
+                      pass
+
+          if not api_key:
+              # Fallback: Try to load from old secrets.env file
               secrets_file = os.path.expanduser('~/.config/secrets.env')
               if os.path.exists(secrets_file):
                   try:
@@ -97,13 +107,12 @@
                           for line in f:
                               line = line.strip()
                               if line.startswith('export ANTHROPIC_API_KEY='):
-                                  # Parse: export ANTHROPIC_API_KEY="value" or export ANTHROPIC_API_KEY=value
                                   api_key = line.split('=', 1)[1].strip().strip('"').strip("'")
                                   break
                               elif line.startswith('ANTHROPIC_API_KEY='):
                                   api_key = line.split('=', 1)[1].strip().strip('"').strip("'")
                                   break
-                  except Exception as e:
+                  except:
                       pass
 
           if not api_key:
@@ -281,10 +290,21 @@
           except:
               cwd = "~"
 
-          # Check for API key
+          # Check for API key - try multiple sources
           api_key = os.environ.get('ANTHROPIC_API_KEY')
 
           if not api_key:
+              # Try sops-managed secret (preferred method)
+              sops_secret = '/run/secrets/anthropic_api_key'
+              if os.path.exists(sops_secret):
+                  try:
+                      with open(sops_secret, 'r') as f:
+                          api_key = f.read().strip()
+                  except:
+                      pass
+
+          if not api_key:
+              # Fallback: Try to load from old secrets.env file
               secrets_file = os.path.expanduser('~/.config/secrets.env')
               if os.path.exists(secrets_file):
                   try:
@@ -506,10 +526,21 @@
               print("🔀 Git repo: No")
           print()
 
-          # Check for API key
+          # Check for API key - try multiple sources
           api_key = os.environ.get('ANTHROPIC_API_KEY')
 
           if not api_key:
+              # Try sops-managed secret (preferred method)
+              sops_secret = '/run/secrets/anthropic_api_key'
+              if os.path.exists(sops_secret):
+                  try:
+                      with open(sops_secret, 'r') as f:
+                          api_key = f.read().strip()
+                  except:
+                      pass
+
+          if not api_key:
+              # Fallback: Try to load from old secrets.env file
               secrets_file = os.path.expanduser('~/.config/secrets.env')
               if os.path.exists(secrets_file):
                   try:
@@ -713,10 +744,21 @@
           except:
               cwd = "~"
 
-          # Check for API key
+          # Check for API key - try multiple sources
           api_key = os.environ.get('ANTHROPIC_API_KEY')
 
           if not api_key:
+              # Try sops-managed secret (preferred method)
+              sops_secret = '/run/secrets/anthropic_api_key'
+              if os.path.exists(sops_secret):
+                  try:
+                      with open(sops_secret, 'r') as f:
+                          api_key = f.read().strip()
+                  except:
+                      pass
+
+          if not api_key:
+              # Fallback: Try to load from old secrets.env file
               secrets_file = os.path.expanduser('~/.config/secrets.env')
               if os.path.exists(secrets_file):
                   try:
