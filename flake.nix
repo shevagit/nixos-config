@@ -23,6 +23,11 @@
       url = "github:karol-broda/snitch";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = inputs@{
@@ -32,6 +37,7 @@
     home-manager-unstable,
     ags,
     snitch,
+    sops-nix,
     ...
   }: {
     nixosConfigurations = {
@@ -39,6 +45,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/simos/configuration.nix
+          sops-nix.nixosModules.sops
           home-manager-unstable.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -53,6 +60,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/athanasiou/configuration.nix
+          sops-nix.nixosModules.sops
           home-manager-unstable.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -66,6 +74,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/kaleipo/configuration.nix
+          sops-nix.nixosModules.sops
           home-manager-stable.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
