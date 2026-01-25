@@ -10,3 +10,7 @@ CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
 result
+
+# Secrets - never commit!
+secrets.env
+secrets.nix
