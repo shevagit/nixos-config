@@ -130,6 +130,19 @@
     download-buffer-size = 524288000;
   };
 
+  # SOPS secrets management
+  sops = {
+    defaultSopsFile = ../../secrets/common/api-keys.yaml;
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+
+    secrets = {
+      anthropic_api_key = {
+        owner = "sheva";
+        mode = "0400";
+      };
+    };
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
