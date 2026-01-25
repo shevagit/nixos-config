@@ -31,10 +31,10 @@
       "ctrl+shift+down" = "neighboring_window down";
 
       # AI Kittens - Claude-powered terminal assistance
-      "ctrl+shift+x" = "kitten hints --type=linenum --program='kitty @ kitten ai-explain @LINE@'";  # Explain command
-      "ctrl+shift+a" = "kitten ai-command";                        # Natural language to command
-      "ctrl+shift+s" = "kitten ai-suggest";                        # Smart suggestions
-      "ctrl+shift+f" = "kitten ai-error";                          # Error helper
+      "ctrl+shift+x" = "launch --type=overlay --hold python3 ~/.config/kitty/kittens/ai-explain.py";   # Explain command
+      "ctrl+shift+a" = "launch --type=overlay --hold python3 ~/.config/kitty/kittens/ai-command.py";   # Natural language to command
+      "ctrl+shift+s" = "launch --type=overlay --hold python3 ~/.config/kitty/kittens/ai-suggest.py";   # Smart suggestions
+      "ctrl+shift+f" = "launch --type=overlay --hold python3 ~/.config/kitty/kittens/ai-error.py";     # Error helper
     };
   };
 
