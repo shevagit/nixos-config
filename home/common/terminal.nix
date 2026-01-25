@@ -23,12 +23,18 @@
       "ctrl+shift+o" = "launch --location=vsplit --cwd=current";
       "ctrl+shift+e" = "launch --location=hsplit --cwd=current";
       "ctrl+shift+w" = "close_window";
-      
+
       # Navigate between panes
       "ctrl+shift+left" = "neighboring_window left";
       "ctrl+shift+right" = "neighboring_window right";
       "ctrl+shift+up" = "neighboring_window up";
       "ctrl+shift+down" = "neighboring_window down";
+
+      # AI Kittens - Claude-powered terminal assistance
+      "ctrl+shift+x" = "kitten hints --type=linenum --program='kitty @ kitten ai-explain @LINE@'";  # Explain command
+      "ctrl+shift+a" = "kitten ai-command";                        # Natural language to command
+      "ctrl+shift+s" = "kitten ai-suggest";                        # Smart suggestions
+      "ctrl+shift+f" = "kitten ai-error";                          # Error helper
     };
   };
 

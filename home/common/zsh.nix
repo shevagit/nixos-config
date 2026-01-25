@@ -31,6 +31,11 @@
       export KUBE_EDITOR=nvim
       export EDITOR=nvim
 
+      # Source secrets from gitignored file
+      if [ -f "$HOME/.config/secrets.env" ]; then
+        source "$HOME/.config/secrets.env"
+      fi
+
       # zoxide init
       eval "$(zoxide init zsh)"
 
