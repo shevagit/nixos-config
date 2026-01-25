@@ -1,0 +1,45 @@
+# SOPS configuration for secrets management
+# Documentation: https://github.com/Mic92/sops-nix
+
+keys:
+  # User keys - can decrypt secrets on any machine
+  - &user_sheva age1v3akezh6scntlpkej7c9jxjz42wasr0qlf5qgckga769nfhu4vtq3vtus9
+
+  # Host keys - each machine has its own unique key
+  # Generate with: sudo mkdir -p /var/lib/sops-nix && sudo age-keygen -o /var/lib/sops-nix/key.txt
+  # View public key: sudo age-keygen -y /var/lib/sops-nix/key.txt
+  - &host_simos age1akfcxcty6ycqh47lm6mzrmgf0d5y75urhhr9q2erwunjm5unepnst0k079
+  # Uncomment these after generating keys on each host:
+  # - &host_athanasiou age1...
+  # - &host_kaleipo age1...
+
+creation_rules:
+  # Common secrets (accessible by all hosts + user key)
+  # Add more host keys as you generate them
+  - path_regex: secrets/common/.*\.yaml$
+    key_groups:
+      - age:
+        - *user_sheva
+        - *host_simos
+        # - *host_athanasiou  # Uncomment after generating key
+        # - *host_kaleipo  # Uncomment after generating key
+
+  # Host-specific secrets
+  - path_regex: secrets/hosts/simos/.*\.yaml$
+    key_groups:
+      - age:
+        - *user_sheva
+        - *host_simos
+
+  # Uncomment these rules after generating keys on each host:
+  # - path_regex: secrets/hosts/athanasiou/.*\.yaml$
+  #   key_groups:
+  #     - age:
+  #       - *user_sheva
+  #       - *host_athanasiou
+
+  # - path_regex: secrets/hosts/kaleipo/.*\.yaml$
+  #   key_groups:
+  #     - age:
+  #       - *user_sheva
+  #       - *host_kaleipo
