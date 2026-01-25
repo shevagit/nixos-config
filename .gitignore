@@ -19,3 +19,6 @@ secrets.nix
 
 # SOPS age keys
 **/keys.txt
+
+# secrets README
+secrets/README.md
