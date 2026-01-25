@@ -16,3 +16,6 @@ secrets.env
 secrets.nix
 # ignore plan files
 *.plan
+
+# SOPS age keys
+**/keys.txt
