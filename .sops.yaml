@@ -10,36 +10,16 @@ keys:
   # View public key: sudo age-keygen -y /var/lib/sops-nix/key.txt
   - &host_simos age1akfcxcty6ycqh47lm6mzrmgf0d5y75urhhr9q2erwunjm5unepnst0k079
   # Uncomment these after generating keys on each host:
-  # - &host_athanasiou age1...
+  - &host_athanasiou age12ge2msc4ltj4t5tr4rzhcylysun29tude7szm8gc30c42cwykqps3n5st9
   # - &host_kaleipo age1...
 
 creation_rules:
   # Common secrets (accessible by all hosts + user key)
-  # Add more host keys as you generate them
+  # All secrets are stored in secrets/common/ and accessible by all configured hosts
   - path_regex: secrets/common/.*\.yaml$
     key_groups:
       - age:
         - *user_sheva
         - *host_simos
-        # - *host_athanasiou  # Uncomment after generating key
-        # - *host_kaleipo  # Uncomment after generating key
-
-  # Host-specific secrets
-  - path_regex: secrets/hosts/simos/.*\.yaml$
-    key_groups:
-      - age:
-        - *user_sheva
-        - *host_simos
-
-  # Uncomment these rules after generating keys on each host:
-  # - path_regex: secrets/hosts/athanasiou/.*\.yaml$
-  #   key_groups:
-  #     - age:
-  #       - *user_sheva
-  #       - *host_athanasiou
-
-  # - path_regex: secrets/hosts/kaleipo/.*\.yaml$
-  #   key_groups:
-  #     - age:
-  #       - *user_sheva
-  #       - *host_kaleipo
+        - *host_athanasiou
+        # - *host_kaleipo  # Uncomment after generating key on kaleipo

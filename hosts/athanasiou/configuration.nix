@@ -165,6 +165,19 @@
     download-buffer-size = 524288000;
   };
 
+  # SOPS secrets management
+  sops = {
+    defaultSopsFile = ../../secrets/common/api-keys.yaml;
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+
+    secrets = {
+      anthropic_api_key = {
+        owner = "sheva";
+        mode = "0400";
+      };
+    };
+  };
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
