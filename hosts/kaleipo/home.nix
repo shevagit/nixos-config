@@ -3,6 +3,8 @@
 {
   imports = [
     ../../home/server
+    ../../home/common/terminal.nix
+    ../../home/common/kitty-kittens.nix
   ];
 
   home.username = "sheva";
