@@ -1,5 +1,5 @@
 {
-  "currentThemeName": "cat-red",
+  "currentThemeName": "blue",
   "currentThemeCategory": "generic",
   "customThemeFile": "",
   "registryThemeVariants": {},
@@ -56,7 +56,7 @@
   "controlCenterShowBrightnessPercent": false,
   "controlCenterShowMicIcon": false,
   "controlCenterShowMicPercent": false,
-  "controlCenterShowBatteryIcon": false,
+  "controlCenterShowBatteryIcon": true,
   "controlCenterShowPrinterIcon": false,
   "controlCenterShowScreenSharingIcon": true,
   "showPrivacyButton": true,
@@ -223,7 +223,7 @@
   "batterySuspendTimeout": 0,
   "batterySuspendBehavior": 0,
   "batteryProfileName": "",
-  "batteryChargeLimit": 100,
+  "batteryChargeLimit": 95,
   "lockBeforeSuspend": false,
   "loginctlLockIntegration": true,
   "fadeToLockEnabled": false,
@@ -233,9 +233,17 @@
   "launchPrefix": "",
   "brightnessDevicePins": {},
   "wifiNetworkPins": {},
-  "bluetoothDevicePins": {},
+  "bluetoothDevicePins": {
+    "preferredDevice": [
+      "E4:90:FD:4F:33:91"
+    ]
+  },
   "audioInputDevicePins": {},
-  "audioOutputDevicePins": {},
+  "audioOutputDevicePins": {
+    "preferredOutput": [
+      "bluez_output.E4:90:FD:4F:33:91"
+    ]
+  },
   "gtkThemingEnabled": false,
   "qtThemingEnabled": false,
   "syncModeWithPortal": true,
@@ -370,6 +378,10 @@
           "enabled": true
         },
         {
+          "id": "battery",
+          "enabled": true
+        },
+        {
           "id": "systemTray",
           "enabled": true
         },
@@ -379,10 +391,6 @@
         },
         {
           "id": "notificationButton",
-          "enabled": true
-        },
-        {
-          "id": "battery",
           "enabled": true
         },
         {
@@ -600,6 +608,18 @@
           "height": 200,
           "x": 63.06640625,
           "y": 55.55078125
+        },
+        "eDP-1": {
+          "width": 200,
+          "height": 200,
+          "x": 860,
+          "y": 440
+        },
+        "HDMI-A-1": {
+          "width": 200,
+          "height": 200,
+          "x": 860,
+          "y": 440
         }
       }
     },
@@ -669,6 +689,18 @@
           "height": 562.9609375,
           "x": 56.76953125,
           "y": 55.1640625
+        },
+        "eDP-1": {
+          "width": 320,
+          "height": 480,
+          "x": 800,
+          "y": 300
+        },
+        "HDMI-A-1": {
+          "width": 320,
+          "height": 480,
+          "x": 800,
+          "y": 300
         }
       }
     }

@@ -22,3 +22,6 @@ secrets.nix
 
 # secrets README
 secrets/README.md
+
+# DMS settings - each machine has its own
+home/common/dms/settings.json
