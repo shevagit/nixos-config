@@ -1,9 +1,13 @@
-.PHONY: all build switch diff update upgrade gc
+.PHONY: all build switch diff update upgrade gc home-build home-switch check
 
 HOSTNAME := $(shell hostname)
 
 # Default target: upgrade the system
 all: upgrade
+
+# Validate flake configuration
+check:
+	nix flake check
 
 # Build the system without applying it
 build:
@@ -12,6 +16,14 @@ build:
 # Apply the system configuration
 switch:
 	sudo nixos-rebuild switch --flake ./#$(HOSTNAME)
+
+# Build only home-manager configuration
+home-build:
+	nix build .#homeConfigurations-$(HOSTNAME)
+
+# Apply only home-manager configuration
+home-switch: home-build
+	./result/activate
 
 # Apply the system configuration on the next boot
 boot:

@@ -39,50 +39,53 @@
     snitch,
     sops-nix,
     ...
-  }: {
+  }:
+  let
+    username = "sheva";
+    system = "x86_64-linux";
+    mkHost = { hostname, nixpkgs, home-manager, extraSpecialArgs ? {} }:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hosts/${hostname}/configuration.nix
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
+            home-manager.extraSpecialArgs = extraSpecialArgs;
+          }
+        ];
+      };
+  in
+  {
     nixosConfigurations = {
-      simos = nixpkgs-unstable.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/simos/configuration.nix
-          sops-nix.nixosModules.sops
-          home-manager-unstable.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.sheva = import ./hosts/simos/home.nix;
-            home-manager.extraSpecialArgs = { inherit ags snitch; };
-          }
-        ];
+      simos = mkHost {
+        hostname = "simos";
+        nixpkgs = nixpkgs-unstable;
+        home-manager = home-manager-unstable;
+        extraSpecialArgs = { inherit ags snitch; };
       };
 
-      athanasiou = nixpkgs-unstable.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/athanasiou/configuration.nix
-          sops-nix.nixosModules.sops
-          home-manager-unstable.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.sheva = import ./hosts/athanasiou/home.nix;
-          }
-        ];
+      athanasiou = mkHost {
+        hostname = "athanasiou";
+        nixpkgs = nixpkgs-unstable;
+        home-manager = home-manager-unstable;
       };
 
-      kaleipo = nixpkgs-stable.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/kaleipo/configuration.nix
-          sops-nix.nixosModules.sops
-          home-manager-stable.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.sheva = import ./hosts/kaleipo/home.nix;
-          }
-        ];
+      kaleipo = mkHost {
+        hostname = "kaleipo";
+        nixpkgs = nixpkgs-stable;
+        home-manager = home-manager-stable;
       };
     };
+
+    packages.${system} = nixpkgs-unstable.lib.mapAttrs'
+      (hostname: config: {
+        name = "homeConfigurations-${hostname}";
+        value = config.config.home-manager.users.${username}.home.activationPackage;
+      })
+      inputs.self.nixosConfigurations;
   };
 }
