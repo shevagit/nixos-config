@@ -16,7 +16,7 @@
 
   # Symlink to the local settings.json (which is gitignored)
   home.file.".config/DankMaterialShell/settings.json" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/sheva/githubdir/nixos-config/home/common/dms/settings.json";
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/githubdir/nixos-config/home/common/dms/settings.json";
     force = true;  # Allow overwriting existing file
   };
 }
