@@ -12,6 +12,8 @@
       kns = "kubens";
       kgi = "kubectl get ingress";
       kctx = "kubectx";
+      kkctx = "kubie ctx";  # kubie context switcher (isolated per terminal)
+      kkns = "kubie ns";    # kubie namespace switcher
       kaccount = "kubectl get pods --context us-e2 -n production -w | grep -E '^account-[^-]+-[^-]+$'";
       kwebsite = "kubectl get pods --context us-e1 -n production -w | grep -E '^website-[^-]+-[^-]+$'";
       du = "du -hsc";
@@ -42,9 +44,13 @@
       # keychain init - load ssh keys
       eval "$(keychain --eval --quiet)"
 
-      # Bind Ctrl + Left Arrow to backward-word and Ctrl + Right Arrow to forward-word
-      bindkey "^[[1;5D" backward-word
-      bindkey "^[[1;5C" forward-word
+      # Key bindings for better navigation
+      bindkey "^[[1;5D" backward-word      # Ctrl + Left Arrow
+      bindkey "^[[1;5C" forward-word       # Ctrl + Right Arrow
+      bindkey "^[[3;5~" kill-word          # Ctrl + Delete
+      bindkey "^H" backward-kill-word      # Ctrl + Backspace
+      bindkey "^[^?" backward-kill-word    # Alt + Backspace (most terminals)
+      bindkey "^[\b" backward-kill-word    # Alt + Backspace (alternative binding)
 
       # getnix-index
       function getnixindexdb {
