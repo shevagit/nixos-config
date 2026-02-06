@@ -72,6 +72,7 @@
           { context_pattern = "eu-w1"; style = "green"; }
           { context_pattern = "test-playground-us-w3"; style = "yellow"; }
           { context_pattern = "us-c1-internal"; style = "yellow"; }
+          { context_pattern = "eu-sw1"; style = "cyan"; }
         ];
       };
 
