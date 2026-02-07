@@ -33,6 +33,20 @@
       export KUBE_EDITOR=nvim
       export EDITOR=nvim
 
+      # kubie start
+      function kubie_kitty_bg() {
+        if [[ -n "$KUBIE_ACTIVE" ]]; then
+          kitty @ set-colors background=#1b3d2d 2>/dev/null
+        else
+          kitty @ set-colors background=#282a36 2>/dev/null
+        fi
+      }
+
+      precmd_functions+=(kubie_kitty_bg)
+
+      kubie_kitty_bg
+      # kubie end
+
       # Source secrets from gitignored file
       if [ -f "$HOME/.config/secrets.env" ]; then
         source "$HOME/.config/secrets.env"

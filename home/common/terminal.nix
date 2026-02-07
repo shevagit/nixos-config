@@ -14,6 +14,7 @@
       shell_integration = "no-rc";
       copy_on_select = "clipboard";  # Auto-copy selected text
       strip_trailing_spaces = "smart";  # Clean up copied text
+      allow_remote_control = "yes";
     };
     extraConfig = ''
       mouse_map right press ungrabbed paste_from_clipboard
