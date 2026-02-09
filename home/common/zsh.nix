@@ -36,7 +36,7 @@
       # kubie start
       function kubie_kitty_bg() {
         if [[ -n "$KUBIE_ACTIVE" ]]; then
-          kitty @ set-colors background=#1b3d2d 2>/dev/null
+          kitty @ set-colors background=#4a0e0e 2>/dev/null
         else
           kitty @ set-colors background=#282a36 2>/dev/null
         fi
