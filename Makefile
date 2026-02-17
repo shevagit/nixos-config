@@ -1,4 +1,4 @@
-.PHONY: all build switch diff update upgrade gc home-build home-switch check
+.PHONY: all build switch diff update upgrade gc deep-gc nuke-gc home-build home-switch check
 
 HOSTNAME := $(shell hostname)
 
@@ -45,6 +45,11 @@ gc:
 	nix-collect-garbage -d
 
 deep-gc:
+	nix-env --delete-generations +3
+	sudo nix-env --delete-generations +3 --profile /nix/var/nix/profiles/system
+	nix-collect-garbage
+
+nuke-gc:
 	sudo nix-collect-garbage -d
 
 # List all available system profiles
