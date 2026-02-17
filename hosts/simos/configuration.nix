@@ -20,6 +20,7 @@
       ../../modules/services/yubi-auth.nix
       ../../modules/common/display-manager.nix
       ../../modules/common/desktop-environment.nix
+      ../../modules/common/shokz-fix.nix
     ];
 
   # Bootloader.
