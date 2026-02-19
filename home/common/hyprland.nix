@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: 
+{ config, pkgs, lib, ... }: 
                                                                           
 {
   programs.terminator = {
@@ -41,6 +41,8 @@
 
         # Bind SUPER+p to DMS power menu
         "$mod, p, exec, dms ipc call powermenu toggle"
+        # Restart DMS when frozen
+        "$mod, l, exec, ${config.home.homeDirectory}/.config/hyprland/scripts/dms-restart.sh"
         # logout; to be removed
         "$mod SHIFT, e, exec, hyprctl dispatch exit 0"
         # close active window
@@ -211,6 +213,25 @@
     '';
   };
     home.file.".config/hyprland/scripts/bares-wrapper.sh".executable = true;
+
+  # DMS restart script
+  home.file.".config/hyprland/scripts/dms-restart.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+      # Quick restart script for DMS when it freezes
+      # Bound to SUPER+L for quick access
+
+      # Restart DMS
+      systemctl --user restart dms
+
+      # Wait for DMS notification service to be ready
+      sleep 2
+
+      # Send notification via DMS's built-in notification service
+      ${pkgs.libnotify}/bin/notify-send "DMS" "Bar restarted" -t 2000
+    '';
+    executable = true;
+  };
 
   home.file.".config/wofi/style.css".text = ''
     window {

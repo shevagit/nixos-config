@@ -33,6 +33,7 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
+    libnotify # provides notify-send for DMS notifications
     google-chrome
     git
     gnumake
