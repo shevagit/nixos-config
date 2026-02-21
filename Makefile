@@ -55,3 +55,6 @@ nuke-gc:
 # List all available system profiles
 list-generations:
 	sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
+
+list-flake-generations:
+	nixos-rebuild list-generations --flake /home/sheva/githubdir/nixos-config 2>&1
