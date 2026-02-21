@@ -43,9 +43,10 @@
   let
     username = "sheva";
     system = "x86_64-linux";
-    mkHost = { hostname, nixpkgs, home-manager, extraSpecialArgs ? {} }:
+    mkHost = { hostname, nixpkgs, home-manager, extraSpecialArgs ? {}, nixosSpecialArgs ? {} }:
       nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = nixosSpecialArgs;
         modules = [
           ./hosts/${hostname}/configuration.nix
           sops-nix.nixosModules.sops
@@ -74,10 +75,16 @@
         home-manager = home-manager-unstable;
       };
 
-      kaleipo = mkHost {
+      kaleipo = let
+        pkgs-unstable = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      in mkHost {
         hostname = "kaleipo";
         nixpkgs = nixpkgs-stable;
         home-manager = home-manager-stable;
+        nixosSpecialArgs = { inherit pkgs-unstable; };
       };
     };
 

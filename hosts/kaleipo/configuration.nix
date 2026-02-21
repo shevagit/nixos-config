@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   imports = [
@@ -13,6 +13,8 @@
     ../../modules/common/docker.nix
     ../../modules/common/tailscale.nix
   ];
+
+  services.tailscale.package = pkgs-unstable.tailscale;
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
