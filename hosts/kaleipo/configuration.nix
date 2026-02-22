@@ -12,6 +12,7 @@
     # ../../modules/server/acme.nix
     ../../modules/common/docker.nix
     ../../modules/common/tailscale.nix
+    ../../modules/services/hdmi-audio-check.nix
   ];
 
   services.tailscale.package = pkgs-unstable.tailscale;
