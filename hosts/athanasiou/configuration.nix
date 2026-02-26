@@ -130,6 +130,23 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Override khal to skip broken documentation build (Sphinx 9.1.0 + Python 3.13 incompatibility)
+  nixpkgs.overlays = [
+    (final: prev: {
+      khal = prev.khal.overridePythonAttrs (old: {
+        # Remove doc and man outputs to avoid Sphinx build failure
+        # Default outputs are ["out" "doc" "man" "dist"], we keep only ["out"]
+        outputs = [ "out" ];
+        # Explicitly disable Sphinx documentation build
+        dontBuildSphinx = true;
+        # Remove sphinx-related build inputs
+        nativeBuildInputs = prev.lib.filter
+          (x: !(prev.lib.hasInfix "sphinx" (x.pname or "")))
+          (old.nativeBuildInputs or []);
+      });
+    })
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
