@@ -8,6 +8,10 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
+    # PINNED: 2026-02-27 — nixpkgs-unstable after a82ccc3 ships broken combo:
+    # kernel 6.18.13 + nvidia 580.126.18 + weston 15 (SDDM crash + nvidia instability on simos/RTX 4070).
+    # Last known working rev: a82ccc3 (kernel 6.18.10, nvidia 580.126.09, weston 14.0.1).
+    # TODO: try `nix flake update` after ~2026-03-07 and rebuild simos to test if upstream fixed it.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager-unstable = {
       url = "github:nix-community/home-manager";
