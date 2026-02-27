@@ -14,11 +14,10 @@
   };
 
   systemd.timers.hdmi-audio-check = {
-    description = "Run HDMI audio health check every 3 minutes";
+    description = "Run HDMI audio health check after boot";
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "60";
-      OnUnitActiveSec = "180";
       AccuracySec = "10";
     };
   };
