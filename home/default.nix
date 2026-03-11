@@ -41,7 +41,7 @@
     wezterm
     alacritty
     terminator
-    neofetch
+    fastfetch
     nnn # terminal file manager
     mongodb-compass
     mongosh
