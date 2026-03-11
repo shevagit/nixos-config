@@ -31,6 +31,7 @@ in
     theme = "sddm-astronaut-theme";
     package = pkgs.kdePackages.sddm;
     wayland.enable = true;
+    wayland.compositor = "kwin";
 
     extraPackages = with pkgs.kdePackages; [
       qtmultimedia
