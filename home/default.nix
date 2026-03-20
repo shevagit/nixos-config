@@ -109,6 +109,11 @@
     spotify
     playerctl
 
+    # fonts
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+    # fonts
+    
     # nix related
     #
     # it provides the command `nom` works just like `nix`
