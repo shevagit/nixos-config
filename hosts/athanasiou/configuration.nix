@@ -117,6 +117,7 @@
   # enable dbus and fwupd for firmware updates
   services.dbus.enable = true;
   services.fwupd.enable = true;
+  services.upower.enable = true;
 
   # Install firefox.
   programs.firefox.enable = true;
@@ -142,6 +143,17 @@
    git
    brightnessctl # used for laptop brightness control
   ];
+
+  # limit battery charge to 95% for longevity
+  systemd.services.set-battery-charge-limit = {
+    description = "Set battery charge threshold to 95%";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-udev-settle.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'echo 95 > /sys/class/power_supply/BAT0/charge_control_end_threshold'";
+    };
+  };
 
   # enable
   systemd.services.set-kbd-backlight = {
