@@ -118,9 +118,8 @@
         ", XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
         ", XF86AudioMute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
 
-        # Wallpaper controls - Removed, DMS handles wallpapers
-        # "$mod, w, exec, ~/.config/hyprland/scripts/wallpaper-next.sh"
-        # "$mod SHIFT, w, exec, ~/.config/hyprland/scripts/wallpaper-random.sh"
+        # Wallpaper controls via DMS
+        "$mod, w, exec, dms ipc call wallpaper next"
 
       ];
 

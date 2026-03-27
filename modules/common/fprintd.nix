@@ -8,4 +8,5 @@
   };
 
   security.pam.services.login.fprintAuth = false;
+  security.pam.services.sudo.fprintAuth = true;
 }
