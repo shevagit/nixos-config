@@ -135,9 +135,15 @@
         "kb_options" = "grp:win_space_toggle";
       };
 
-      general ={
+      general = {
+        layout = "master";
         gaps_in = 10;
         gaps_out = 20;
+      };
+
+      master = {
+        new_status = "slave";
+        mfact = 0.55;
       };
 
       decoration = {
