@@ -1,6 +1,7 @@
 {
   programs.git = {
     enable = true;
+    signing.format = null;
     settings = {
       alias = {
         retag = "!f() { git tag -f -a \"$1\" -m \"$1\" && git push origin \"$1\" -f; }; f";
