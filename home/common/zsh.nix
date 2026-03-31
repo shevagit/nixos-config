@@ -55,9 +55,6 @@
       # zoxide init
       eval "$(zoxide init zsh)"
 
-      # keychain init - load ssh keys
-      eval "$(keychain --eval --quiet)"
-
       # Key bindings for better navigation
       bindkey "^[[1;5D" backward-word      # Ctrl + Left Arrow
       bindkey "^[[1;5C" forward-word       # Ctrl + Right Arrow

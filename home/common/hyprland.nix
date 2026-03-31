@@ -298,10 +298,8 @@
     home.file.".config/hyprland/scripts/move-to-next-empty.sh".executable = true;
 
 
-  # Enable ssh-agent service for keychain to connect to
-  # handle ssh keys; gnome-keyring is used for password management
-  services.ssh-agent.enable = true;
-
+  # keychain manages its own ssh-agent; do not enable services.ssh-agent
+  # alongside it as they conflict (stale sockets / duplicate agents)
   programs.keychain = {
     enable = true;
     keys = [
