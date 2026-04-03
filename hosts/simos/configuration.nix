@@ -66,6 +66,8 @@
   # Use gdm and gnome keyring and disable gnome desktop manager
   services.desktopManager.gnome.enable = false;
   services.gnome.gnome-keyring.enable = true;
+  # Disable gcr-ssh-agent so it doesn't conflict with keychain's ssh-agent
+  services.gnome.gcr-ssh-agent.enable = false;
 
   # Configure keymap in X11
   services.xserver.xkb = {
