@@ -238,6 +238,31 @@
     executable = true;
   };
 
+  # DMS lock recovery script — run from TTY when DMS lock screen crashes
+  home.file.".config/hyprland/scripts/unlock.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+      # Recovery script for when DMS lock screen crashes
+      # Usage: from TTY (Ctrl+Alt+F2), login and run: ~/unlock.sh
+
+      echo "Unlocking session..."
+      loginctl unlock-session
+
+      # Restart DMS so the bar comes back
+      systemctl --user restart dms
+
+      sleep 2
+      echo "Done. Switch back to Hyprland with Ctrl+Alt+F1"
+    '';
+    executable = true;
+  };
+
+  # Symlink unlock.sh to home dir for easy TTY access
+  home.file."unlock.sh" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.config/hyprland/scripts/unlock.sh";
+  };
+
   home.file.".config/wofi/style.css".text = ''
     window {
       background-color: rgba(40, 42, 54, 0.9);
@@ -310,7 +335,6 @@
     extraFlags = [
       "--quiet"
       "--timeout 120"
-      "--ssh-allow-forwarded"
     ];
   };
 
