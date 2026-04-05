@@ -2,7 +2,7 @@
 
     home.packages = with pkgs; [
         nodejs # Required for Copilot + some LSP tools
-        nodePackages.bash-language-server
+        bash-language-server
     ];
 
     home.file.".config/nvim/init.lua".text = ''
