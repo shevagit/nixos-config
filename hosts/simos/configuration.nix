@@ -25,6 +25,7 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.luks.devices."luks-71011c21-d4ea-4506-b3f2-a909a67ba871".device = "/dev/disk/by-uuid/71011c21-d4ea-4506-b3f2-a909a67ba871";
@@ -107,6 +108,9 @@
     gid = 1000;
   };
   
+  # nix-ld: run dynamically linked binaries (e.g. claude native installer)
+  programs.nix-ld.enable = true;
+
   # zsh is enabled in home manager, but is not recognized if I don't add it here
   programs.zsh.enable = true;
  

@@ -45,8 +45,8 @@ gc:
 	nix-collect-garbage -d
 
 deep-gc:
-	nix-env --delete-generations +3
-	sudo nix-env --delete-generations +3 --profile /nix/var/nix/profiles/system
+	nix-env --delete-generations +5
+	sudo nix-env --delete-generations +5 --profile /nix/var/nix/profiles/system
 	nix-collect-garbage
 
 nuke-gc:
