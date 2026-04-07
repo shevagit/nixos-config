@@ -21,6 +21,7 @@
       ../../modules/common/display-manager.nix
       ../../modules/common/desktop-environment.nix
       ../../modules/common/shokz-fix.nix
+      ../../modules/common/nix-ld.nix
     ];
 
   # Bootloader.
@@ -108,9 +109,6 @@
     gid = 1000;
   };
   
-  # nix-ld: run dynamically linked binaries (e.g. claude native installer)
-  programs.nix-ld.enable = true;
-
   # zsh is enabled in home manager, but is not recognized if I don't add it here
   programs.zsh.enable = true;
  

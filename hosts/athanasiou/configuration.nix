@@ -23,6 +23,7 @@
       ../../modules/common/display-manager.nix
       ../../modules/common/desktop-environment.nix
       ../../modules/common/shokz-fix.nix
+      ../../modules/common/nix-ld.nix
     ];
 
   # Bootloader.
