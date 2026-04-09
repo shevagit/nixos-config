@@ -26,7 +26,7 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 3;
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.luks.devices."luks-71011c21-d4ea-4506-b3f2-a909a67ba871".device = "/dev/disk/by-uuid/71011c21-d4ea-4506-b3f2-a909a67ba871";
