@@ -26,8 +26,12 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 5;
+  boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Use the scripted initrd (not systemd-based) so passphrase reuse works
+  # across multiple LUKS devices — avoids being prompted twice at boot.
+  boot.initrd.systemd.enable = false;
 
   boot.initrd.luks.devices."luks-71011c21-d4ea-4506-b3f2-a909a67ba871".device = "/dev/disk/by-uuid/71011c21-d4ea-4506-b3f2-a909a67ba871";
   networking.hostName = "simos";
