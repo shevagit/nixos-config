@@ -35,6 +35,9 @@
 
       # kubie start
       function kubie_kitty_bg() {
+        # Only attempt kitty remote control when actually inside kitty —
+        # in a TTY the call blocks for ~20s per prompt trying to find a socket.
+        [[ -z "$KITTY_WINDOW_ID" ]] && return
         if [[ -n "$KUBIE_ACTIVE" ]]; then
           kitty @ set-colors background=#4a0e0e 2>/dev/null
         else
