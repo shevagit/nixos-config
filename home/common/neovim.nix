@@ -109,13 +109,8 @@
     '';
 
     home.file.".config/nvim/lua/lsp.lua".text = ''
-        local lspconfig = require("lspconfig")
-
-        -- Enable gopls (Go)
-        lspconfig.gopls.setup({})
-
-        -- Enable bash-language-server
-        lspconfig.bashls.setup({})
+        -- nvim 0.11+: vim.lsp.enable picks up lsp/<name>.lua from nvim-lspconfig's runtime
+        vim.lsp.enable({ "gopls", "bashls" })
 
         -- Completion setup
         local cmp = require("cmp")
