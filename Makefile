@@ -1,4 +1,4 @@
-.PHONY: all build switch diff update upgrade gc deep-gc nuke-gc home-build home-switch check
+.PHONY: all build dry-activate switch diff update upgrade gc deep-gc nuke-gc home-build home-switch check
 
 HOSTNAME := $(shell hostname)
 
@@ -12,6 +12,10 @@ check:
 # Build the system without applying it
 build:
 	nixos-rebuild build --flake ./#$(HOSTNAME)
+
+# Build and show what activation would do, without committing to it
+dry-activate:
+	sudo nixos-rebuild dry-activate --flake ./#$(HOSTNAME)
 
 # Apply the system configuration
 switch:
