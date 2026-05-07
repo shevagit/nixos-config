@@ -120,6 +120,9 @@
   services.fwupd.enable = true;
   services.upower.enable = true;
 
+  # Lid close: only lock (handled by Hyprland bindl -> DMS), don't suspend
+  services.logind.lidSwitch = "lock";
+
   # Install firefox.
   programs.firefox.enable = true;
 
