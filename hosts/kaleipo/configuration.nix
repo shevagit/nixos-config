@@ -13,9 +13,12 @@
     ../../modules/common/docker.nix
     ../../modules/common/tailscale.nix
     ../../modules/services/hdmi-audio-check.nix
+    ../../modules/services/monitoring.nix
   ];
 
   services.tailscale.package = pkgs-unstable.tailscale;
+
+  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
