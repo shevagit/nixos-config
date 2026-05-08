@@ -29,6 +29,7 @@
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.efi.canTouchEfiVariables = true;
 
+
   # Give the LUKS passphrase prompt up to 5 minutes before the root
   # device unit times out and trips emergency mode (default is 90s).
   fileSystems."/".options = [ "x-systemd.device-timeout=300" ];
