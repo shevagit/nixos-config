@@ -16,6 +16,7 @@
         ./vscode-plugins.nix
         ./neovim.nix
         ./ai.nix
+        ./ansible.nix
         # ./hyprpanel.nix  # Disabled - replaced by DMS (Dank Material Shell)
         ./dms  # DMS (Dank Material Shell) configuration
         ./nixos-wallpapers.nix
