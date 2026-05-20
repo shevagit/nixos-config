@@ -11,7 +11,7 @@
       ../../modules/common/docker.nix
       ../../modules/common/extraHosts.nix
       ../../modules/services/systemd-tmpfiles-rules.nix
-      # ../../modules/common/fprintd.nix  # T14s G6 fingerprint reader not yet supported by fprintd — enable later
+      ../../modules/common/fprintd.nix
       ../../modules/common/tailscale.nix
       ../../modules/services/yubi-auth.nix
       ../../modules/services/speechd.nix
@@ -104,7 +104,7 @@
   services.upower.enable = true;
 
   # Lid close: only lock (handled by Hyprland bindl -> DMS), don't suspend
-  services.logind.lidSwitch = "lock";
+  services.logind.settings.Login.HandleLidSwitch = "lock";
 
   # Install firefox.
   programs.firefox.enable = true;
