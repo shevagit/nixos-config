@@ -75,6 +75,12 @@
         home-manager = home-manager-unstable;
       };
 
+      nontas = mkHost {
+        hostname = "nontas";
+        nixpkgs = nixpkgs-unstable;
+        home-manager = home-manager-unstable;
+      };
+
       kaleipo = let
         pkgs-unstable = import nixpkgs-unstable {
           inherit system;
