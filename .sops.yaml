@@ -9,9 +9,9 @@ keys:
   # Generate with: sudo mkdir -p /var/lib/sops-nix && sudo age-keygen -o /var/lib/sops-nix/key.txt
   # View public key: sudo age-keygen -y /var/lib/sops-nix/key.txt
   - &host_simos age1akfcxcty6ycqh47lm6mzrmgf0d5y75urhhr9q2erwunjm5unepnst0k079
-  # Uncomment these after generating keys on each host:
   - &host_athanasiou age12ge2msc4ltj4t5tr4rzhcylysun29tude7szm8gc30c42cwykqps3n5st9
   - &host_kaleipo age1j4j7essfytt887whens7wc4zf2xtqqkjyu25v4dakvxa9e6x5eqsep7kjy
+  - &host_nontas age13s6jju4f785gww463skmy42d78up92vpl0l8l7pplpndn3cdsyqs6xup0m
 
 creation_rules:
   # Common secrets (accessible by all hosts + user key)
@@ -22,6 +22,7 @@ creation_rules:
         - *host_simos
         - *host_athanasiou
         - *host_kaleipo
+        - *host_nontas
 
   # kaleipo-specific secrets
   - path_regex: secrets/hosts/kaleipo/.*\.yaml$
