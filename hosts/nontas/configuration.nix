@@ -158,16 +158,16 @@
 
   # SOPS secrets management — enable after generating an age key on this host
   # and adding it as a recipient in .sops.yaml (see INSTALL.md section 8).
-  # sops = {
-  #   defaultSopsFile = ../../secrets/common/api-keys.yaml;
-  #   age.keyFile = "/var/lib/sops-nix/key.txt";
-  #   secrets = {
-  #     anthropic_api_key = {
-  #       owner = "sheva";
-  #       mode = "0400";
-  #     };
-  #   };
-  # };
+   sops = {
+     defaultSopsFile = ../../secrets/common/api-keys.yaml;
+     age.keyFile = "/var/lib/sops-nix/key.txt";
+     secrets = {
+       anthropic_api_key = {
+         owner = "sheva";
+         mode = "0400";
+       };
+     };
+   };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
