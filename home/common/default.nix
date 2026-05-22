@@ -1,6 +1,7 @@
 {
     imports = [
         ./git.nix
+        ./ssh.nix
         ./fzf.nix
         ./zsh.nix
         ./starship.nix

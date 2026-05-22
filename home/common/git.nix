@@ -1,3 +1,7 @@
+{ osConfig, ... }:
+let
+  host = osConfig.networking.hostName;
+in
 {
   programs.git = {
     enable = true;
@@ -31,7 +35,7 @@
         [commit]
             gpgSign = false
         [core]
-            sshCommand = ssh -i ~/.ssh/nixsimos-github
+            sshCommand = ssh -i ~/.ssh/nix${host}-p
       '';
     };
     ".gitconfig-gitlab" = {
@@ -39,13 +43,13 @@
         [user]
             name = Andreas Sevastos
             email = sheva@learnworlds.com
-            signingkey = ~/.ssh/ed25519_gitlab.pub
+            signingkey = ~/.ssh/nix${host}-gl.pub
         [gpg]
             format = ssh
         [commit]
             gpgSign = true
         [core]
-            sshCommand = ssh -i ~/.ssh/ed25519_gitlab
+            sshCommand = ssh -i ~/.ssh/nix${host}-gl
       '';
     };
     ".gitconfig-githublw" = {
@@ -53,13 +57,13 @@
         [user]
             name = Andreas Sevastos
             email = sheva@learnworlds.com
-            signingkey = ~/.ssh/lwgithub-signingkey.pub
+            signingkey = ~/.ssh/nix${host}-w.pub
         [gpg]
             format = ssh
         [commit]
             gpgSign = true
         [core]
-            sshCommand = ssh -i ~/.ssh/github-lw-athanasiou -o IdentitiesOnly=yes
+            sshCommand = ssh -i ~/.ssh/nix${host}-w -o IdentitiesOnly=yes
       '';
     };
   };
