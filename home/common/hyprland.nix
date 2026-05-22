@@ -1,4 +1,7 @@
-{ config, pkgs, lib, ... }: 
+{ config, pkgs, lib, osConfig, ... }:
+let
+  host = osConfig.networking.hostName;
+in
                                                                           
 {
   programs.terminator = {
@@ -328,8 +331,9 @@
   programs.keychain = {
     enable = true;
     keys = [
-      "nixsimos-github"
-      "ed25519_gitlab"
+      "nix${host}-p"
+      "nix${host}-w"
+      "nix${host}-gl"
       "google_compute_engine"
     ];
     extraFlags = [
