@@ -12,6 +12,7 @@
       ../../modules/common/extraHosts.nix
       ../../modules/services/systemd-tmpfiles-rules.nix
       ../../modules/common/fprintd.nix
+      ../../modules/common/howdy.nix
       ../../modules/common/tailscale.nix
       ../../modules/services/yubi-auth.nix
       ../../modules/services/speechd.nix
