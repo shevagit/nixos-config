@@ -64,6 +64,8 @@ in
             gpgSign = true
         [core]
             sshCommand = ssh -i ~/.ssh/nix${host}-w -o IdentitiesOnly=yes
+        [url "git@github-work:"]
+            insteadOf = git@github.com:
       '';
     };
   };
