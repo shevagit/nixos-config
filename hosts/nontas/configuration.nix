@@ -19,7 +19,14 @@
       ../../modules/common/display-manager.nix
       ../../modules/common/desktop-environment.nix
       ../../modules/common/nix-ld.nix
+      ../../modules/common/shokz-fix.nix
     ];
+
+  # allow casting
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
