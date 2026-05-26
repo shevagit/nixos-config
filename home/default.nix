@@ -37,6 +37,7 @@
     google-chrome
     git
     gnumake
+    openssl
     vscode
     wezterm
     alacritty
