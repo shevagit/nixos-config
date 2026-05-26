@@ -9,13 +9,13 @@ in
     includes = [ "~/.config/colima/ssh_config" ];
     matchBlocks = {
       "github.com" = {
-        user = "git";
+        user = "shevagit";
         identityFile = "~/.ssh/nix${host}-p";
         extraOptions = { IdentitiesOnly = "yes"; };
       };
       "github-work" = {
         hostname = "github.com";
-        user = "git";
+        user = "sheva-lw";
         identityFile = "~/.ssh/nix${host}-w";
         extraOptions = { IdentitiesOnly = "yes"; };
       };
