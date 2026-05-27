@@ -20,8 +20,14 @@
   ];
 
   wayland.windowManager.hyprland.settings.monitor = [
-    # catch-all fallback — laptop's built-in display will use its preferred mode
-    ",preferred,auto,1"
+  # office monitor on top
+  "DP-2,2560x1440@60,0x0,1"
+
+  # embedded screen below
+  "eDP-1,1920x1080@60,0x1440,1"
+
+  # catch-all fallback
+  ",preferred,auto,1"
   ];
 
   # host-specific packages
