@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/common/overlays.nix
       ../../modules/common/bluetooth.nix
       ../../modules/common/virt-manager.nix
       ../../modules/hardware/nvidia.nix

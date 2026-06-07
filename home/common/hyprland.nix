@@ -9,6 +9,9 @@ in
   };
   wayland.windowManager.hyprland = {
     enable = true;
+    # Keep the legacy hyprlang generator. The new default ("lua", from stateVersion
+    # 26.05) would rewrite this whole config in Lua; opt into that deliberately later.
+    configType = "hyprlang";
     settings = {
       "$mod" = "SUPER";
       

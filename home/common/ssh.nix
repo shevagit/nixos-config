@@ -7,17 +7,17 @@ in
     enable = true;
     enableDefaultConfig = false;
     includes = [ "~/.config/colima/ssh_config" ];
-    matchBlocks = {
+    settings = {
       "github.com" = {
-        user = "shevagit";
-        identityFile = "~/.ssh/nix${host}-p";
-        extraOptions = { IdentitiesOnly = "yes"; };
+        User = "shevagit";
+        IdentityFile = "~/.ssh/nix${host}-p";
+        IdentitiesOnly = "yes";
       };
       "github-work" = {
-        hostname = "github.com";
-        user = "sheva-lw";
-        identityFile = "~/.ssh/nix${host}-w";
-        extraOptions = { IdentitiesOnly = "yes"; };
+        HostName = "github.com";
+        User = "sheva-lw";
+        IdentityFile = "~/.ssh/nix${host}-w";
+        IdentitiesOnly = "yes";
       };
     };
   };

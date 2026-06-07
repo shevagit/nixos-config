@@ -3,6 +3,7 @@
 {
   imports =
     [ ./hardware-configuration.nix
+      ../../modules/common/overlays.nix
       ../../modules/common/bluetooth.nix
       ../../modules/common/virt-manager.nix
       ../../modules/hardware/amd.nix
