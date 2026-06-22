@@ -149,14 +149,14 @@
    brightnessctl # used for laptop brightness control
   ];
 
-  # limit battery charge to 95% for longevity
   systemd.services.set-battery-charge-limit = {
-    description = "Set battery charge threshold to 95%";
+    description = "Set BAT0 charge thresholds to 75/85 for longevity";
     wantedBy = [ "multi-user.target" ];
     after = [ "systemd-udev-settle.service" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash -c 'echo 95 > /sys/class/power_supply/BAT0/charge_control_end_threshold'";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.bash}/bin/bash -c 'echo 75 > /sys/class/power_supply/BAT0/charge_control_start_threshold && echo 85 > /sys/class/power_supply/BAT0/charge_control_end_threshold'";
     };
   };
 

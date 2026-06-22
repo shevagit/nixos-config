@@ -1,6 +1,8 @@
 # nixos-config
 NixOS files for multi-setup
 
+See [INSTALL.md](./INSTALL.md) for the end-to-end install guide (labels, LUKS, bringing a new host under the flake).
+
 flake.nix: Defines your flake's inputs and outputs. It references hosts/<hostname> for specific machines.
 
 hosts/<hostname>:
