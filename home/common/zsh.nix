@@ -11,6 +11,7 @@
       k  = "kubectl";
       kns = "kubens";
       kgi = "kubectl get ingress";
+      kgir = "kubectl get ingressroute";
       kctx = "kubectx";
       kkctx = "kubie ctx";  # kubie context switcher (isolated per terminal)
       kkns = "kubie ns";    # kubie namespace switcher
