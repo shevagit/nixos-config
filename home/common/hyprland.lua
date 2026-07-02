@@ -1,24 +1,23 @@
--- Hyprland Lua config — DRAFT / work-in-progress port of hyprland.nix `settings`.
+-- Hyprland Lua config (ACTIVE). Ported from the former hyprland.nix `settings`
+-- block. Home Manager injects this file verbatim into ~/.config/hypr/hyprland.lua
+-- via `wayland.windowManager.hyprland.extraConfig` (configType = "lua"), so it is
+-- the live Hyprland config as of the next login.
 --
--- This file is shipped by Home Manager to ~/.config/hypr/hyprland-draft.lua and
--- is NOT loaded by Hyprland (it only auto-loads a file named exactly
--- `hyprland.lua`). The hyprlang `hyprland.conf` remains the active config.
---
--- To trial this live (from a TTY or terminal):
---     ln -sf hyprland-draft.lua ~/.config/hypr/hyprland.lua
---     hyprctl reload   # or log out / back in
--- To roll back:
---     rm ~/.config/hypr/hyprland.lua    # hyprland.conf takes over again
+-- Note: the lua-vs-conf backend is chosen ONCE at Hyprland startup — `hyprctl
+-- reload` re-runs this file but cannot switch backends. After the rebuild that
+-- flipped configType to "lua", log out and back in for it to take effect.
+-- To roll back to the old hyprlang config: `git revert` the switch commit + rebuild.
 --
 -- API reference: https://wiki.hypr.land/Configuring/Start/
 -- and example:    https://github.com/hyprwm/Hyprland/blob/main/example/hyprland.lua
 --
--- ⚠ DISPATCHERS TO VERIFY in a live session — these `hl.dsp.*` forms are inferred
---   from the example (which doesn't cover them) and may need tweaking:
---     • hl.dsp.window.fullscreen()           (was `fullscreen,`)
---     • hl.dsp.window.move({ direction=... }) (was `movewindow, l/r/u/d`)
---     • hl.dsp.window.move({ monitor="+1" })  (was `movewindow, mon:+1`)
---     • hl.dsp.focus({ workspace="m+1"/"m-1" })(was `workspace, m+1/m-1`)
+-- Verified 2026-07-02 against Hyprland 0.55.4 (src/config/lua/bindings/
+-- LuaBindingsDispatchers.cpp) in a nested instance: all 54 binds registered
+-- with no lua/config errors. The previously-uncertain dispatchers are correct:
+--     • hl.dsp.window.fullscreen()            → toggle fullscreen (no-arg default)
+--     • hl.dsp.window.move({ direction=... })  → dsp_moveInDirection
+--     • hl.dsp.window.move({ monitor="+1" })   → dsp_moveToMonitor
+--     • hl.dsp.focus({ workspace="m+1"/"m-1" }) → workspace selector (relative-on-monitor)
 
 local mod = "SUPER"
 local home = os.getenv("HOME")
@@ -27,7 +26,7 @@ local home = os.getenv("HOME")
 ---- MONITORS ----
 ------------------
 hl.monitor({ output = "DP-1", mode = "2560x1440@164",   position = "0x0",    scale = 1 })
-hl.monitor({ output = "DP-4", mode = "2560x1440@99.95", position = "2560x0", scale = 1 })
+hl.monitor({ output = "DP-3", mode = "2560x1440@99.95", position = "2560x0", scale = 1 })
 
 -------------------
 ---- AUTOSTART ----
@@ -86,7 +85,7 @@ hl.bind(mod .. " + l",      hl.dsp.exec_cmd(home .. "/.config/hyprland/scripts/d
 hl.bind(mod .. " + SHIFT + e", hl.dsp.exec_cmd("hyprctl dispatch exit 0")) -- logout; to be removed
 hl.bind(mod .. " + q",      hl.dsp.window.close())
 hl.bind("CONTROL + Space",  hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mod .. " + F",      hl.dsp.window.fullscreen())          -- ⚠ verify
+hl.bind(mod .. " + F",      hl.dsp.window.fullscreen())
 hl.bind(mod .. " + w",      hl.dsp.exec_cmd("dms ipc call wallpaper next"))
 
 -- Move to the next empty workspace
@@ -98,7 +97,7 @@ hl.bind(mod .. " + L", hl.dsp.focus({ direction = "right" }))
 hl.bind(mod .. " + K", hl.dsp.focus({ direction = "up" }))
 hl.bind(mod .. " + J", hl.dsp.focus({ direction = "down" }))
 
--- Move window  (⚠ verify direction form)
+-- Move window
 hl.bind(mod .. " + SHIFT + H",     hl.dsp.window.move({ direction = "left" }))
 hl.bind(mod .. " + SHIFT + L",     hl.dsp.window.move({ direction = "right" }))
 hl.bind(mod .. " + SHIFT + K",     hl.dsp.window.move({ direction = "up" }))
@@ -108,7 +107,7 @@ hl.bind(mod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mod .. " + SHIFT + up",    hl.dsp.window.move({ direction = "up" }))
 hl.bind(mod .. " + SHIFT + down",  hl.dsp.window.move({ direction = "down" }))
 
--- Move window to next monitor  (⚠ verify monitor form)
+-- Move window to next monitor
 hl.bind(mod .. " + SHIFT + TAB", hl.dsp.window.move({ monitor = "+1" }))
 
 -- Switch / move-to workspaces with mod (+SHIFT) + [0-9]
@@ -118,7 +117,7 @@ for i = 1, 10 do
   hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
--- Workspace navigation on the current monitor  (⚠ verify m+/m- form)
+-- Workspace navigation on the current monitor
 hl.bind("CONTROL + ALT + right", hl.dsp.focus({ workspace = "m+1" }))
 hl.bind("CONTROL + ALT + left",  hl.dsp.focus({ workspace = "m-1" }))
 hl.bind(mod .. " + mouse_up",    hl.dsp.focus({ workspace = "m+1" }))

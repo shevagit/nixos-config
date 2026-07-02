@@ -9,163 +9,14 @@ in
   };
   wayland.windowManager.hyprland = {
     enable = true;
-    # Keep the legacy hyprlang generator. The new default ("lua", from stateVersion
-    # 26.05) would rewrite this whole config in Lua; opt into that deliberately later.
-    configType = "hyprlang";
-    settings = {
-      "$mod" = "SUPER";
-      
-      exec-once = [
-        #"~/.config/hyprland/scripts/waybars-wrapper.sh"
-        "~/.config/hyprland/scripts/bares-wrapper.sh"
-        # "swww-daemon"  # Removed - DMS handles wallpapers
-        # "~/.config/hyprland/scripts/wallpaper-init.sh"  # Removed - DMS handles wallpapers
-        "wl-paste --type text --watch cliphist store"  # Clipboard history for DMS
-        "wl-paste --type image --watch cliphist store"  # Image clipboard history
-      ];
-
-      monitor = [
-        # cheatsheet: "monitor = name, resolution, position, scale"
-        # transform: 
-        # 0 -> normal (no transforms)
-        # 1 -> 90 degrees
-        # 2 -> 180 degrees
-        # 3 -> 270 degrees
-        # 4 -> flipped
-        # 5 -> flipped + 90 degrees
-        # 6 -> flipped + 180 degrees
-        # 7 -> flipped + 270 degrees
-        "DP-1,2560x1440@164,0x0,1"
-        "DP-4,2560x1440@99.95,2560x0,1"
-      ];
-
-      bind = [
-        # --- Actions ---
-        "$mod, Return, exec, kitty"
-        "$mod, d, exec, rofi -show drun -config ~/.config/rofi/launcher.rasi"
-        #"$mod SHIFT, r exec, hyprctl reload"
-
-        # Bind SUPER+p to DMS power menu
-        "$mod, p, exec, dms ipc call powermenu toggle"
-        # Restart DMS when frozen
-        "$mod, l, exec, ${config.home.homeDirectory}/.config/hyprland/scripts/dms-restart.sh"
-        # logout; to be removed
-        "$mod SHIFT, e, exec, hyprctl dispatch exit 0"
-        # close active window
-        "$mod, q, killactive,"
-
-        "CONTROL, Space, togglefloating,"
-
-        "$mod, F, fullscreen,"
-
-
-        # move to the next workspace
-        "$mod SHIFT, grave, exec, ~/.config/hyprland/scripts/move-to-next-empty.sh"
-
-        # Move focus
-        "$mod, H, movefocus, l"
-        "$mod, L, movefocus, r"
-        "$mod, K, movefocus, u"
-        "$mod, J, movefocus, d"
-
-        # move window using keys
-        "$mod SHIFT, H, movewindow, l"
-        "$mod SHIFT, L, movewindow, r"
-        "$mod SHIFT, K, movewindow, u"
-        "$mod SHIFT, J, movewindow, d"
-        "$mod SHIFT, left, movewindow, l"
-        "$mod SHIFT, right, movewindow, r"
-        "$mod SHIFT, up, movewindow, u"
-        "$mod SHIFT, down, movewindow, d"
-
-        # move windows to next monitor
-        "$mod SHIFT, TAB, movewindow, mon:+1"
-
-        # Switch workspaces with mod + [0-9]
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-        "$mod, 6, workspace, 6"
-        "$mod, 7, workspace, 7"
-        "$mod, 8, workspace, 8"
-        "$mod, 9, workspace, 9"
-        "$mod, 0, workspace, 10"
-
-        # Move active window to a workspace with mod + SHIFT + [0-9]
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
-        "$mod SHIFT, 5, movetoworkspace, 5"
-        "$mod SHIFT, 6, movetoworkspace, 6"
-        "$mod SHIFT, 7, movetoworkspace, 7"
-        "$mod SHIFT, 8, movetoworkspace, 8"
-        "$mod SHIFT, 9, movetoworkspace, 9"
-        "$mod SHIFT, 0, movetoworkspace, 10"
-
-        # next workspace on monitor
-        "CONTROL_ALT, right, workspace, m+1"
-        "CONTROL_ALT, left, workspace, m-1"
-
-        "$mod, mouse_up, exec, hyprctl dispatch workspace m+1"
-        "$mod, mouse_down, exec, hyprctl dispatch workspace m-1"
-
-        # lock
-        "CONTROL_ALT, L, exec, swaylock"
-
-        # Screenshot
-        # deprecated: "$mod, Print, exec, grim -g \"$(slurp)\""
-        "$mod, Print, exec, grimblast save area /tmp/screenshot.png && swappy -f /tmp/screenshot.png"
-
-        # Volume control
-        ", XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
-        ", XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-        ", XF86AudioMute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
-
-        # Wallpaper controls via DMS
-        "$mod, w, exec, dms ipc call wallpaper next"
-
-      ];
-
-      bindm = [
-        # Move/resize windows with mod + LMB/RMB and dragging
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindowpixel"
-      ];
-
-      input = {
-        "kb_layout" = "us,gr";
-        "kb_options" = "grp:win_space_toggle";
-      };
-
-      general = {
-        layout = "master";
-        gaps_in = 10;
-        gaps_out = 20;
-      };
-
-      master = {
-        new_status = "slave";
-        mfact = 0.55;
-      };
-
-      decoration = {
-        rounding = 10;
-        dim_inactive = true;
-        dim_strength = 0.2;
-        blur = {
-          size = 3;
-          passes = 2;
-          vibrancy = 0.1696;
-        };
-        shadow = {
-          range = 4;
-          render_power = 3;
-        };
-      };
-    };
+    # Migrated to the Lua config generator (2026-07-02). The whole config lives in
+    # ./hyprland.lua and is injected via extraConfig below. `settings` MUST stay
+    # empty: with configType = "lua" the module serializes `settings` into hl.*()
+    # calls, so the old hyprlang keys ($mod, bind, monitor, ...) would render as
+    # broken Lua. Roll back with `git revert` of this commit (restores hyprlang +
+    # the settings block), then rebuild.
+    configType = "lua";
+    extraConfig = builtins.readFile ./hyprland.lua;
   };
 
   # required packages for the hyprland configuration
@@ -191,7 +42,6 @@ in
     ] else [
       pkgs.nerdfonts
     ]);
-
 
   home.file = {
     ".config/hyprland/scripts/waybars-wrapper.sh".text = ''
@@ -328,7 +178,6 @@ in
   };
     home.file.".config/hyprland/scripts/move-to-next-empty.sh".executable = true;
 
-
   # keychain manages its own ssh-agent; do not enable services.ssh-agent
   # alongside it as they conflict (stale sockets / duplicate agents)
   programs.keychain = {
@@ -354,7 +203,7 @@ in
 
       background = [
         {
-          path = "~/Pictures/hyprlock-wallpaper.jpeg";
+          path = "${pkgs.sddm-astronaut}/share/sddm/themes/sddm-astronaut-theme/Backgrounds/japanese_aesthetic.png";
           blur_passes = 3;
           blur_size = 5;
         }
