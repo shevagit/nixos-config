@@ -173,10 +173,12 @@ in
       done
 
       # Move the focused window to the next available workspace.
-      # Under the Lua config backend `hyprctl dispatch <name> <args>` is parsed as
-      # Lua, so the classic string form fails. Wrap it in the exec_raw bridge, which
-      # runs the legacy dispatcher under the Lua backend.
-      hyprctl dispatch "hl.dsp.exec_raw(\"movetoworkspace $next_workspace\")"
+      # Under the Lua config backend `hyprctl dispatch <arg>` is evaluated as Lua
+      # (`return hl.dispatch(<arg>)`), so the classic string form fails. Note that
+      # `hl.dsp.exec_raw("...")` runs its argument as a *shell* command (that is how
+      # logout does `exec_raw("exit 0")`), NOT a dispatcher — so it silently no-ops.
+      # The real move-window-to-workspace dispatcher is hl.dsp.window.move.
+      hyprctl dispatch "hl.dsp.window.move({ workspace = $next_workspace })"
     '';
   };
     home.file.".config/hyprland/scripts/move-to-next-empty.sh".executable = true;
