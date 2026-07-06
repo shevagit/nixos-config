@@ -11,7 +11,7 @@
 
     layout = [
       { label = "lock";     text = "  Lock";     action = "${pkgs.hyprlock}/bin/hyprlock"; keybind = "l"; }
-      { label = "logout";   text = "  Logout";   action = "${pkgs.hyprland}/bin/hyprctl dispatch exit 0"; keybind = "o"; }
+      { label = "logout";   text = "  Logout";   action = "${pkgs.hyprland}/bin/hyprctl dispatch 'hl.dsp.exec_raw(\"exit 0\")'"; keybind = "o"; }
       { label = "reboot";   text = "  Restart";  action = "${pkgs.systemd}/bin/systemctl reboot"; keybind = "r"; }
       { label = "shutdown"; text = "  Shutdown"; action = "${pkgs.systemd}/bin/systemctl poweroff"; keybind = "s"; }
     ];

@@ -82,7 +82,7 @@ hl.bind(mod .. " + Return", hl.dsp.exec_cmd("kitty"))
 hl.bind(mod .. " + d",      hl.dsp.exec_cmd("rofi -show drun -config ~/.config/rofi/launcher.rasi"))
 hl.bind(mod .. " + p",      hl.dsp.exec_cmd("dms ipc call powermenu toggle"))
 hl.bind(mod .. " + l",      hl.dsp.exec_cmd(home .. "/.config/hyprland/scripts/dms-restart.sh"))
-hl.bind(mod .. " + SHIFT + e", hl.dsp.exec_cmd("hyprctl dispatch exit 0")) -- logout; to be removed
+hl.bind(mod .. " + SHIFT + e", hl.dsp.exec_raw("exit 0")) -- logout; to be removed
 hl.bind(mod .. " + q",      hl.dsp.window.close())
 hl.bind("CONTROL + Space",  hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mod .. " + F",      hl.dsp.window.fullscreen())
