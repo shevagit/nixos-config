@@ -12,7 +12,7 @@ let
   #   - "pixel_sakura" (animated gif)
   #   - "jake_the_dog" (animated mp4)
   #   - "hyprland_kath" (animated mp4)
-  themePreset = "japanese_aesthetic";
+  themePreset = "black_hole";
 
   # Custom sddm-astronaut theme with selected preset
   sddm-astronaut-custom = pkgs.runCommand "sddm-astronaut-${themePreset}" { } ''
