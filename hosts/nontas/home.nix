@@ -3,37 +3,34 @@
     ../../home
     ../../home/common
   ];
-  # override home manager configuration
-  wayland.windowManager.hyprland.settings.bind = [
-    # Brightness control (F5/F6)
-    ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
-    ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
-  ];
+  # Host-specific Hyprland overrides. The shared config uses configType = "lua"
+  # (see home/common/hyprland.nix), so these MUST be Lua injected via extraConfig,
+  # NOT `settings.*`. Under the lua backend the module serializes `settings` into
+  # hl.*() calls, and keys like `bindl` render as `hl.bindl(...)` — a nil value
+  # that throws a fatal Lua error and aborts the ENTIRE config (broken resolution,
+  # dead keybinds, error banner). mkAfter appends this after the shared hyprland.lua.
+  wayland.windowManager.hyprland.extraConfig = lib.mkAfter ''
 
-  wayland.windowManager.hyprland.settings.gesture = [
-    "3, horizontal, workspace"
-  ];
+    ---- host: nontas (laptop) ----
 
-  # Lock screen on lid close via DMS
-  wayland.windowManager.hyprland.settings.bindl = [
-    ", switch:on:Lid Switch, exec, dms ipc call lock lock"
-  ];
+    -- Brightness (F5/F6)
+    hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"))
+    hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set +5%"))
 
-  wayland.windowManager.hyprland.settings.monitor = [
-  # office monitor on top
-  "DP-2,2560x1440@60,0x0,1"
+    -- 3-finger horizontal swipe switches workspaces
+    hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
-  # embedded screen below
-  "eDP-1,1920x1200@60,0x1440,1"
+    -- Lock on lid close via DMS (locked = fires even while screen is locked)
+    hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("dms ipc call lock lock"), { locked = true })
 
-  # catch-all fallback
-  ",preferred,auto,1"
-  ];
+    -- Monitors: office monitor on top, embedded panel below, catch-all fallback
+    hl.monitor({ output = "DP-2",  mode = "2560x1440@60", position = "0x0",    scale = 1 })
+    hl.monitor({ output = "eDP-1", mode = "1920x1200@60", position = "0x1440", scale = 1 })
+    hl.monitor({ output = "",      mode = "preferred",    position = "auto",   scale = "auto" })
 
-  wayland.windowManager.hyprland.settings.device = {
-    name = "gtch1563:00-2a94:a89b";
-    output = "eDP-1";
-  };
+    -- Route the touchscreen to the embedded panel
+    hl.device({ name = "gtch1563:00-2a94:a89b", output = "eDP-1" })
+  '';
 
   # host-specific packages
   home.packages = with pkgs; [

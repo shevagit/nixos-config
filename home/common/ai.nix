@@ -1,5 +1,23 @@
 { config, pkgs, lib, ... }:
 
+let
+  # Cursor is Electron/Chromium; under Hyprland (an unrecognized desktop env)
+  # Chromium can't auto-detect the keyring backend and errors with "An OS keyring
+  # couldn't be identified". gnome-keyring IS running and owns org.freedesktop.secrets,
+  # so we just have to tell Chromium to use it — same fix as mongodb-compass in
+  # home/default.nix. The .desktop files call bare `cursor` (PATH-resolved), so
+  # wrapping the package binary fixes both the launcher and the CLI.
+  code-cursor = pkgs.symlinkJoin {
+    name = "code-cursor-keyring";
+    paths = [ pkgs.code-cursor ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      rm "$out/bin/cursor"
+      makeWrapper ${pkgs.code-cursor}/bin/cursor "$out/bin/cursor" \
+        --add-flags "--password-store=gnome-libsecret"
+    '';
+  };
+in
 {
   home.packages = with pkgs; [
     code-cursor

@@ -35,6 +35,17 @@
   # Strix Point needs a recent kernel for GPU/NPU support.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Workaround: machine hangs at the final ACPI reset/power-off after a clean
+  # software shutdown (reboot/poweroff don't power the machine off). Lenovo
+  # firmware 1.19 ("Fixed cold reset flag not being set correctly") is the real
+  # fix; this forces the ACPI reboot path in case the firmware update alone
+  # doesn't resolve it. Try acpi -> pci -> efi -> bios if the hang persists.
+  boot.kernelParams = [ "reboot=acpi" ];
+
+  # Safety net: if a shutdown/reboot ever hangs, let the hardware watchdog
+  # force a reset in 30s instead of leaving the machine stuck (default is 10min).
+  systemd.watchdog.rebootTime = "30s";
+
   networking.hostName = "nontas";
 
   # Enable networking
