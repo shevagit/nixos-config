@@ -200,7 +200,7 @@
       )
 
       function krun {
-        local parallel=0 ns="" contexts=()
+        local parallel=0 assume_yes=0 ns="" contexts=() nsflag=()
 
         # print help if no args
         if [[ $# -eq 0 ]]; then
@@ -213,7 +213,9 @@
           echo "  --contexts \"c1 c2\"   Run on specific contexts"
           echo "  -P, --parallel       Run all contexts in parallel"
           echo "  -n, --namespace NS   Specify namespace for all contexts"
-          echo "  -y                   Skip confirmation for mutating commands"
+          echo "  -y, --yes            Skip confirmation for mutating commands"
+          echo ""
+          echo "Options must come before --; everything after -- goes to kubectl."
           echo ""
           echo "Available context groups:"
           for group in "''${(k)KUBE_GROUPS[@]}"; do
@@ -239,17 +241,22 @@
             --contexts)   contexts=(''${=2}); shift 2 ;;
             -P|--parallel) parallel=1; shift ;;
             -n|--namespace) ns="$2"; shift 2 ;;
+            -y|--yes)     assume_yes=1; shift ;;
             --) shift; break ;;
             *)  break ;;
           esac
         done
 
         local cmd=("$@")
+        # build namespace flag as an array; zsh does not word-split unquoted
+        # expansions, so ''${ns:+--namespace "$ns"} would be a single argument
+        [[ -n "$ns" ]] && nsflag=(--namespace "$ns")
+
         # default: current context only
         (( ''${#contexts} == 0 )) && contexts=($(kubectl config current-context))
 
         # safety prompt for mutating ops (unless user passed -y)
-        if [[ ! " $* " =~ " -y " ]]; then
+        if (( ! assume_yes )); then
           if [[ " ''${cmd[*]} " =~ "( apply | delete | scale | rollout | cordon | drain )" ]]; then
             echo "About to run on ''${#contexts} context(s): ''${contexts[*]}"
             read "REPLY?Continue? [y/N] "; [[ $REPLY =~ ^[Yy]$ ]] || return 1
@@ -261,20 +268,22 @@
           if (( parallel )); then
             (
               echo ">>> [$ctx] kubectl ''${cmd[*]}"
-              kubectl --context "$ctx" ''${ns:+--namespace "$ns"} "''${cmd[@]}" \
+              kubectl --context "$ctx" "''${nsflag[@]}" "''${cmd[@]}" \
                 | sed -e "s/^/[$ctx] /"
+              exit ''${pipestatus[1]}
             ) & pids+=($!)
           else
             echo ">>> [$ctx] kubectl ''${cmd[*]}"
-            kubectl --context "$ctx" ''${ns:+--namespace "$ns"} "''${cmd[@]}" \
+            kubectl --context "$ctx" "''${nsflag[@]}" "''${cmd[@]}" \
               | sed -e "s/^/[$ctx] /"
+            (( ''${pipestatus[1]} )) && rc=1
           fi
         done
 
         if (( parallel )); then
           for pid in "''${pids[@]}"; do wait "$pid" || rc=1; done
-          return $rc
         fi
+        return $rc
       }
     '';
   };
