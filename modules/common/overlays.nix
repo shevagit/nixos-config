@@ -24,21 +24,5 @@
         in
         prev.callPackage (patchedSrc + "/package.nix") { };
     })
-
-    # mongodb-compass: broken on nixpkgs since e858e80fb1 ("wrapGAppsHook: only
-    # wrap $outBin by default", 2026-06-15). The hook now guards with
-    # wrapGAppsHookHasRunForOutput["$output"], but mongodb-compass calls
-    # wrapGAppsHook manually inside buildCommand where $output is unset ->
-    # "bad array subscript" kills the build. prefix and outputBin are already
-    # "out" at that point, so defining output=out restores the old behavior.
-    # Remove once upstream fixes the package (the assert fails loudly when the
-    # manual wrapGAppsHook call disappears from buildCommand).
-    (final: prev: {
-      mongodb-compass = prev.mongodb-compass.overrideAttrs (old: {
-        buildCommand =
-          assert prev.lib.hasInfix "wrapGAppsHook $out/bin/mongodb-compass" old.buildCommand;
-          "output=out\n" + old.buildCommand;
-      });
-    })
   ];
 }
