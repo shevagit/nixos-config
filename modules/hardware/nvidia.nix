@@ -8,6 +8,16 @@
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
 
+  # NVIDIA Wayland / EGL. These MUST stay on nvidia hosts only: on AMD
+  # (nontas, athanasiou) GBM_BACKEND=nvidia-drm makes Mesa fail to open
+  # nvidia-drm_gbm.so and Hyprland 0.56.2 exits immediately → SDDM login loop.
+  environment.sessionVariables = {
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    __GL_GSYNC_ALLOWED = "0";
+    __GL_VRR_ALLOWED = "0";
+  };
+
   # Nvidia driver settings
   hardware.nvidia = {
 

@@ -16,7 +16,27 @@ in
     # broken Lua. Roll back with `git revert` of this commit (restores hyprlang +
     # the settings block), then rebuild.
     configType = "lua";
-    extraConfig = builtins.readFile ./hyprland.lua;
+    extraConfig = lib.mkMerge [
+      (builtins.readFile ./hyprland.lua)
+      # After host extraConfig (mkAfter). DMS writes these at runtime into
+      # ~/.config/hypr/dms/; without the requires, resolve-include stays
+      # included=false and Hyprland never gets the dms:bar layer rules.
+      # Do not require dms.outputs — host extraConfig owns monitors.
+      (lib.mkOrder 2000 ''
+        require("dms.colors")
+        require("dms.layout")
+        require("dms.cursor")
+        require("dms.windowrules")
+      '')
+    ];
+    # UWSM already owns graphical-session.target. Home Manager's hyprland-session
+    # integration conflicts with that: it execs
+    #   systemctl --user stop hyprland-session.target && start ...
+    # on hyprland.start, and since 2026-08 that target gained
+    # PropagatesStopTo=graphical-session.target, so the bounce kills
+    # wayland-wm@hyprland.desktop.service (~2s after login → SDDM loop).
+    # https://wiki.hypr.land/Useful-Utilities/Systemd-start/
+    systemd.enable = false;
   };
 
   # required packages for the hyprland configuration
