@@ -44,7 +44,7 @@
 
   # Safety net: if a shutdown/reboot ever hangs, let the hardware watchdog
   # force a reset in 30s instead of leaving the machine stuck (default is 10min).
-  systemd.watchdog.rebootTime = "30s";
+  systemd.settings.Manager.RebootWatchdogSec = "30s";
 
   networking.hostName = "nontas";
 

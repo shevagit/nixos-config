@@ -34,6 +34,10 @@
       export KUBE_EDITOR=nvim
       export EDITOR=nvim
 
+      if command -v mise >/dev/null 2>&1; then
+        eval "$(mise activate zsh)"
+      fi
+
       # kubie start
       function kubie_kitty_bg() {
         # Only attempt kitty remote control when actually inside kitty —
