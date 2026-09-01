@@ -51,3 +51,14 @@ creation_rules:
       - age:
         - *user_sheva
         - *host_athanasiou
+
+  # Workstation-only secrets: readable by the three machines that run Claude,
+  # deliberately NOT by kaleipo. The work-account sync passes through kaleipo
+  # encrypted, so the hub must never hold the key that would decrypt it.
+  - path_regex: secrets/workstations/.*\.yaml$
+    key_groups:
+      - age:
+        - *user_sheva
+        - *host_nontas
+        - *host_simos
+        - *host_athanasiou

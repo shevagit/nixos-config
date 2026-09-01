@@ -69,6 +69,7 @@ in
       mkdir -p "$HOME/.claude/$d"
     done
     mkdir -p "$HOME/sync/scratch"
+    mkdir -p "$HOME/.claude-work/projects"
     # settings.json is rewritten in place by /config, and an atomic rewrite would
     # replace a symlink with a real file — so seed a copy once and let the two
     # accounts diverge from there.

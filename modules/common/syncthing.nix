@@ -20,6 +20,12 @@ let
 
   peers = lib.attrNames (lib.filterAttrs (n: _: n != self) devices);
 
+  # kaleipo is the always-on hub; the other three are where Claude actually runs.
+  hub               = "kaleipo";
+  workstations      = [ "nontas" "simos" "athanasiou" ];
+  isHub             = self == hub;
+  otherWorkstations = lib.filter (n: n != self) workstations;
+
   # Keep a month of overwritten versions. This is the undo button for a
   # troubleshooting session that clobbers its own output.
   versioning = {
@@ -37,6 +43,14 @@ in
     syncthing-key = {
       sopsFile = ../../secrets/hosts/${self}/syncthing.yaml;
       key      = "key";
+      owner    = user;
+    };
+  } // lib.optionalAttrs (!isHub) {
+    # Encrypts the work-account folder before it reaches the hub. Deliberately
+    # not decryptable by kaleipo — see the workstation rule in .sops.yaml.
+    syncthing-work-encryption = {
+      sopsFile = ../../secrets/workstations/claude-work-sync.yaml;
+      key      = "encryptionPassword";
       owner    = user;
     };
   };
@@ -70,8 +84,7 @@ in
         # .credentials.json and .claude.json, and two hosts refreshing the same
         # OAuth token can invalidate each other.
         #
-        # To sync the work account too, add ~/.claude-work/projects the same
-        # way — left out by default so work session data stays off the server.
+        # The work account is synced too, but separately — see below.
         claude-projects = {
           id      = "claude-projects";
           path    = "${home}/.claude/projects";
@@ -87,7 +100,34 @@ in
           devices = peers;
           inherit versioning;
         };
-      };
+      }
+      # The work (Team) account syncs between the workstations the same way, but
+      # kaleipo carries it as an untrusted device: it store-and-forwards
+      # ciphertext it holds no key for. The hub is still required — the
+      # workstations are rarely online together — but employer session data
+      # never sits in the clear on a machine at home.
+      // (
+        if isHub then {
+          claude-work-projects = {
+            id      = "claude-work-projects";
+            # Encrypted blobs with encrypted filenames, not readable files.
+            # Kept away from ~/.claude-work so nothing mistakes it for real data.
+            path    = "${home}/syncthing-encrypted/claude-work";
+            type    = "receiveencrypted";
+            devices = workstations;
+          };
+        } else {
+          claude-work-projects = {
+            id      = "claude-work-projects";
+            path    = "${home}/.claude-work/projects";
+            devices = otherWorkstations ++ [{
+              name                   = hub;
+              encryptionPasswordFile = config.sops.secrets.syncthing-work-encryption.path;
+            }];
+            inherit versioning;
+          };
+        }
+      );
 
       options = {
         # Tailscale is the only transport: no public discovery, no relays, no
