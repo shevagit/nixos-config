@@ -38,6 +38,15 @@
         eval "$(mise activate zsh)"
       fi
 
+      # Claude Code: personal account uses the default ~/.claude; `claudew`
+      # runs the work (Team) account out of ~/.claude-work. CLAUDE_CONFIG_DIR
+      # isolates login, history and memory, so both can run at the same time
+      # in different terminals. Shared skills/commands/agents are symlinked
+      # into ~/.claude-work by home/common/ai.nix.
+      function claudew {
+        CLAUDE_CONFIG_DIR="$HOME/.claude-work" command claude "$@"
+      }
+
       # kubie start
       function kubie_kitty_bg() {
         # Only attempt kitty remote control when actually inside kitty —
