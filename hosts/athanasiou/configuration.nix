@@ -19,6 +19,7 @@
       ../../modules/services/systemd-tmpfiles-rules.nix
       ../../modules/common/fprintd.nix
       ../../modules/common/tailscale.nix
+      ../../modules/common/syncthing.nix
       ../../modules/services/yubi-auth.nix
       ../../modules/services/speechd.nix
       ../../modules/common/display-manager.nix

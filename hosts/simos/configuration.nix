@@ -18,6 +18,7 @@
       ../../modules/common/extraHosts.nix
       ../../modules/services/systemd-tmpfiles-rules.nix
       ../../modules/common/tailscale.nix
+      ../../modules/common/syncthing.nix
       ../../modules/services/yubi-auth.nix
       ../../modules/common/display-manager.nix
       ../../modules/common/desktop-environment.nix

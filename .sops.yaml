@@ -30,3 +30,24 @@ creation_rules:
       - age:
         - *user_sheva
         - *host_kaleipo
+
+  # nontas-specific secrets
+  - path_regex: secrets/hosts/nontas/.*\.yaml$
+    key_groups:
+      - age:
+        - *user_sheva
+        - *host_nontas
+
+  # simos-specific secrets
+  - path_regex: secrets/hosts/simos/.*\.yaml$
+    key_groups:
+      - age:
+        - *user_sheva
+        - *host_simos
+
+  # athanasiou-specific secrets
+  - path_regex: secrets/hosts/athanasiou/.*\.yaml$
+    key_groups:
+      - age:
+        - *user_sheva
+        - *host_athanasiou
