@@ -43,9 +43,52 @@
       # isolates login, history and memory, so both can run at the same time
       # in different terminals. Shared skills/commands/agents are symlinked
       # into ~/.claude-work by home/common/ai.nix.
-      function claudew {
-        CLAUDE_CONFIG_DIR="$HOME/.claude-work" command claude "$@"
+      #
+      # Both wrappers prompt for a session name. `--name` is written into the
+      # session transcript, and transcripts sync between machines, so a named
+      # session is one that can actually be found in `claude --resume` from
+      # simos days later. Unnamed sessions are the ones that get lost.
+
+      # True only for a fresh interactive session that has no name yet.
+      function _claude_wants_name {
+        local a
+        for a in "$@"; do
+          case "$a" in
+            -n|--name|--name=*)              return 1 ;;  # already named
+            -r|--resume|--resume=*|-c|--continue) return 1 ;;  # keeps its name
+            -p|--print)                      return 1 ;;  # scripted
+            -h|--help|-v|--version)          return 1 ;;
+            --from-pr|--from-pr=*|--cloud|--cloud=*) return 1 ;;
+          esac
+        done
+        # Subcommands are not sessions.
+        case "''${1:-}" in
+          agents|attach|auth|auto-mode|doctor|gateway|import|install|kill|logs|mcp|plugin|plugins|project|respawn|rm|setup-token|stop|ultrareview|update|upgrade) return 1 ;;
+        esac
+        # Never prompt without a terminal, so pipes and scripts are unaffected.
+        [[ -t 0 && -t 1 ]] || return 1
+        return 0
       }
+
+      function _claude_launch {
+        local cfgdir="$1"; shift
+        local -a pre=()
+        if _claude_wants_name "$@"; then
+          local fallback="''${PWD:t}-$(date +%m%d-%H%M)"
+          local name
+          read "name?Session name [''${fallback}]: "
+          [[ -z "$name" ]] && name="$fallback"
+          pre=(--name "$name")
+        fi
+        if [[ -n "$cfgdir" ]]; then
+          CLAUDE_CONFIG_DIR="$cfgdir" command claude "''${pre[@]}" "$@"
+        else
+          command claude "''${pre[@]}" "$@"
+        fi
+      }
+
+      function claude  { _claude_launch "" "$@"; }
+      function claudew { _claude_launch "$HOME/.claude-work" "$@"; }
 
       # kubie start
       function kubie_kitty_bg() {
