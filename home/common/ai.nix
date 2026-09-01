@@ -50,16 +50,25 @@ in
   home.file.".claude/CLAUDE.md".text = ''
     # Working notes
 
-    Scratch that should outlive the session — debug output, captured logs,
-    investigation notes, one-off scripts — goes in `~/sync/scratch/<topic>/`,
-    not `/tmp`. `~/sync` is Syncthing-replicated to my other machines
-    (nontas, simos, athanasiou) via the always-on kaleipo hub, so work started
-    on one machine is waiting on whichever one I pick up next.
+    Start an investigation in its own directory under the synced tree, so the
+    working files and the session travel together to my other machines:
 
-    Use `/tmp` only for genuinely throwaway files within a single session.
+    - personal account -> `~/sync/<topic>/`
+    - work account (`claudew`) -> `~/sync-work/<topic>/`
 
-    Claude Code session transcripts (`~/.claude/projects/`) sync the same way,
-    so `claude --resume` on another machine picks up this conversation.
+    Both live at the same absolute path on every machine, which is what lets
+    `claude --resume` find the session there — the project is keyed to its full
+    path. Scratch that has no project of its own goes in `~/sync/scratch/`.
+
+    Use `/tmp` only for genuinely throwaway files within a single session; it is
+    tmpfs and gone on reboot.
+
+    Session transcripts sync the same way, so `claude --resume` on another
+    machine picks the conversation back up.
+
+    Anything under `~/sync-work` and the work account's transcripts passes
+    through the kaleipo hub encrypted; the personal equivalents do not. Keep
+    work material on the work side.
   '';
   home.file.".claude-work/CLAUDE.md".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.claude/CLAUDE.md";

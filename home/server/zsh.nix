@@ -26,7 +26,12 @@
     history.ignorePatterns = [ "rm *" ];
     # Add paths in PATH
     initContent = ''
-      export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+      # ~/sync/bin is Syncthing-replicated to the other machines, so a helper
+      # script written here is runnable everywhere within seconds — no rebuild,
+      # no commit. Syncthing preserves the executable bit, so chmod +x travels
+      # with it. Use `#!/usr/bin/env bash`: NixOS has no /bin/bash.
+      # Scripts worth versioning belong in the repo instead, not here.
+      export PATH="$HOME/bin:$HOME/.local/bin:$HOME/sync/bin:$PATH"
       export KUBE_EDITOR=nvim
       export EDITOR=nvim
 

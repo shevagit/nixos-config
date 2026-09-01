@@ -32,6 +32,34 @@ let
     type = "staggered";
     params.maxAge = toString (30 * 24 * 3600);
   };
+
+  # A folder that passes through the hub encrypted. kaleipo relays ciphertext it
+  # holds no key for, so it needs a receiveencrypted definition pointed at a
+  # blob directory, while the workstations hold the real files. Same shape for
+  # every folder carrying work data.
+  encryptedFolder =
+    { id, path, hubPath }:
+    if isHub then
+      {
+        ${id} = {
+          inherit id;
+          # Encrypted blobs with encrypted filenames, not readable files. Kept
+          # away from the real paths so nothing mistakes this for usable data.
+          path    = hubPath;
+          type    = "receiveencrypted";
+          devices = workstations;
+        };
+      }
+    else
+      {
+        ${id} = {
+          inherit id path versioning;
+          devices = otherWorkstations ++ [{
+            name                   = hub;
+            encryptionPasswordFile = config.sops.secrets.syncthing-work-encryption.path;
+          }];
+        };
+      };
 in
 {
   sops.secrets = {
@@ -101,33 +129,24 @@ in
           inherit versioning;
         };
       }
-      # The work (Team) account syncs between the workstations the same way, but
-      # kaleipo carries it as an untrusted device: it store-and-forwards
-      # ciphertext it holds no key for. The hub is still required — the
-      # workstations are rarely online together — but employer session data
-      # never sits in the clear on a machine at home.
-      // (
-        if isHub then {
-          claude-work-projects = {
-            id      = "claude-work-projects";
-            # Encrypted blobs with encrypted filenames, not readable files.
-            # Kept away from ~/.claude-work so nothing mistakes it for real data.
-            path    = "${home}/syncthing-encrypted/claude-work";
-            type    = "receiveencrypted";
-            devices = workstations;
-          };
-        } else {
-          claude-work-projects = {
-            id      = "claude-work-projects";
-            path    = "${home}/.claude-work/projects";
-            devices = otherWorkstations ++ [{
-              name                   = hub;
-              encryptionPasswordFile = config.sops.secrets.syncthing-work-encryption.path;
-            }];
-            inherit versioning;
-          };
-        }
-      );
+      # Everything carrying work data goes through the hub encrypted. kaleipo
+      # cannot be avoided — the workstations are rarely online together — but it
+      # is a machine at home, so it relays ciphertext rather than being trusted.
+      #
+      # Both halves of an investigation are covered: the session transcript and
+      # the working files. Encrypting only the transcript would leave the
+      # artifacts it produced (exports, logs, captured output) in the clear,
+      # which is usually the more sensitive half.
+      // encryptedFolder {
+        id      = "claude-work-projects";
+        path    = "${home}/.claude-work/projects";
+        hubPath = "${home}/syncthing-encrypted/claude-work";
+      }
+      // encryptedFolder {
+        id      = "sync-work";
+        path    = "${home}/sync-work";
+        hubPath = "${home}/syncthing-encrypted/sync-work";
+      };
 
       options = {
         # Tailscale is the only transport: no public discovery, no relays, no
