@@ -83,6 +83,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-simos-gfx": {
+      "locked": {
+        "lastModified": 1785090369,
+        "narHash": "sha256-m0pDuRJG7EDo9ri+4Ksu83VsI+PlxNC9lNBfydejce4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "624af665418d3c65d544145b4d34ad696439570e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "624af665418d3c65d544145b4d34ad696439570e",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1767313136,
@@ -120,6 +136,7 @@
         "ags": "ags",
         "home-manager-stable": "home-manager-stable",
         "home-manager-unstable": "home-manager-unstable",
+        "nixpkgs-simos-gfx": "nixpkgs-simos-gfx",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "snitch": "snitch",
