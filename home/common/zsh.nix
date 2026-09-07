@@ -95,6 +95,44 @@
       function claude  { _claude_launch "" "$@"; }
       function claudew { _claude_launch "$HOME/.claude-work" "$@"; }
 
+      # Investigation launchers: make a synced topic dir, cd into it, and start a
+      # session whose --name matches the dir — so the working files, the transcript,
+      # and the `claude --resume` entry all share ONE identifier and travel between
+      # machines. Plain `claude` / `claudew` above are untouched.
+      #   claude-investigate  <topic>  -> ~/sync/<slug>       (personal account)
+      #   claudew-investigate <topic>  -> ~/sync-work/<slug>  (work account)
+      # The dir name and the session name are both the slug, so on another host:
+      #   cd ~/sync-work/<slug> && claudew --resume
+      function _claude_investigate {
+        local cfgdir="$1" base="$2"; shift 2
+        if [[ -z "$*" ]]; then
+          print -u2 "usage: (claude|claudew)-investigate <topic>  — makes <base>/<slug>, starts a session named <slug> there"
+          return 1
+        fi
+        # slugify all args: lowercase, spaces/underscores -> '-', drop the rest,
+        # collapse repeats, trim leading/trailing dashes.
+        local slug="''${(L)*}"
+        slug="''${slug//[ _]/-}"
+        slug="''${slug//[^a-z0-9-]/}"
+        while [[ "$slug" == *--* ]]; do slug="''${slug//--/-}"; done
+        slug="''${slug#-}"; slug="''${slug%-}"
+        if [[ -z "$slug" ]]; then
+          print -u2 "investigate: name is empty after slugifying; pick another"
+          return 1
+        fi
+        local dir="''${base}/''${slug}"
+        mkdir -p "$dir" || return 1
+        cd "$dir" || return 1
+        # Reuse the normal launcher. --name pins the session name to the dir name
+        # and skips _claude_launch's interactive name prompt; the trailing prompt
+        # is the first message, so the session actually persists (Claude Code never
+        # saves a session you exit with zero messages) and Claude seeds ./CLAUDE.md
+        # on launch.
+        _claude_launch "$cfgdir" --name "$slug" "Starting investigation $slug. Create ./CLAUDE.md (title, today's date, one-line context placeholder), then ask me what this investigation is about."
+      }
+      function claude-investigate  { _claude_investigate ""                  "$HOME/sync"      "$@"; }
+      function claudew-investigate { _claude_investigate "$HOME/.claude-work" "$HOME/sync-work" "$@"; }
+
       # kubie start
       function kubie_kitty_bg() {
         # Only attempt kitty remote control when actually inside kitty —
