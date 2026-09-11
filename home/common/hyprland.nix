@@ -25,7 +25,12 @@ in
       (lib.mkOrder 2000 ''
         require("dms.colors")
         require("dms.layout")
-        require("dms.cursor")
+        -- dms.cursor is only written by DMS's generateCursorConfig() (a cursor/
+        -- theme-setting event), NOT by its startup ensureDmsLuaConfigs() like
+        -- layout/windowrules. On a fresh profile the file may not exist yet, and
+        -- a hard require() aborts the whole config. pcall degrades gracefully:
+        -- default cursor until DMS writes dms/cursor.lua, then it loads on reload.
+        pcall(require, "dms.cursor")
         require("dms.windowrules")
       '')
     ];
