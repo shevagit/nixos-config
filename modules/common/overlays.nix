@@ -2,6 +2,24 @@
 { ... }:
 {
   nixpkgs.overlays = [
+    # sops-nix builds its sops-install-secrets with `buildGo125Module`, which
+    # nixpkgs-unstable removed when Go 1.25 went end-of-life. The attribute
+    # still exists but throws on evaluation, which breaks the unstable hosts
+    # at `sops.package` (and `sops.validationPackage`, same default).
+    # kaleipo is unaffected: it builds from nixpkgs-stable, which still has a
+    # working buildGo125Module and no buildGo126Module — which is also why this
+    # lives here, in a module kaleipo does not import, rather than in a shared
+    # one.
+    # sops-nix upstream HEAD (13616ff, 2026-09-09) has not caught up yet, so
+    # there is no input bump that fixes this.
+    # go.mod declares `go 1.25.0` as a *minimum*, so the default builder is
+    # fine: pkgs.go is 1.26.7, and buildGoModule uses that same Go, which keeps
+    # the package's separate `go` argument consistent with the builder.
+    # Remove once sops-nix moves off buildGo125Module.
+    (final: prev: {
+      buildGo125Module = prev.buildGoModule;
+    })
+
     # google-cloud-sdk: its extra components (e.g. gke-gcloud-auth-plugin) pull
     # in a `bundled-python3-unix` component built around a bundled CPython 3.14.
     # autoPatchelf fails on it because:
