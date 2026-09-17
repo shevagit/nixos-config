@@ -216,6 +216,13 @@ in
     extraFlags = [
       "--quiet"
       "--timeout 120"
+      # keychain 3.x coordinates key loading across terminals and, by default,
+      # waits for Enter in every new shell before running ssh-add. None of the
+      # keys above carry a passphrase, so that prompt gates nothing — it just
+      # appears in each new terminal. --immediate keeps the coordination (one
+      # loader, the rest wait) and drops the preliminary Enter. Revisit if any
+      # of these keys ever gains a passphrase.
+      "--immediate"
     ];
   };
 
