@@ -235,7 +235,11 @@ in
 
       background = [
         {
-          path = "${pkgs.sddm-astronaut}/share/sddm/themes/sddm-astronaut-theme/Backgrounds/japanese_aesthetic.png";
+          # Shares the derivation the SDDM login theme uses (defined in
+          # modules/common/overlays.nix) so only one copy is in the closure.
+          # Every preset's background ships in the package, so this image is
+          # unaffected by which preset that overlay selects.
+          path = "${pkgs.sddm-astronaut-themed}/share/sddm/themes/sddm-astronaut-theme/Backgrounds/japanese_aesthetic.png";
           blur_passes = 3;
           blur_size = 5;
         }
