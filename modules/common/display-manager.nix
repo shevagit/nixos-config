@@ -14,16 +14,23 @@ let
   #   - "hyprland_kath" (animated mp4)
   themePreset = "purple_leaves";
 
-  # Custom sddm-astronaut theme with selected preset
-  sddm-astronaut-custom = pkgs.runCommand "sddm-astronaut-${themePreset}" { } ''
-    mkdir -p $out/share/sddm/themes
-    cp -r ${pkgs.sddm-astronaut}/share/sddm/themes/sddm-astronaut-theme $out/share/sddm/themes/
-    chmod -R +w $out/share/sddm/themes/sddm-astronaut-theme
-
-    # Change the ConfigFile to the selected theme preset
-    sed -i 's|ConfigFile=Themes/astronaut.conf|ConfigFile=Themes/${themePreset}.conf|' \
-      $out/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
-  '';
+  # Which of the bundled presets the theme uses is decided by the ConfigFile=
+  # line in the theme's metadata.desktop. nixpkgs' sddm-astronaut takes that as
+  # an argument, so hand it the preset instead of copying the theme out of the
+  # package and running our own sed over the copy, as this used to.
+  # Upstream's substitution is anchored (^ConfigFile=Themes/.*\.conf$) where
+  # ours matched the literal astronaut.conf, so ours would have silently
+  # no-opped — sed exits 0 on no match — if upstream ever changed its default
+  # preset, leaving us on astronaut with no error.
+  # Note this does not shrink the system closure: hyprlock (home/common/
+  # hyprland.nix) pulls in the *unmodified* sddm-astronaut for its lock screen
+  # background, so both that and this override are present, ~22M each. Pointing
+  # hyprlock at the same derivation would leave just one.
+  # `themeConfig` is available here too, if individual theme keys ever need
+  # overriding.
+  sddm-astronaut-custom = pkgs.sddm-astronaut.override {
+    embeddedTheme = themePreset;
+  };
 in
 {
   services.displayManager.sddm = {
