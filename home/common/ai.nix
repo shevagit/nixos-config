@@ -67,8 +67,27 @@ in
     machine picks the conversation back up.
 
     Anything under `~/sync-work` and the work account's transcripts passes
-    through the kaleipo hub encrypted; the personal equivalents do not. Keep
-    work material on the work side.
+    through an encrypted sync hub; the personal equivalents do not. Keep work
+    material on the work side.
+
+    # Red flag: unexplained changes in a shared git repo — STOP and report
+
+    Some repos I work in are shared, long-lived, and travel by git rather than
+    the synced scratch tree above. In any such repo, before you act on it or
+    build/deploy from it, check its state. If you find changes that neither of
+    us made and that I have not accounted for, STOP and report them before doing
+    anything else — do not restore, revert, commit, discard, overwrite, or
+    build/deploy on top of them, and do not "fix" them silently. This covers
+    uncommitted edits we didn't make (including files truncated to empty),
+    commits or a branch / worktree state I don't recognize, and any drift from
+    what we expect. Treat deploy and config directories as the highest stakes: a
+    surprise change there can silently break a production deploy.
+
+    Reporting means: show me exactly what changed and where, then wait.
+    Restoring from HEAD, committing, or re-applying may be the right fix — but
+    it's my call, made with the change in front of me, not a silent cleanup. A
+    change I can account for (I tell you I just pulled, switched branches, or
+    made an edit) is fine — proceed; the rule is for changes with no explanation.
   '';
   home.file.".claude-work/CLAUDE.md".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.claude/CLAUDE.md";

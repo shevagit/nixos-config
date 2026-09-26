@@ -221,6 +221,13 @@ in
     extraFlags = [
       "--quiet"
       "--timeout 120"
+      # keychain 3.x coordinates key loading across terminals and, by default,
+      # waits for Enter in every new shell before running ssh-add. None of the
+      # keys above carry a passphrase, so that prompt gates nothing — it just
+      # appears in each new terminal. --immediate keeps the coordination (one
+      # loader, the rest wait) and drops the preliminary Enter. Revisit if any
+      # of these keys ever gains a passphrase.
+      "--immediate"
     ];
   };
 
@@ -233,7 +240,11 @@ in
 
       background = [
         {
-          path = "${pkgs.sddm-astronaut}/share/sddm/themes/sddm-astronaut-theme/Backgrounds/japanese_aesthetic.png";
+          # Shares the derivation the SDDM login theme uses (defined in
+          # modules/common/overlays.nix) so only one copy is in the closure.
+          # Every preset's background ships in the package, so this image is
+          # unaffected by which preset that overlay selects.
+          path = "${pkgs.sddm-astronaut-themed}/share/sddm/themes/sddm-astronaut-theme/Backgrounds/japanese_aesthetic.png";
           blur_passes = 3;
           blur_size = 5;
         }

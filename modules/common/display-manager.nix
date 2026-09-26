@@ -1,30 +1,9 @@
 { config, pkgs, ... }:
-let
-  # Choose your theme preset here:
-  # Available options:
-  #   - "astronaut"
-  #   - "black_hole"
-  #   - "cyberpunk"
-  #   - "japanese_aesthetic"
-  #   - "pixel_sakura_static"
-  #   - "post-apocalyptic_hacker"
-  #   - "purple_leaves"
-  #   - "pixel_sakura" (animated gif)
-  #   - "jake_the_dog" (animated mp4)
-  #   - "hyprland_kath" (animated mp4)
-  themePreset = "black_hole";
 
-  # Custom sddm-astronaut theme with selected preset
-  sddm-astronaut-custom = pkgs.runCommand "sddm-astronaut-${themePreset}" { } ''
-    mkdir -p $out/share/sddm/themes
-    cp -r ${pkgs.sddm-astronaut}/share/sddm/themes/sddm-astronaut-theme $out/share/sddm/themes/
-    chmod -R +w $out/share/sddm/themes/sddm-astronaut-theme
-
-    # Change the ConfigFile to the selected theme preset
-    sed -i 's|ConfigFile=Themes/astronaut.conf|ConfigFile=Themes/${themePreset}.conf|' \
-      $out/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
-  '';
-in
+# The astronaut theme preset is chosen in modules/common/overlays.nix, which
+# defines pkgs.sddm-astronaut-themed. It lives there because hyprlock
+# (home/common/hyprland.nix) reads a background image out of the same package,
+# and sharing one derivation keeps a single copy in the closure.
 {
   services.displayManager.sddm = {
     enable = true;
@@ -33,12 +12,15 @@ in
     wayland.enable = true;
     wayland.compositor = "kwin";
 
+    # SDDM finds the theme by path under /run/current-system/sw/share/sddm/
+    # themes, not as a Nix dependency, so the Qt plugins the theme needs have
+    # to be handed to the greeter explicitly here.
     extraPackages = with pkgs.kdePackages; [
       qtmultimedia
     ];
   };
 
   environment.systemPackages = [
-    sddm-astronaut-custom
+    pkgs.sddm-astronaut-themed
   ];
 }
