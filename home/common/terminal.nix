@@ -15,6 +15,9 @@
       copy_on_select = "clipboard";  # Auto-copy selected text
       strip_trailing_spaces = "smart";  # Clean up copied text
       allow_remote_control = "yes";
+      # kitty 0.49 also remembers the maximized state, so every new window
+      # asks Hyprland to open maximized instead of tiling. Hyprland owns sizing.
+      remember_window_size = "no";
     };
     extraConfig = ''
       mouse_map right press ungrabbed paste_from_clipboard
