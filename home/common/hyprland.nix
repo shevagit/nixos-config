@@ -100,7 +100,7 @@ in
     text = ''
       #!/usr/bin/env bash
       # Quick restart script for DMS when it freezes
-      # Bound to SUPER+L for quick access
+      # Bound to SUPER+SHIFT+R for quick access
 
       # Restart DMS
       systemctl --user restart dms
