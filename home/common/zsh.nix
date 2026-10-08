@@ -35,7 +35,8 @@
       # no commit. Syncthing preserves the executable bit, so chmod +x travels
       # with it. Use `#!/usr/bin/env bash`: NixOS has no /bin/bash.
       # Scripts worth versioning belong in the repo instead, not here.
-      export PATH="$HOME/bin:$HOME/.local/bin:$HOME/sync/bin:$PATH"
+      # ~/sync-work/bin is the same idea for work helpers (e.g. find-session).
+      export PATH="$HOME/bin:$HOME/.local/bin:$HOME/sync/bin:$HOME/sync-work/bin:$PATH"
       export KUBE_EDITOR=nvim
       export EDITOR=nvim
 
