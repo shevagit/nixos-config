@@ -54,8 +54,8 @@ hl.config({
   },
 
   scrolling = {
-    column_width     = 0.33, -- three columns on screen
-    focus_fit_method = 0,    -- 0 = center the focused column, 1 = fit
+    column_width     = 0.5, -- two windows fill the screen, no side gaps
+    focus_fit_method = 1,   -- 1 = fit (only scroll when needed), 0 = center
   },
 
   decoration = {
