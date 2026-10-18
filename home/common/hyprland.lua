@@ -42,14 +42,20 @@ end)
 -----------------------
 hl.config({
   general = {
-    layout   = "master",
+    layout   = "scrolling",
     gaps_in  = 10,
     gaps_out = 20,
   },
 
+  -- Only used when switching back to layout = "master".
   master = {
     new_status = "slave",
     mfact      = 0.55,
+  },
+
+  scrolling = {
+    column_width     = 0.5, -- two windows fill the screen, no side gaps
+    focus_fit_method = 1,   -- 1 = fit (only scroll when needed), 0 = center
   },
 
   decoration = {
@@ -81,7 +87,7 @@ hl.config({
 hl.bind(mod .. " + Return", hl.dsp.exec_cmd("kitty"))
 hl.bind(mod .. " + d",      hl.dsp.exec_cmd("rofi -show drun -config ~/.config/rofi/launcher.rasi"))
 hl.bind(mod .. " + p",      hl.dsp.exec_cmd("dms ipc call powermenu toggle"))
-hl.bind(mod .. " + l",      hl.dsp.exec_cmd(home .. "/.config/hyprland/scripts/dms-restart.sh"))
+hl.bind(mod .. " + SHIFT + R", hl.dsp.exec_cmd(home .. "/.config/hyprland/scripts/dms-restart.sh"))
 hl.bind(mod .. " + SHIFT + e", hl.dsp.exec_raw("exit 0")) -- logout; to be removed
 hl.bind(mod .. " + q",      hl.dsp.window.close())
 hl.bind("CONTROL + Space",  hl.dsp.window.float({ action = "toggle" }))
@@ -122,6 +128,15 @@ hl.bind("CONTROL + ALT + right", hl.dsp.focus({ workspace = "m+1" }))
 hl.bind("CONTROL + ALT + left",  hl.dsp.focus({ workspace = "m-1" }))
 hl.bind(mod .. " + mouse_up",    hl.dsp.focus({ workspace = "m+1" }))
 hl.bind(mod .. " + mouse_down",  hl.dsp.focus({ workspace = "m-1" }))
+
+-- Scroll through columns (scrolling layout) with the mouse wheel
+hl.bind(mod .. " + SHIFT + mouse_down", hl.dsp.focus({ direction = "right" }))
+hl.bind(mod .. " + SHIFT + mouse_up",   hl.dsp.focus({ direction = "left" }))
+
+-- Cycle the focused column through scrolling:explicit_column_widths
+-- (0.333, 0.5, 0.667, 1.0), e.g. to widen columns when only two are open
+hl.bind(mod .. " + equal", hl.dsp.layout("colresize +conf"))
+hl.bind(mod .. " + minus", hl.dsp.layout("colresize -conf"))
 
 -- Lock
 hl.bind("CONTROL + ALT + L", hl.dsp.exec_cmd("swaylock"))
