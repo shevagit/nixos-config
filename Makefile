@@ -48,10 +48,14 @@ upgrade: update switch
 gc:
 	nix-collect-garbage -d
 
+# Keep the newest $(KEEP) generations, prune the boot menu to match, then GC
+KEEP ?= 10
 deep-gc:
-	nix-env --delete-generations +5
-	sudo nix-env --delete-generations +5 --profile /nix/var/nix/profiles/system
-	nix-collect-garbage
+	nix-env --delete-generations +$(KEEP)
+	nix-env --delete-generations +$(KEEP) --profile $${XDG_STATE_HOME:-$$HOME/.local/state}/nix/profiles/home-manager
+	sudo nix-env --delete-generations +$(KEEP) --profile /nix/var/nix/profiles/system
+	sudo /run/current-system/bin/switch-to-configuration boot
+	sudo nix-collect-garbage
 
 nuke-gc:
 	sudo nix-collect-garbage -d
