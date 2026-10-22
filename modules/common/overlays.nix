@@ -10,6 +10,9 @@
     # pixel_sakura_static, post-apocalyptic_hacker, purple_leaves,
     # pixel_sakura (animated gif), jake_the_dog (animated mp4),
     # hyprland_kath (animated mp4).
+    # Animated presets have frozen the greeter on simos (NVIDIA + kwin) before;
+    # if jake_the_dog does, fall back to a static one (astronaut is the known
+    # safe choice there).
     #
     # This lives in an overlay rather than in the SDDM module because there are
     # two consumers: modules/common/display-manager.nix installs it as the
@@ -22,7 +25,7 @@
     # (nontas, simos, athanasiou) are exactly the three importing home/common.
     (final: prev: {
       sddm-astronaut-themed = prev.sddm-astronaut.override {
-        embeddedTheme = "purple_leaves";
+        embeddedTheme = "jake_the_dog";
       };
     })
 
