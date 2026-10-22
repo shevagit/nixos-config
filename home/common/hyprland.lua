@@ -86,6 +86,7 @@ hl.config({
 -- Actions
 hl.bind(mod .. " + Return", hl.dsp.exec_cmd("kitty"))
 hl.bind(mod .. " + d",      hl.dsp.exec_cmd("rofi -show drun -config ~/.config/rofi/launcher.rasi"))
+hl.bind(mod .. " + e",      hl.dsp.exec_cmd("nautilus --new-window"))
 hl.bind(mod .. " + p",      hl.dsp.exec_cmd("dms ipc call powermenu toggle"))
 hl.bind(mod .. " + SHIFT + R", hl.dsp.exec_cmd(home .. "/.config/hyprland/scripts/dms-restart.sh"))
 hl.bind(mod .. " + SHIFT + e", hl.dsp.exec_raw("exit 0")) -- logout; to be removed
