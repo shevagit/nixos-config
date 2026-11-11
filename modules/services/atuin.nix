@@ -1,4 +1,4 @@
-{ pkgs-unstable, ... }:
+{ pkgs-unstable, lib, ... }:
 
 {
   # Self-hosted atuin sync server: the hub for zsh history shared across the
@@ -36,6 +36,17 @@
     # database.createLocally defaults to true: provisions a local postgres db
     # and user for atuin. The DB holds only atuin's encrypted history records.
   };
+
+  # nixpkgs' atuin 18.24.5 (unstable) splits the server into a separate
+  # `atuin-server` binary. The stock NixOS 25.05 module's ExecStart runs
+  # `${atuin} server start`, but the main `atuin` binary no longer has that
+  # subcommand (→ "unrecognized subcommand 'server'", unit fails on start).
+  # Point the unit at atuin-server directly — it reads the same ATUIN_* env
+  # vars the module sets. (Stable's unified atuin has `atuin server`; this
+  # override is only needed because we pin the server to unstable for parity
+  # with the clients. Drop it if the server ever moves back to stable atuin.)
+  systemd.services.atuin.serviceConfig.ExecStart =
+    lib.mkForce "${pkgs-unstable.atuin}/bin/atuin-server start";
 
   # Reachable only from the tailnet, exactly like glances (monitoring.nix).
   # This list option merges with monitoring.nix's entry (61208) across modules.
