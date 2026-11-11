@@ -20,7 +20,11 @@
       # self-hosted server — never the public api.atuin.sh.
       sync_address = "http://kaleipo:8888";
       auto_sync = true;
-      sync_frequency = "1m";
+      # Mostly single-machine use, so no need for aggressive syncing: auto-sync
+      # runs hourly (keeps kaleipo as a recent backup). Full history still lives
+      # locally; run `atuin sync` by hand for an immediate push/pull when hopping
+      # machines.
+      sync_frequency = "1h";
 
       ui = {
         # Columns shown in the Ctrl-R TUI, left to right. `host` is the whole
