@@ -25,9 +25,11 @@
     host = "0.0.0.0";
     port = 8888;
 
-    # Required so the first account can register. Flip to false and rebuild once
-    # every host has registered / logged in (see the manual steps in CLAUDE.md).
-    openRegistration = true;
+    # Closed: the account(s) exist, so no new registrations are accepted. This
+    # does NOT affect `atuin login` on further hosts (login needs the account +
+    # key, not open registration) — only `atuin register` of brand-new accounts.
+    # Set back to true temporarily if you ever need to register another account.
+    openRegistration = false;
 
     # openFirewall would punch the PUBLIC firewall. Keep it off; the port is
     # opened on tailscale0 only, below.
