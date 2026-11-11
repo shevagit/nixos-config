@@ -4,6 +4,7 @@
         ./ssh.nix
         ./fzf.nix
         ./zsh.nix
+        ./atuin.nix
         ./starship.nix
         ./terminal.nix
         ./kitty-kittens.nix  # AI-powered terminal kittens

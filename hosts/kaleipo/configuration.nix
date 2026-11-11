@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-unstable, sops-install-secrets, ... }:
 
 {
   imports = [
@@ -15,11 +15,20 @@
     ../../modules/common/syncthing.nix
     ../../modules/services/hdmi-audio-check.nix
     ../../modules/services/monitoring.nix
+    ../../modules/services/atuin.nix
   ];
 
   services.tailscale.package = pkgs-unstable.tailscale;
 
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+
+  # Build sops-install-secrets with the sops-nix flake's own (unstable, go 1.27)
+  # package. Stable 25.05's default go (1.24.10) can't satisfy the go >= 1.26 in
+  # sops-nix's go.mod, so the stock build fails. Both options default to the same
+  # derivation, and validationPackage runs at build time — override both. See the
+  # specialArg in flake.nix. Remove once stable ships go >= 1.26.
+  sops.package = sops-install-secrets;
+  sops.validationPackage = sops-install-secrets;
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;

@@ -90,7 +90,16 @@
         hostname = "kaleipo";
         nixpkgs = nixpkgs-stable;
         home-manager = home-manager-stable;
-        nixosSpecialArgs = { inherit pkgs-unstable; };
+        nixosSpecialArgs = {
+          inherit pkgs-unstable;
+          # sops-nix's go.mod now requires go >= 1.26 (bumped in the 2026-11-09
+          # flake update), but stable 25.05 — which kaleipo tracks — tops out at
+          # go 1.25. The sops-nix *flake* builds sops-install-secrets against its
+          # own (unstable) nixpkgs, i.e. go 1.27, so hand kaleipo that build and
+          # point sops.{package,validationPackage} at it (hosts/kaleipo). Same
+          # trick as services.tailscale.package = pkgs-unstable.tailscale.
+          sops-install-secrets = sops-nix.packages.${system}.sops-install-secrets;
+        };
       };
     };
 
