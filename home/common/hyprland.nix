@@ -25,12 +25,11 @@ in
       (lib.mkOrder 2000 ''
         require("dms.colors")
         require("dms.layout")
-        -- dms.cursor is only written by DMS's generateCursorConfig() (a cursor/
-        -- theme-setting event), NOT by its startup ensureDmsLuaConfigs() like
-        -- layout/windowrules. On a fresh profile the file may not exist yet, and
-        -- a hard require() aborts the whole config. pcall degrades gracefully:
-        -- default cursor until DMS writes dms/cursor.lua, then it loads on reload.
-        pcall(require, "dms.cursor")
+        -- dms.cursor is deliberately NOT required: the cursor is owned by
+        -- home.pointerCursor (home/common/hyprland-theme.nix, size 16). DMS 2.x
+        -- regenerates dms/cursor.lua on every settings reload and wrote its
+        -- default size 24 there (2026-11-12), which made the cursor visibly
+        -- bigger and ignored a later size change in DMS's own settings.
         require("dms.windowrules")
       '')
     ];
@@ -54,11 +53,9 @@ in
       wofi
       rofi
       nwg-drawer
-      swaylock
       pavucontrol
       pulseaudio
       font-awesome
-      hyprlock
       
   ] ++ (if pkgs ? nerd-fonts then [
       pkgs.nerd-fonts.fira-code
@@ -231,70 +228,14 @@ in
     ];
   };
 
-  programs.hyprlock = {
-    enable = true;
-    settings = {
-      general = {
-        hide_cursor = true;
-      };
-
-      background = [
-        {
-          # Shares the derivation the SDDM login theme uses (defined in
-          # modules/common/overlays.nix) so only one copy is in the closure.
-          # Every preset's background ships in the package, so this image is
-          # unaffected by which preset that overlay selects.
-          path = "${pkgs.sddm-astronaut-themed}/share/sddm/themes/sddm-astronaut-theme/Backgrounds/japanese_aesthetic.png";
-          blur_passes = 3;
-          blur_size = 5;
-        }
-      ];
-
-      input-field = [
-        {
-          monitor = "";
-          size = "250, 50";
-          outline_thickness = 2;
-          dots_size = 0.3;
-          dots_spacing = 0.2;
-          outer_color = "rgba(30, 30, 30, 0.8)";
-          inner_color = "rgba(0, 0, 0, 0.8)";
-          font_color = "rgb(255, 255, 255)";
-          fade_on_empty = false;
-        }
-      ];
-
-      animations = {
-          enabled = true;
-          bezier = "linear, 1, 1, 0, 0";
-      };
-
-      animation = [
-        "fadeIn, 1, 5, linear"
-        "fadeOut, 1, 5, linear"
-        "inputFieldDots, 1, 2, linear"
-      ];
-
-      label = [
-        {
-          monitor = "";
-          text = "$TIME";
-          font_size = 30;
-          font_family = "$font";
-          position = "-30, 0";
-          halign = "right";
-          valign = "top";
-        }
-        {
-          monitor = "";
-          text = "cmd[update:60000] date +\"%A, %d %B %Y\"";
-          font_size = 25;
-          font_family = "$font";
-          position = "-30, -150";
-          halign = "right";
-          valign = "top";
-        }
-      ];
-    };
-  };
+  # Lock-screen wallpaper for the DMS lock (Super+P → L, Ctrl+Alt+L, lid close).
+  # DMS's settings.json is runtime-managed (Syncthing-shared, see ./dms), so
+  # it can't hold a store path that changes on every bump. It points at this
+  # stable path instead (lockScreenWallpaperPath), and Home Manager keeps the
+  # path aimed at the current image.
+  # Shares the derivation the SDDM login theme uses (modules/common/overlays.nix)
+  # so only one copy is in the closure. Every preset's background ships in the
+  # package, so this image is unaffected by which preset the overlay selects.
+  home.file.".local/share/backgrounds/lockscreen.png".source =
+    "${pkgs.sddm-astronaut-themed}/share/sddm/themes/sddm-astronaut-theme/Backgrounds/japanese_aesthetic.png";
 }

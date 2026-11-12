@@ -71,6 +71,14 @@ hl.config({
       range        = 4,
       render_power = 3,
     },
+    -- New in Hyprland 0.57. Colours come from DMS's matugen hook
+    -- (~/.config/hypr/dms/colors.lua sets glow.color / glow.color_inactive),
+    -- so the glow follows the theme; only the switch and shape live here.
+    glow = {
+      enabled      = true,
+      range        = 10,
+      render_power = 3,
+    },
   },
 
   input = {
@@ -139,8 +147,8 @@ hl.bind(mod .. " + SHIFT + mouse_up",   hl.dsp.focus({ direction = "left" }))
 hl.bind(mod .. " + equal", hl.dsp.layout("colresize +conf"))
 hl.bind(mod .. " + minus", hl.dsp.layout("colresize -conf"))
 
--- Lock
-hl.bind("CONTROL + ALT + L", hl.dsp.exec_cmd("swaylock"))
+-- Lock: no dedicated key. Use the DMS power menu (Super+P → L); the lid
+-- switch (hosts/nontas/home.nix) and idle timeout use the same DMS lock.
 
 -- Screenshot
 hl.bind(mod .. " + Print", hl.dsp.exec_cmd("grimblast save area /tmp/screenshot.png && swappy -f /tmp/screenshot.png"))

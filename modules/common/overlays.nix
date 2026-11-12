@@ -16,8 +16,8 @@
     #
     # This lives in an overlay rather than in the SDDM module because there are
     # two consumers: modules/common/display-manager.nix installs it as the
-    # login theme, and home/common/hyprland.nix reads a background image out of
-    # the same package for hyprlock. Pointing both at one derivation keeps a
+    # login theme, and home/common/hyprland.nix links a background image out of
+    # the same package as the DMS lock-screen wallpaper. Pointing both at one derivation keeps a
     # single ~22M copy in the closure; when they referred to separate
     # derivations, both were pulled in.
     # Home-manager sees this because useGlobalPkgs = true. Safe to assume the

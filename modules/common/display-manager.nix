@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 # The astronaut theme preset is chosen in modules/common/overlays.nix, which
-# defines pkgs.sddm-astronaut-themed. It lives there because hyprlock
-# (home/common/hyprland.nix) reads a background image out of the same package,
+# defines pkgs.sddm-astronaut-themed. It lives there because the DMS
+# lock-screen wallpaper (home/common/hyprland.nix) comes out of the same package,
 # and sharing one derivation keeps a single copy in the closure.
 {
   services.displayManager.sddm = {
