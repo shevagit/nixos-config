@@ -63,6 +63,15 @@ in
     Use `/tmp` only for genuinely throwaway files within a single session; it is
     tmpfs and gone on reboot.
 
+    Keep the synced tree light: it is for scripts, notes and the output worth
+    keeping, not for copies of code or bulk data. Work on code in its real clone
+    or worktree outside `~/sync*` and refer to it by path. When a session needs a
+    local copy anyway — `git archive` / worktree snapshots, `helm template` or
+    other rendered output, downloaded media, datasets — put it in a directory
+    named `*.nosync` inside the topic (e.g. `<topic>/src.nosync/`,
+    `<topic>/render.nosync/`). Those stay on the machine that made them; anything
+    else in the topic is copied to every machine.
+
     Session transcripts sync the same way, so `claude --resume` on another
     machine picks the conversation back up.
 
