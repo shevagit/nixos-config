@@ -119,14 +119,20 @@ in
   # Written before syncthing starts, so a fresh machine never pulls ignored
   # content first and filters it afterwards. Workstations only: kaleipo holds
   # ciphertext with encrypted names and can't match patterns anyway.
+  #
+  # Also wanted by multi-user.target and kept active (RemainAfterExit), so a
+  # rebuild starts it on first deploy and re-runs it when the patterns change;
+  # being wanted by syncthing.service alone only runs it when syncthing
+  # restarts. Syncthing picks up a changed .stignore on its next scan.
   systemd.services.syncthing-ignores = lib.mkIf (!isHub) {
     description = "Write .stignore for the Syncthing working-dir folders";
-    wantedBy    = [ "syncthing.service" ];
+    wantedBy    = [ "multi-user.target" "syncthing.service" ];
     before      = [ "syncthing.service" ];
     serviceConfig = {
-      Type  = "oneshot";
-      User  = user;
-      Group = "users";
+      Type            = "oneshot";
+      RemainAfterExit = true;
+      User            = user;
+      Group           = "users";
     };
     script = lib.concatMapStrings (dir: ''
       mkdir -p ${dir}
