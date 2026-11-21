@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   user    = "sheva";
@@ -32,6 +32,39 @@ let
     type = "staggered";
     params.maxAge = toString (30 * 24 * 3600);
   };
+
+  # The working-dir folders (~/sync, ~/sync-work) are for scripts, notes and
+  # session output, not for code trees, their dependencies or bulk media.
+  #
+  # Syncthing ignores by name pattern only (never by size), and .stignore is
+  # never synced itself, so every workstation writes the same file. Anything
+  # named *.nosync stays on the machine that made it. That is the escape hatch
+  # for heavy output (`<topic>/src.nosync/`, `<topic>/render.nosync/`), so no
+  # per-directory patterns are needed here.
+  #
+  # (?d) lets Syncthing delete an ignored file when it is the only thing
+  # stopping a directory deletion that came from a peer. Without it, deleting
+  # a topic on one machine leaves an undeletable husk on the others.
+  #
+  # Ignoring is not deleting: files already present stay where they are, and
+  # peers keep their copies. Cleaning up existing data is a separate, manual
+  # step.
+  workingDirIgnores = pkgs.writeText "stignore" ''
+    // Managed by nixos-config (modules/common/syncthing.nix). Local edits are
+    // overwritten when syncthing restarts; change it there.
+    (?d)*.nosync
+    (?d).git
+    (?d)node_modules
+    (?d)vendor
+    (?d).venv
+    (?d)__pycache__
+    (?d).terraform
+    (?d)*.tar
+    (?d)*.tar.gz
+    (?d)*.tgz
+    (?d)*.zip
+  '';
+  workingDirs = [ "${home}/sync" "${home}/sync-work" ];
 
   # A folder that passes through the hub encrypted. kaleipo relays ciphertext it
   # holds no key for, so it needs a receiveencrypted definition pointed at a
@@ -81,6 +114,24 @@ in
       key      = "encryptionPassword";
       owner    = user;
     };
+  };
+
+  # Written before syncthing starts, so a fresh machine never pulls ignored
+  # content first and filters it afterwards. Workstations only: kaleipo holds
+  # ciphertext with encrypted names and can't match patterns anyway.
+  systemd.services.syncthing-ignores = lib.mkIf (!isHub) {
+    description = "Write .stignore for the Syncthing working-dir folders";
+    wantedBy    = [ "syncthing.service" ];
+    before      = [ "syncthing.service" ];
+    serviceConfig = {
+      Type  = "oneshot";
+      User  = user;
+      Group = "users";
+    };
+    script = lib.concatMapStrings (dir: ''
+      mkdir -p ${dir}
+      install -m 0644 ${workingDirIgnores} ${dir}/.stignore
+    '') workingDirs;
   };
 
   services.syncthing = {
