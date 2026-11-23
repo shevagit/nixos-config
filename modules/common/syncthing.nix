@@ -36,33 +36,28 @@ let
   # The working-dir folders (~/sync, ~/sync-work) are for scripts, notes and
   # session output, not for code trees, their dependencies or bulk media.
   #
-  # Syncthing ignores by name pattern only (never by size), and .stignore is
-  # never synced itself, so every workstation writes the same file. Anything
-  # named *.nosync stays on the machine that made it. That is the escape hatch
-  # for heavy output (`<topic>/src.nosync/`, `<topic>/render.nosync/`), so no
-  # per-directory patterns are needed here.
+  # Two layers, because .stignore itself never syncs:
+  #
+  # - The pattern list is syncthing-ignore.txt inside each folder. It is an
+  #   ordinary synced file, so an edit on one machine reaches all of them with
+  #   no rebuild. Its header holds the policy for what gets ignored.
+  # - .stignore is per machine and written here. It pulls the list in with
+  #   #include and adds *.nosync: anything so named stays on the machine that
+  #   made it, the escape hatch for heavy session output
+  #   (`<topic>/src.nosync/`, `<topic>/render.nosync/`).
+  #
+  # The #include is written only when the list exists: Syncthing refuses to
+  # load an ignore file whose include is missing, and a fresh machine has not
+  # received the list yet. The next boot or rebuild adds it.
   #
   # (?d) lets Syncthing delete an ignored file when it is the only thing
   # stopping a directory deletion that came from a peer. Without it, deleting
   # a topic on one machine leaves an undeletable husk on the others.
-  #
-  # Ignoring is not deleting: files already present stay where they are, and
-  # peers keep their copies. Cleaning up existing data is a separate, manual
-  # step.
-  workingDirIgnores = pkgs.writeText "stignore" ''
-    // Managed by nixos-config (modules/common/syncthing.nix). Local edits are
-    // overwritten when syncthing restarts; change it there.
+  stignoreBase = pkgs.writeText "stignore-base" ''
+    // Per machine, NOT synced. Written by nixos-config
+    // (modules/common/syncthing.nix); local edits are overwritten.
+    // Shared patterns: syncthing-ignore.txt, which DOES sync.
     (?d)*.nosync
-    (?d).git
-    (?d)node_modules
-    (?d)vendor
-    (?d).venv
-    (?d)__pycache__
-    (?d).terraform
-    (?d)*.tar
-    (?d)*.tar.gz
-    (?d)*.tgz
-    (?d)*.zip
   '';
   workingDirs = [ "${home}/sync" "${home}/sync-work" ];
 
@@ -134,10 +129,20 @@ in
       User            = user;
       Group           = "users";
     };
-    script = lib.concatMapStrings (dir: ''
-      mkdir -p ${dir}
-      install -m 0644 ${workingDirIgnores} ${dir}/.stignore
-    '') workingDirs;
+    # Assembled outside the folder and moved in whole, so Syncthing never
+    # sees a half-written ignore file or a temp file worth syncing.
+    script = ''
+      for dir in ${lib.escapeShellArgs workingDirs}; do
+        mkdir -p "$dir"
+        tmp=$(mktemp)
+        cat ${stignoreBase} > "$tmp"
+        if [ -e "$dir/syncthing-ignore.txt" ]; then
+          echo '#include syncthing-ignore.txt' >> "$tmp"
+        fi
+        install -m 0644 "$tmp" "$dir/.stignore"
+        rm -f "$tmp"
+      done
+    '';
   };
 
   services.syncthing = {
